@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class DragObject : MonoBehaviour
 {
+    //CONSTANT VALUES
+    const int board_layerMask = 1 << 8;
 
+    //PUBLIC REFERENCES   
     Rigidbody rb;
-    public Plane basePlane;
+    BoardManager boardManager;
+    Plane basePlane;
 
     private void Start()
     {
-        basePlane = GetBasePlane();
+        boardManager = (BoardManager) GameObject.Find("Board").GetComponent(typeof(BoardManager));
+        basePlane = boardManager.GetBasePlane();
     }
 
     void OnMouseDown()
@@ -21,13 +26,19 @@ public class DragObject : MonoBehaviour
     private void OnMouseDrag()
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
+
         if (basePlane.Raycast(mouseRay, out float distance))
         {
+            transform.position = mouseRay.GetPoint(distance - distance/2); // mover cubo en el aire
             Vector3 toGround = this.transform.TransformDirection(Vector3.down);
-            Debug.DrawRay(this.transform.position, toGround * 50, Color.green);
 
-            transform.position = mouseRay.GetPoint(distance);
+            Debug.DrawRay(this.transform.position, toGround * 50, Color.green); // pintar línea a suelo (DEBUG)
+
+            if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, board_layerMask))
+            {
+                Debug.Log("hitting the plane at " + hit.point.ToString());
+
+            }
         }
 
     }
@@ -35,15 +46,11 @@ public class DragObject : MonoBehaviour
     private void OnMouseUp()
     {
         
-
     }
-    
-    private Plane GetBasePlane()
+
+    private void DoTheCubeSnappingThing()
     {
-        rb = GetComponent<Rigidbody>();
-        var filter = GameObject.Find("Board").GetComponentInChildren<MeshFilter>();
-        Vector3 normal = filter.transform.TransformDirection(filter.mesh.normals[0]);
-        return new Plane(normal, transform.position);
+
     }
 }
 

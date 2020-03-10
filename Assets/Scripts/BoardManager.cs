@@ -5,19 +5,36 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
 
-    private const float TILE_SIZE = 1.0f;
-    private const float TILE_OFFSET = 0.5f;
+    //private const float TILE_SIZE = 1.0f;
+    //private const float TILE_OFFSET = 0.5f;
+
+    private int TILE_NUMBER_X = 20;
+    private int TILE_NUMBER_Z = 20;
+
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        // 1. Calcular tiles (dividir tablero en casillas)
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GetTile(Vector2 point)
     {
-        DrawBoard();
+
+    }
+
+    public Plane GetBasePlane()
+    {
+        var filter = this.GetComponentInChildren<MeshFilter>();
+        Vector3 normal = filter.transform.TransformDirection(filter.mesh.normals[0]);
+        return new Plane(normal, transform.position);
+    }
+
+    private void SetTiles()
+    {
+
     }
 
     private void DrawBoard()
