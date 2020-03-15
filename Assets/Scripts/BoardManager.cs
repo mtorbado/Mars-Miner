@@ -1,29 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
 
-    //private const float TILE_SIZE = 1.0f;
-    //private const float TILE_OFFSET = 0.5f;
-
-    private int TILE_NUMBER_X = 20;
-    private int TILE_NUMBER_Z = 20;
+    private int tileNumber;
+    private double tileSize;
 
     Rigidbody rb;
+    Plane basePlane;
+    GameObject gridPlane;
+    Material gridMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
-        // 1. Calcular tiles (dividir tablero en casillas)
+        basePlane = GetBasePlane();
+        gridPlane = GameObject.Find("Grid Plane");
+        gridPlane.SetActive(false);
+        gridMaterial = gridPlane.GetComponent<Renderer>().material;
+        tileNumber = gridMaterial.GetInt("_GridSize");
 
     }
 
-    public void GetTile(Vector2 point)
-    {
-
-    }
+    /* ========================================================= GET METHODS ========================================================= */
 
     public Plane GetBasePlane()
     {
@@ -32,26 +34,52 @@ public class BoardManager : MonoBehaviour
         return new Plane(normal, transform.position);
     }
 
-    private void SetTiles()
+    public Tile GetTile(Vector2 point)
     {
+        Tile tile = new Tile(-1, -1);
+        int tileX = (int)Math.Abs(point.x);
+        int tileY = (int)Math.Abs(point.y);
 
+        if (tileX >= 0 && tileX <= tileNumber && tileY >= 0 && tileY <= tileNumber)
+        {
+            tile.X = tileX;
+            tile.Y = tileY;
+        }
+        return tile;
     }
 
-    private void DrawBoard()
+    public Vector3 GetCenterPointOfTile(Tile tile)
     {
-        Vector3 xLine = Vector3.right * 20;
-        Vector3 zLine = Vector3.forward * 20;
+        return new Vector3(tile.X + 0.5f, 0, tile.Y + 0.5f);
+    }
 
-        for (int i = 0; i <= 20; i++)
+    /* ===================================================== GRID UPDATE METHODS ===================================================== */
+
+    public void ShowSelectedTile(Vector2 point)
+    {
+        Tile selectedTile = GetTile(point);
+        if (selectedTile.X != -1 && selectedTile.Y != -1)
         {
-            Vector3 start = Vector3.forward * i;
-            Debug.DrawLine(start, start + xLine);
-            for (int j = 0; j <= 20; j++)
-            {
-                start = Vector3.right * j;
-                Debug.DrawLine(start, start + zLine);
-            }
-
+            gridMaterial.SetInt("_SelectedCellX", selectedTile.X);
+            gridMaterial.SetInt("_SelectedCellY", selectedTile.Y);
+            gridMaterial.SetInt("_SelectCell", 1);
         }
     }
+
+    public void ShowTileGrid(bool value)
+    {
+        gridPlane.SetActive(value);
+    }
+}
+
+
+/* ========================================================= AUXILIAR CLASS ========================================================== */
+
+
+public class Tile
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public Tile(int x, int y) => (X, Y) = (x, y);
 }

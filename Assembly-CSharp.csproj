@@ -63,6 +63,9 @@
     <Compile Include="Assets\Scripts\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Character Movement\CharacterMovementLevel1.cs" />
     <Compile Include="Assets\Scripts\DragObject.cs" />
+    <Compile Include="Assets\SimpleGridShader\DistanceScaling.cs" />
+    <None Include="Assets\SimpleGridShader\README.txt" />
+    <None Include="Assets\SimpleGridShader\GridShader.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Users/Mario/Unity projects/tfg/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
