@@ -14,7 +14,7 @@ public class BoardManager : MonoBehaviour
     GameObject gridPlane;
     Material gridMaterial;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         basePlane = GetBasePlane();
@@ -27,6 +27,10 @@ public class BoardManager : MonoBehaviour
 
     /* ========================================================= GET METHODS ========================================================= */
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public Plane GetBasePlane()
     {
         var filter = this.GetComponentInChildren<MeshFilter>();
@@ -34,20 +38,27 @@ public class BoardManager : MonoBehaviour
         return new Plane(normal, transform.position);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     public Tile GetTile(Vector2 point)
     {
         Tile tile = new Tile(-1, -1);
-        int tileX = (int)Math.Abs(point.x);
-        int tileY = (int)Math.Abs(point.y);
-
-        if (tileX >= 0 && tileX <= tileNumber && tileY >= 0 && tileY <= tileNumber)
+        if (point.x >= 0 && point.x <= tileNumber && point.y >= 0 && point.y <= tileNumber)
         {
-            tile.X = tileX;
-            tile.Y = tileY;
+            tile.X = (int)Math.Abs(point.x);
+            tile.Y = (int)Math.Abs(point.y);
         }
         return tile;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public Vector3 GetCenterPointOfTile(Tile tile)
     {
         return new Vector3(tile.X + 0.5f, 0, tile.Y + 0.5f);
@@ -55,14 +66,33 @@ public class BoardManager : MonoBehaviour
 
     /* ===================================================== GRID UPDATE METHODS ===================================================== */
 
-    public void ShowSelectedTile(Vector2 point)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="isClear"></param>
+    public void ShowSelectedTile(Vector2 point, bool isClear)
     {
         Tile selectedTile = GetTile(point);
         if (selectedTile.X != -1 && selectedTile.Y != -1)
         {
+            if (isClear)
+            {
+                gridMaterial.SetColor("_SelectedColor", new Color(0.7f,1,0.36f));
+                gridMaterial.SetColor("_LineColor", new Color(0.8f,1,0.16f));
+            }
+            else
+            {
+                gridMaterial.SetColor("_SelectedColor", new Color(1,0.4f,0.2f));
+                gridMaterial.SetColor("_LineColor", new Color(1,0.4f,0.2f));
+            }
             gridMaterial.SetInt("_SelectedCellX", selectedTile.X);
             gridMaterial.SetInt("_SelectedCellY", selectedTile.Y);
             gridMaterial.SetInt("_SelectCell", 1);
+        }
+        else
+        {
+            gridMaterial.SetInt("_SelectCell", 0);
         }
     }
 
