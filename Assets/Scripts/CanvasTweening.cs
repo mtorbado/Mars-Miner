@@ -9,7 +9,7 @@ public class CanvasTweening : MonoBehaviour
     private bool isDisplayed;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         isDisplayed = true;
 

@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragObject : MonoBehaviour
-{
+public class DragObjectController : MonoBehaviour
+{ 
+    
     //LAYER MASKS
-    const int board_layerMask = 1 << 8;
-    const int gameElement_layerMask = 1 << 9;
+    const int Board_LayerMask = 1 << 8;
+    const int GameElement_LayerMask = 1 << 9;
 
-    //PUBLIC REFERENCES   
-    BoardManager boardManager;
     Plane basePlane;
+    BoardManager boardManager;
     Vector3 previousPosition;
+
+    Ray mouseRay;
+    Transform cable;
 
     private void Awake()
     {
@@ -19,15 +22,7 @@ public class DragObject : MonoBehaviour
         basePlane = boardManager.GetBasePlane();
         previousPosition = transform.position;
     }
-    private void Start()
-    {
-        
-    }
 
-    void OnMouseDown()
-    {
-
-    }
     private void OnMouseOver()
     {
         
@@ -35,39 +30,35 @@ public class DragObject : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (basePlane.Raycast(mouseRay, out float distance))
         {
 
             boardManager.ShowTileGrid(true); // mostrar grid
             transform.position = mouseRay.GetPoint(distance - distance / 10); // mover cubo en el aire
-            
-            boardManager.ShowSelectedTile(GetHoverPoint(), IsTileClear());
 
+            boardManager.ShowSelectedTile(GetHoverPoint(), IsTileClear());
             //DEBUG_GetPlaneHitPoint();
         }
-
     }
 
     private void OnMouseUp()
     {
         boardManager.ShowTileGrid(false);
         SnapIntoPlaneCell();
+        
     }
 
     /* =================================================================================================================================== */
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+
     private Vector2 GetHoverPoint()
     {
         Vector2 hoverPoint = new Vector2(-1,-1);
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
 
-        if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, board_layerMask))
+        if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, Board_LayerMask))
         {
             hoverPoint.x = hit.point.x;
             hoverPoint.y = hit.point.z;
@@ -75,24 +66,17 @@ public class DragObject : MonoBehaviour
         return hoverPoint;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private bool IsTileClear()
     {
         bool clear = true;
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
-        if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, gameElement_layerMask))
+        if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, GameElement_LayerMask))
         {
             clear = false;
         }
         return clear;
     }
 
-    /// <summary>
-    /// This class does something.
-    /// </summary>
     private void SnapIntoPlaneCell()
     {
 
@@ -100,7 +84,7 @@ public class DragObject : MonoBehaviour
         if (IsTileClear() && tile.X!=-1)
         {
             Vector3 centerOfTile = boardManager.GetCenterPointOfTile(tile);
-            centerOfTile.y = transform.localScale.y / 2;
+            //centerOfTile.y = transform.localScale.y / 2;
             transform.position = centerOfTile;
             previousPosition = transform.position;
         }

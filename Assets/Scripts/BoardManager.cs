@@ -14,23 +14,17 @@ public class BoardManager : MonoBehaviour
     GameObject gridPlane;
     Material gridMaterial;
 
-
-    void Start()
+    void Awake()
     {
         basePlane = GetBasePlane();
         gridPlane = GameObject.Find("Grid Plane");
         gridPlane.SetActive(false);
         gridMaterial = gridPlane.GetComponent<Renderer>().material;
         tileNumber = gridMaterial.GetInt("_GridSize");
-
     }
 
     /* ========================================================= GET METHODS ========================================================= */
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public Plane GetBasePlane()
     {
         var filter = this.GetComponentInChildren<MeshFilter>();
@@ -38,11 +32,6 @@ public class BoardManager : MonoBehaviour
         return new Plane(normal, transform.position);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="point"></param>
-    /// <returns></returns>
     public Tile GetTile(Vector2 point)
     {
         Tile tile = new Tile(-1, -1);
@@ -54,23 +43,18 @@ public class BoardManager : MonoBehaviour
         return tile;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="tile"></param>
-    /// <returns></returns>
     public Vector3 GetCenterPointOfTile(Tile tile)
     {
-        return new Vector3(tile.X + 0.5f, 0, tile.Y + 0.5f);
+        return new Vector3(tile.X + 0.5f, 0.5f, tile.Y + 0.5f);
+    }
+
+    public Vector3 GetCenterPointOfTile(int x, int y)
+    {
+        return new Vector3(x + 0.5f, 0.5f, y + 0.5f);
     }
 
     /* ===================================================== GRID UPDATE METHODS ===================================================== */
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="point"></param>
-    /// <param name="isClear"></param>
     public void ShowSelectedTile(Vector2 point, bool isClear)
     {
         Tile selectedTile = GetTile(point);
@@ -101,7 +85,6 @@ public class BoardManager : MonoBehaviour
         gridPlane.SetActive(value);
     }
 }
-
 
 /* ========================================================= AUXILIAR CLASS ========================================================== */
 
