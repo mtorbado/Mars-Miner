@@ -5,7 +5,7 @@ using UnityEngine;
 public class CanvasTweening : MonoBehaviour
 {
 
-    public GameObject panel, button, buttonOpenText, buttonCloseText;
+    public GameObject panel, button;
     private bool isDisplayed;
 
     // Start is called before the first frame update

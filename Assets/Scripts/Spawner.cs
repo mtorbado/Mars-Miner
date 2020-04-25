@@ -14,9 +14,6 @@ public class Spawner : MonoBehaviour
     const String LevelFolderPath = "LevelFiles/";
     const string LevelFileNaming = "level_";
     const int TableSize = 20;
-
-
-
     BoardManager boardManager;
 
     private void Awake() 
@@ -36,20 +33,20 @@ public class Spawner : MonoBehaviour
     {
         System.Random random = new System.Random();  
  
-         for (int j = 0; j < table.GetLength(0); j++)
+         for (int i = 0; i < table.GetLength(0); i++)
             {
-                for (int i = 0; i < table.GetLength(1); i++)
+                for (int j = 0; j < table.GetLength(1); j++)
                 {
-                    if (table[j,i] == '1') { // movable rock
+                    if (table[i,j] == '1') { // movable rock
                         int rnd = random.Next(0, movableRocks.Length -1);
-                        Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(j,i), Quaternion.identity);
+                        Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
                     }
-                    else if (table[j,i] == '2') { //fixed rock
+                    else if (table[i,j] == '2') { //fixed rock
                         int rnd = random.Next(0, fixedRocks.Length -1);
-                        Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(j,i), Quaternion.identity);
+                        Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
                     }
 
-                    else if (table[j,i] == 'u' || table[j,i] == 'd'|| table[j,i] =='l' || table[j,i] == 'r') //character cube
+                    else if (table[i,j] == 'u' || table[i,j] == 'd'|| table[i,j] =='l' || table[i,j] == 'r') //character cube
                     {
                         //set character cube
                     }
@@ -69,19 +66,19 @@ public class Spawner : MonoBehaviour
         var string_table = File.ReadAllLines(LevelFolderPath + LevelFileNaming + levelNumber + ".csv").Select(l => l.Split(',').ToArray()).ToArray();
         try
         {
-            for (int j = 0; j < TableSize; j++)
+            for (int i = 0; i < TableSize; i++)
             {
-                for (int i = 0; i < TableSize; i++)
+                for (int j = 0; j < TableSize; j++)
                 {
                     char letter;
-                    bool ok = char.TryParse(string_table[j][i], out letter);
+                    bool ok = char.TryParse(string_table[i][j], out letter);
                     if (ok)
                     {
-                        table[j, i] = letter;
+                        table[i,j] = letter;
                     }
                     else
                     {
-                        table[j, i] = '0';
+                        table[i,j] = '0';
                     }
                 }
             }
