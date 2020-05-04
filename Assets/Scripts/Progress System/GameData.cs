@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 
+
+/// <summary>
+/// Serializable class to save game progress
+/// </summary>
 [System.Serializable]
 public class GameData
 {
