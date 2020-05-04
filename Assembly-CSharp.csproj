@@ -90,6 +90,9 @@
      <Compile Include="Assets\Scripts\Game System\BoardManager.cs" />
      <Compile Include="Assets\Scripts\Game System\CableController.cs" />
      <Compile Include="Assets\Scripts\Game System\DragObjectController.cs" />
+     <Compile Include="Assets\Scripts\Game System\Robot\IRobotMovement.cs" />
+     <Compile Include="Assets\Scripts\Game System\Robot\IRobotSenses.cs" />
+     <Compile Include="Assets\Scripts\Game System\Robot\Robot.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
      <Compile Include="Assets\Scripts\Progress System\LevelLoader.cs" />

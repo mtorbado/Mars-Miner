@@ -51,7 +51,7 @@ public class DragObjectController : MonoBehaviour
     }
 
     /* =================================================================================================================================== */
-
+    //extract this functions, useful for robot too
 
     private Vector2 GetHoverPoint()
     {
