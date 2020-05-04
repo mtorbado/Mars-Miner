@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class S : MonoBehaviour
 {
     public GameObject[] movableRocks;
     public GameObject[] fixedRocks;

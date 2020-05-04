@@ -30,7 +30,7 @@ public class CableController : MonoBehaviour
         mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (basePlane.Raycast(mouseRay, out float distance))
         {
-            this.transform.position = new Vector3(mouseRay.GetPoint(distance).x, 14, mouseRay.GetPoint(distance).z);
+            this.transform.position = new Vector3(mouseRay.GetPoint(distance).x, HeithUpdater(), mouseRay.GetPoint(distance).z);
         }
     }
 
@@ -49,5 +49,9 @@ public class CableController : MonoBehaviour
         animation = this.GetComponentInChildren<Animation>();
         animation.AddClip(dropCableClip, "dropCableClip");
         animation.AddClip(retrieveCableClip, "retrieveCableClip");
+    }
+
+    private float HeithUpdater(){
+        return 16 - (Input.mousePosition.y/250);
     }
 }
