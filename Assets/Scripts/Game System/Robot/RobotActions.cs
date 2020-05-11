@@ -11,7 +11,7 @@ public class RobotActions : MonoBehaviour
 
     BoardManager boardManager;
     Vector3 CurrentPosition;
-    float moveSpeed;
+    float moveSpeed = 1f;
 
     private void Awake()
     {
@@ -19,15 +19,38 @@ public class RobotActions : MonoBehaviour
         CurrentPosition = transform.position;
     }
 
+    private Tile GetFowardTile()
+    {
+        Tile t = boardManager.GetTile(transform.position);
+        if (transform.rotation.y == 0) 
+        {
+            return new Tile(t.X + 1, t.Y);
+        }
+        else if (transform.rotation.y == 1) 
+        {
+            return new Tile (t.X - 1 , t.Y);
+        }
+        else if (transform.rotation.y > 0)
+        {
+            return new Tile (t.X, t.Y - 1);
+        }
+        else //(transform.rotation.y < 0)
+        {
+            return new Tile (t.X, t.Y + 1);
+        }
+    }
+
     IEnumerator MoveFoward()
     {
-        // calculate which is the tile in front of the robot (rotation relative to grid) and get its center point (target)
-        // while (Vector3.Distance(transform.position, target) > 0.0f)
-        // {
-        //     transform.position = Vector3.Lerp(transform.position, target.position, moveSpeed*Time.deltaTime);
-        //     yield return null;
-        // }
-        throw new NotImplementedException();
+        Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile());
+        float i = 0.0f;
+        while (Vector3.Distance(transform.position, target) > 0.0f)
+        {
+            i += Time.deltaTime * moveSpeed;
+            transform.position = Vector3.Lerp(transform.position, target, i);
+            Debug.Log("moving to "+ target);
+            yield return null;
+        }
     }
 
     IEnumerator MoveBackward()

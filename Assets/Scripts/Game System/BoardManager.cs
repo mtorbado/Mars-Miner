@@ -43,6 +43,17 @@ public class BoardManager : MonoBehaviour
         return tile;
     }
 
+    public Tile GetTile(Vector3 point)
+    {
+        Tile tile = new Tile(-1, -1);
+        if (point.x >= 0 && point.x <= tileNumber && point.z >= 0 && point.z <= tileNumber)
+        {
+            tile.X = (int)Math.Abs(point.x);
+            tile.Y = (int)Math.Abs(point.z);
+        }
+        return tile;
+    }
+
     public Vector3 GetCenterPointOfTile(Tile tile)
     {
         return new Vector3(tile.X + 0.5f, 0.5f, tile.Y + 0.5f);
@@ -73,6 +84,8 @@ public class BoardManager : MonoBehaviour
             gridMaterial.SetInt("_SelectedCellX", selectedTile.X);
             gridMaterial.SetInt("_SelectedCellY", selectedTile.Y);
             gridMaterial.SetInt("_SelectCell", 1);
+
+            // DEBUG_PrintTile(selectedTile);
         }
         else
         {
@@ -84,9 +97,17 @@ public class BoardManager : MonoBehaviour
     {
         gridPlane.SetActive(value);
     }
+
+    /* ========================================================= DEBUG FUNCTIONS ========================================================= */
+    
+    private void DEBUG_PrintTile(Tile tile)
+    {
+        
+        Debug.Log("hitting the tile: (" + tile.X + "," + tile.Y + ")");
+    }
 }
 
-/* ========================================================= AUXILIAR CLASS ========================================================== */
+/* =========================================================== AUXILIAR CLASS ============================================================ */
 
 
 public class Tile

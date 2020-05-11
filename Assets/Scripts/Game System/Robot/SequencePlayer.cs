@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +9,11 @@ using UnityEngine;
 public class SequencePlayer : MonoBehaviour
 {
     // Coroutines without params or return (not using CoroutineWithData)
-    void PlaySequence(List<String> methodSequence)
+    private IEnumerator PlaySequence(List<String> methodSequence)
     {
         foreach (String method in methodSequence)
         {
-            StartCoroutine(method);
+           yield return StartCoroutine(method);
         }
     }
 
