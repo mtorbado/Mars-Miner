@@ -12,11 +12,17 @@ public class RobotActions : MonoBehaviour
     BoardManager boardManager;
     Vector3 CurrentPosition;
     float moveSpeed = 1f;
+    float rotationTime = 1f;
 
     private void Awake()
     {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
         CurrentPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(TurnLeft());
     }
 
     private Tile GetFowardTile()
@@ -60,12 +66,30 @@ public class RobotActions : MonoBehaviour
 
     IEnumerator TurnRight()
     {
-        throw new NotImplementedException();
+        float startRotation = transform.eulerAngles.y;
+        float endRotation = startRotation + 90f;
+        float t = 0.0f;
+        while ( t  < rotationTime )
+        {
+            t += Time.deltaTime;
+            float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
+            yield return null;
+        }
     }
 
     IEnumerator TurnLeft()
     {
-        throw new NotImplementedException();
+        float startRotation = transform.eulerAngles.y;
+        float endRotation = startRotation - 90f;
+        float t = 0.0f;
+        while ( t  < rotationTime )
+        {
+            t += Time.deltaTime;
+            float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
+            yield return null;
+        }
     }
 
     IEnumerator Scan(Vector2 direction)
