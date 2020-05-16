@@ -33,26 +33,27 @@ public class LevelLoader : MonoBehaviour
     {
         System.Random random = new System.Random();  
  
-         for (int i = 0; i < table.GetLength(0); i++)
+        for (int i = 0; i < table.GetLength(0); i++)
+        {
+            for (int j = 0; j < table.GetLength(1); j++)
             {
-                for (int j = 0; j < table.GetLength(1); j++)
+                if (table[i,j] == '1')  // movable rock
                 {
-                    if (table[i,j] == '1') { // movable rock
-                        int rnd = random.Next(0, movableRocks.Length -1);
-                        Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
-                    }
-                    else if (table[i,j] == '2') { //fixed rock
-                        int rnd = random.Next(0, fixedRocks.Length -1);
-                        Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
-                    }
+                    int rnd = random.Next(0, movableRocks.Length -1);
+                    Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                }
+                else if (table[i,j] == '2') //fixed rock
+                { 
+                    int rnd = random.Next(0, fixedRocks.Length -1);
+                    Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                }
 
-                    else if (table[i,j] == 'u' || table[i,j] == 'd'|| table[i,j] =='l' || table[i,j] == 'r') //character cube
-                    {
+                else if (table[i,j] == 'u' || table[i,j] == 'd'|| table[i,j] =='l' || table[i,j] == 'r') //character cube
+                {
                         //set character cube
-                    }
-
                 }
             }
+        }
     }
 
     private GameObject GetRndGameObjectOfType(int type) 
@@ -83,9 +84,9 @@ public class LevelLoader : MonoBehaviour
                 }
             }
         } catch (InvalidOperationException)
-            {
-                throw new InvalidOperationException("The given jagged array is not rectangular.");
-            }
+        {
+            throw new InvalidOperationException("The given jagged array is not rectangular.");
+        }
 
         return table;
     }
