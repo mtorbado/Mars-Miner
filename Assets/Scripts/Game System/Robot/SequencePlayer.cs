@@ -8,20 +8,20 @@ using UnityEngine;
 /// </summary>
 public class SequencePlayer : MonoBehaviour
 {
-    // Coroutines without params or return (not using CoroutineWithData)
-    private IEnumerator PlaySequence(List<String> methodSequence)
+    
+    public IEnumerator PlaySequence(List<CoroutineWithData> sequence)
     {
-        foreach (String method in methodSequence)
+        foreach (CoroutineWithData cd in sequence)
         {
-           yield return StartCoroutine(method);
+          yield return cd.coroutine;
         }
     }
 
-    void WhileLoop(List<String> methodSequence)
+    public IEnumerator WhileLoop(List<CoroutineWithData> sequence, bool interrupt)
     {
-        while(true)
+        while(!interrupt)
         {
-            PlaySequence(methodSequence);
+           yield return PlaySequence(sequence);
         }
     }
 }

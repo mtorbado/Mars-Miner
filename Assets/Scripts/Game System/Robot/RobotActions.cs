@@ -20,10 +20,60 @@ public class RobotActions : MonoBehaviour
         CurrentPosition = transform.position;
     }
 
-    private void Start()
+    /* ===================================================== COROUTINES ===================================================== */
+
+    public IEnumerator MoveFoward()
     {
-        StartCoroutine(TurnLeft());
+        Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile());
+        float i = 0.0f;
+        while (Vector3.Distance(transform.position, target) > 0.0f)
+        {
+            i += Time.deltaTime * moveSpeed;
+            transform.position = Vector3.Lerp(transform.position, target, i);
+            // Debug.Log("moving to "+ target);
+            yield return null;
+        }
     }
+
+    public IEnumerator MoveBackward()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerator TurnRight()
+    {
+        float startRotation = transform.eulerAngles.y;
+        float endRotation = startRotation + 90f;
+        float t = 0.0f;
+        while ( t  < rotationTime )
+        {
+            t += Time.deltaTime;
+            float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
+            yield return null;
+        }
+    }
+
+    public IEnumerator TurnLeft()
+    {
+        float startRotation = transform.eulerAngles.y;
+        float endRotation = startRotation - 90f;
+        float t = 0.0f;
+        while ( t  < rotationTime )
+        {
+            t += Time.deltaTime;
+            float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
+            yield return null;
+        }
+    }
+
+    public void Stop()
+    {
+
+    }
+
+    /* ===================================================== PRIVATE FUNCTIONS ===================================================== */
 
     private Tile GetFowardTile()
     {
@@ -44,56 +94,5 @@ public class RobotActions : MonoBehaviour
         {
             return new Tile (t.X, t.Y + 1);
         }
-    }
-
-    IEnumerator MoveFoward()
-    {
-        Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile());
-        float i = 0.0f;
-        while (Vector3.Distance(transform.position, target) > 0.0f)
-        {
-            i += Time.deltaTime * moveSpeed;
-            transform.position = Vector3.Lerp(transform.position, target, i);
-            Debug.Log("moving to "+ target);
-            yield return null;
-        }
-    }
-
-    IEnumerator MoveBackward()
-    {
-        throw new NotImplementedException();
-    }
-
-    IEnumerator TurnRight()
-    {
-        float startRotation = transform.eulerAngles.y;
-        float endRotation = startRotation + 90f;
-        float t = 0.0f;
-        while ( t  < rotationTime )
-        {
-            t += Time.deltaTime;
-            float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
-            yield return null;
-        }
-    }
-
-    IEnumerator TurnLeft()
-    {
-        float startRotation = transform.eulerAngles.y;
-        float endRotation = startRotation - 90f;
-        float t = 0.0f;
-        while ( t  < rotationTime )
-        {
-            t += Time.deltaTime;
-            float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
-            yield return null;
-        }
-    }
-
-    IEnumerator Scan(Vector2 direction)
-    {
-        throw new NotImplementedException();
     }
 }
