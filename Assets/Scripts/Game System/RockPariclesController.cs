@@ -1,23 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RockPariclesController : MonoBehaviour
-{
+public class RockPariclesController : MonoBehaviour {
 
     ParticleSystem particles;
-    private void Start() 
-    {
+
+    private void Start() {
         particles = GetComponentInChildren<ParticleSystem>();
         particles.Stop();
     }
-    private void OnMouseDown()
-    {
+
+    private void OnMouseDown() {
         particles.Play();
     }
 
-    private void OnMouseUp()
-    {
+    private void OnMouseUp() {
         particles.Stop();
     }
 

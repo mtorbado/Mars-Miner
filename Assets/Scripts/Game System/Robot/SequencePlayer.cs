@@ -6,21 +6,16 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public class SequencePlayer : MonoBehaviour
-{
+public class SequencePlayer : MonoBehaviour {
     
-    public IEnumerator PlaySequence(List<CoroutineWithData> sequence)
-    {
-        foreach (CoroutineWithData cd in sequence)
-        {
+    public IEnumerator PlaySequence(List<CoroutineWithData> sequence) {
+        foreach (CoroutineWithData cd in sequence) {
           yield return cd.coroutine;
         }
     }
 
-    public IEnumerator WhileLoop(List<CoroutineWithData> sequence, bool interrupt)
-    {
-        while(!interrupt)
-        {
+    public IEnumerator WhileLoop(List<CoroutineWithData> sequence, bool interrupt) {
+        while(!interrupt) {
            yield return PlaySequence(sequence);
         }
     }
