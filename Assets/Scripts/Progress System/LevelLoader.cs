@@ -10,6 +10,7 @@ public class LevelLoader : MonoBehaviour {
     public GameObject[] movableRocks;
     public GameObject[] fixedRocks;
     public GameObject character;
+    public GameObject ore;
 
     const String LevelFolderPath = "LevelFiles/";
     const string LevelFileNaming = "level_";
@@ -38,12 +39,24 @@ public class LevelLoader : MonoBehaviour {
                     Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
                 }
 
-                else if (false) { // ore
-                    // TODO: set ore
+                else if (table[i,j] == '3') { // ore
+                    Instantiate(ore, boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
                 }
 
-                else if (table[i,j] == 'u' || table[i,j] == 'd'|| table[i,j] =='l' || table[i,j] == 'r') { // character cube
-                    // TODO: set character cube
+                else if (table[i,j] == 'u') { // character cube (looking up) (-x)
+                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+                }
+                    
+                else if (table[i,j] == 'd') { // character cube (looking down) (x)
+                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f));
+                }
+                
+                else if (table[i,j] =='l') { // character cube (looking left) (-z)
+                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 90f, 0f));
+                }
+                
+                else if (table[i,j] == 'r') { // character cube (looking right) (z)
+                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f));
                 }
             }
         }
