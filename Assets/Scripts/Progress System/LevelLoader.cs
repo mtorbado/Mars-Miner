@@ -19,9 +19,17 @@ public class LevelLoader : MonoBehaviour {
 
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
+        // this function calls will be done from level loading
         SetTableElements(ReadLevelTable(0));
+        SetLevelScript(0);
+
     }
 
+    /// <summary>
+    /// Sets the game elements onto the game board acording to the given level table
+    /// </summary>
+    /// <param name="["></param>
+    /// <param name="table"></param>
     private void SetTableElements(char [,] table) {
 
         System.Random random = new System.Random();  
@@ -62,6 +70,11 @@ public class LevelLoader : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Reads the required csv level file given its number and returns it as a char jagged array
+    /// </summary>
+    /// <param name="levelNumber"></param>
+    /// <returns></returns>
     private char[,] ReadLevelTable(int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
@@ -81,5 +94,16 @@ public class LevelLoader : MonoBehaviour {
         } catch (InvalidOperationException) { throw new InvalidOperationException("The given jagged array is not rectangular.");}
 
         return table;
+    }
+
+    /// <summary>
+    /// Locates all character cubes in the scene and adds the propper level script to them
+    /// </summary>
+    /// <param name="levelNumber">Number level</param>
+    private void SetLevelScript(int levelNumber) {
+        GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCubes");
+        foreach(GameObject cc in characterCubes) {
+            cc.AddComponent(Type.GetType("Level" + levelNumber));
+        }
     }
 }

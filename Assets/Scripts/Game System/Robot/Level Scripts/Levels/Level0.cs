@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public class Level0 : AbsLevel {
 
@@ -7,9 +8,9 @@ public class Level0 : AbsLevel {
     private int OreCount {get; set;} // move to interface?
 
     private void Awake() {
-        robotActions = new RobotActions();
+        robotActions = (RobotActions)transform.GetComponent<RobotActions>(); // si Level0 está en character cube 
     }
-
+    
     public override IEnumerator Play() {
         
         while (OreCount < OreGoal) {

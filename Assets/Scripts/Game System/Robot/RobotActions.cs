@@ -17,7 +17,7 @@ public class RobotActions : MonoBehaviour {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
         CurrentPosition = transform.position;
     }
-
+    
     /* =========================================================== COROUTINES ====================================================================== */
 
     public IEnumerator MoveFoward() {
