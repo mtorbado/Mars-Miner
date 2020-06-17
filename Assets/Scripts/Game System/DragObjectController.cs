@@ -33,7 +33,7 @@ public class DragObjectController : MonoBehaviour {
             boardManager.ShowTileGrid(true); // mostrar grid
             transform.position = mouseRay.GetPoint(distance - distance / 10); // mover cubo en el aire
 
-            boardManager.ShowSelectedTile(GetHoverPoint(), IsTileClear());
+            boardManager.ShowSelectedTile(GetHoverPoint(), IsTileUnderClear());
             //DEBUG_GetPlaneHitPoint();
         }
     }
@@ -57,7 +57,7 @@ public class DragObjectController : MonoBehaviour {
         return hoverPoint;
     }
 
-    private bool IsTileClear() {
+    private bool IsTileUnderClear() {
         bool clear = true;
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
 
@@ -71,7 +71,7 @@ public class DragObjectController : MonoBehaviour {
 
         Tile tile = boardManager.GetTile(GetHoverPoint());
 
-        if (IsTileClear() && tile.X!=-1) {
+        if (IsTileUnderClear() && tile.X!=-1) {
             Vector3 centerOfTile = boardManager.GetCenterPointOfTile(tile);
             //centerOfTile.y = transform.localScale.y / 2;
             transform.position = centerOfTile;

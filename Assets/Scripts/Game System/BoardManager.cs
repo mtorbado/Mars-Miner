@@ -95,11 +95,3 @@ public class BoardManager : MonoBehaviour {
         Debug.Log("hitting the tile: (" + tile.X + "," + tile.Y + ")");
     }
 }
-
-/* =============================================================== AUXILIAR CLASS ================================================================ */
-// TODO: Extraer a un script separado
-public class Tile {
-    public int X { get; set; }
-    public int Y { get; set; }
-    public Tile(int x, int y) => (X, Y) = (x, y);
-}
