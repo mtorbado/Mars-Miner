@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class to define game levels
+/// </summary>
 public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     // Must be overrided

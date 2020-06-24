@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Class for loading game levels
+/// </summary>
 public class LevelLoader : MonoBehaviour {
 
     public GameObject[] movableRocks;
@@ -28,43 +29,45 @@ public class LevelLoader : MonoBehaviour {
     /// <summary>
     /// Sets the game elements onto the game board acording to the given level table
     /// </summary>
-    /// <param name="["></param>
-    /// <param name="table"></param>
+    /// <param name="table"> char table that contains the distribution of game objects in the board for each level </param>
     private void SetTableElements(char [,] table) {
 
-        System.Random random = new System.Random();  
+        System.Random random = new System.Random();
  
         for (int i = 0; i < table.GetLength(0); i++) {
             for (int j = 0; j < table.GetLength(1); j++) {
-
-                if (table[i,j] == '1') { // movable rock
-                    int rnd = random.Next(0, movableRocks.Length -1);
-                    Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
-                }
-
-                else if (table[i,j] == '2') { // fixed rock 
-                    int rnd = random.Next(0, fixedRocks.Length -1);
-                    Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
-                }
-
-                else if (table[i,j] == '3') { // ore
-                    Instantiate(ore, boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
-                }
-
-                else if (table[i,j] == 'u') { // character cube (looking up) (-x)
-                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f));
-                }
+                switch(table[i,j]) {
                     
-                else if (table[i,j] == 'd') { // character cube (looking down) (x)
-                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f));
-                }
-                
-                else if (table[i,j] =='l') { // character cube (looking left) (-z)
-                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 90f, 0f));
-                }
-                
-                else if (table[i,j] == 'r') { // character cube (looking right) (z)
-                    Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f));
+                    case '1': { // movable rock
+                        int rnd = random.Next(0, movableRocks.Length -1);
+                        Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                        break;
+                    }
+                    case '2': { // fixed rock 
+                        int rnd = random.Next(0, fixedRocks.Length -1);
+                        Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                        break;
+                    }
+                    case '3': { // ore
+                        Instantiate(ore, boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                        break;
+                    }
+                    case 'u': { // character cube (looking up) (-x)
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+                        break;
+                    }
+                    case 'd': { // character cube (looking down) (x)
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f));
+                        break;
+                    }
+                    case 'l': { // character cube (looking left) (-z)
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 90f, 0f));
+                        break;
+                    }
+                    case 'r': { // character cube (looking right) (z)
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f));
+                        break;
+                    }
                 }
             }
         }
@@ -73,8 +76,8 @@ public class LevelLoader : MonoBehaviour {
     /// <summary>
     /// Reads the required csv level file given its number and returns it as a char jagged array
     /// </summary>
-    /// <param name="levelNumber"></param>
-    /// <returns></returns>
+    /// <param name="levelNumber"> Number of level to load </param>
+    /// <returns> char table with csv file content </returns>
     private char[,] ReadLevelTable(int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
@@ -99,7 +102,7 @@ public class LevelLoader : MonoBehaviour {
     /// <summary>
     /// Locates all character cubes in the scene and adds the propper level script to them
     /// </summary>
-    /// <param name="levelNumber">Number level</param>
+    /// <param name="levelNumber">Number of level to load</param>
     private void SetLevelScript(int levelNumber) {
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCubes");
         foreach(GameObject cc in characterCubes) {

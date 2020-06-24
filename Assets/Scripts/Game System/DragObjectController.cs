@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that allows to drag objetcs with the mouse in the game board
+/// </summary>
 public class DragObjectController : MonoBehaviour { 
     
-    //LAYER MASKS
+    // LAYER MASKS
     const int Board_LayerMask = 1 << 8;
     const int GameElement_LayerMask = 1 << 9;
 
@@ -30,8 +33,8 @@ public class DragObjectController : MonoBehaviour {
 
         if (basePlane.Raycast(mouseRay, out float distance)) {
 
-            boardManager.ShowTileGrid(true); // mostrar grid
-            transform.position = mouseRay.GetPoint(distance - distance / 10); // mover cubo en el aire
+            boardManager.ShowTileGrid(true);
+            transform.position = mouseRay.GetPoint(distance - distance / 10);
 
             boardManager.ShowSelectedTile(GetHoverPoint(), IsTileUnderClear());
             //DEBUG_GetPlaneHitPoint();
@@ -44,8 +47,11 @@ public class DragObjectController : MonoBehaviour {
     }
 
     /* ============================================================================================================================================= */
-    // TODO: extract this functions, useful for robot too ?
 
+    /// <summary>
+    /// Returns a point on the game board upon which the object is hovering
+    /// </summary>
+    /// <returns>Hover point</returns>
     private Vector2 GetHoverPoint() {
         Vector2 hoverPoint = new Vector2(-1,-1);
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
@@ -57,6 +63,10 @@ public class DragObjectController : MonoBehaviour {
         return hoverPoint;
     }
 
+    /// <summary>
+    /// Returns if the board tile upon which the object is hovering is clear or not
+    /// </summary>
+    /// <returns>true if tile is clear, false otherwise</returns>
     private bool IsTileUnderClear() {
         bool clear = true;
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
@@ -67,13 +77,16 @@ public class DragObjectController : MonoBehaviour {
         return clear;
     }
 
+    /// <summary>
+    /// Snaps the object into the board cell bellow it, if said cell is clear
+    /// </summary>
     private void SnapIntoPlaneCell() {
 
         Tile tile = boardManager.GetTile(GetHoverPoint());
 
         if (IsTileUnderClear() && tile.X!=-1) {
             Vector3 centerOfTile = boardManager.GetCenterPointOfTile(tile);
-            //centerOfTile.y = transform.localScale.y / 2;
+            // centerOfTile.y = transform.localScale.y / 2;
             transform.position = centerOfTile;
             previousPosition = transform.position;
         }
@@ -86,7 +99,7 @@ public class DragObjectController : MonoBehaviour {
 
     private void DEBUG_GetPlaneHitPoint() {
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
-        Debug.DrawRay(this.transform.position, toGround * 50, Color.green); // pintar línea a suelo (DEBUG)
+        Debug.DrawRay(this.transform.position, toGround * 50, Color.green);
         Debug.Log("hitting the plane at: (" + GetHoverPoint().x + "," + GetHoverPoint().y + ")");
     }
 }

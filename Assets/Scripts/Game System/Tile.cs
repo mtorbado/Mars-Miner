@@ -1,5 +1,5 @@
 /// <summary>
-///
+/// Auxiliar class for easy management of board tiles
 /// </summary>
 public class Tile {
     public int X { get; set; }

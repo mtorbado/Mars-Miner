@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 
+/// Contains the coroutine-based methods for each action that the robot can execute
 /// </summary>
 public class RobotActions : MonoBehaviour {
 
@@ -20,6 +19,10 @@ public class RobotActions : MonoBehaviour {
     
     /* =========================================================== COROUTINES ====================================================================== */
 
+    /// <summary>
+    /// Moves the robot to the tile in front of it
+    /// </summary>
+    /// <returns> null </returns>
     public IEnumerator MoveFoward() {
         Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile());
         float i = 0.0f;
@@ -31,10 +34,18 @@ public class RobotActions : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Moves the robot to the tile on its back, without rotating
+    /// </summary>
+    /// <returns> null </returns>
     public IEnumerator MoveBackward() {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Rotates the robot to its right 90 degrees
+    /// </summary>
+    /// <returns> null </returns>
     public IEnumerator TurnRight() {
         float startRotation = transform.eulerAngles.y;
         float endRotation = startRotation + 90f;
@@ -47,6 +58,10 @@ public class RobotActions : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Rotates the robot to its left 90 degrees
+    /// </summary>
+    /// <returns> null </returns>
     public IEnumerator TurnLeft() {
         float startRotation = transform.eulerAngles.y;
         float endRotation = startRotation - 90f;
@@ -59,12 +74,19 @@ public class RobotActions : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Stops the robot from moving
+    /// </summary>
     public void Stop() {
-        // TODO: implement
+       throw new NotImplementedException();
     }
 
     /* ============================================================ PRIVATE FUNCTIONS ============================================================= */
 
+    /// <summary>
+    /// Returns the tile in front of the robot
+    /// </summary>
+    /// <returns> tile in front </returns>
     private Tile GetFowardTile() {
 
         Tile t = boardManager.GetTile(transform.position);
