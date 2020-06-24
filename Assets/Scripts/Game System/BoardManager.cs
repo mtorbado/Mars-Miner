@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains multiple utility functions to work with the game booard
+/// </summary>
 public class BoardManager : MonoBehaviour {
 
     private int tileNumber;
@@ -21,17 +22,26 @@ public class BoardManager : MonoBehaviour {
         tileNumber = gridMaterial.GetInt("_GridSize");
     }
 
-    /* ========================================================= GET METHODS ========================================================= */
+    /* =============================================================== GET METHODS =============================================================== */
 
+    /// <summary>
+    /// Returns the board game plane to perform other calculations
+    /// </summary>
+    /// <returns> board game plane </returns>
     public Plane GetBasePlane() {
         var filter = this.GetComponentInChildren<MeshFilter>();
         Vector3 normal = filter.transform.TransformDirection(filter.mesh.normals[0]);
         return new Plane(normal, transform.position);
     }
 
+    /// <summary>
+    /// Returns a game board tile from a point (X,Y) from game world coordinates
+    /// </summary>
+    /// <param name="point"> 2D point (X,Y) from game world coordinates </param>
+    /// <returns></returns>
     public Tile GetTile(Vector2 point) {
 
-        Tile tile = new Tile(-1, -1);
+        Tile tile = new Tile(-1, -1); //TODO: manage positions outside the board in a different way
 
         if (point.x >= 0 && point.x <= tileNumber && point.y >= 0 && point.y <= tileNumber) {
             tile.X = (int)Math.Abs(point.x);
@@ -40,27 +50,41 @@ public class BoardManager : MonoBehaviour {
         return tile;
     }
 
+    /// <summary>
+    /// Returns a game board tile from a point (X,Y,Z) from game world coordinates
+    /// </summary>
+    /// <param name="point"> 3D point (X,Y,Z) from game world coordinates </param>
+    /// <returns></returns>
     public Tile GetTile(Vector3 point) {
-
-        Tile tile = new Tile(-1, -1);
-
-        if (point.x >= 0 && point.x <= tileNumber && point.z >= 0 && point.z <= tileNumber) {
-            tile.X = (int)Math.Abs(point.x);
-            tile.Y = (int)Math.Abs(point.z);
-        }
-        return tile;
+        return GetTile(new Vector2(point.x, point.z));
     }
 
+    /// <summary>
+    /// Returns the center point of the given tile
+    /// </summary>
+    /// <param name="tile"> game board tile </param>
+    /// <returns> center pont of the tile </returns>
     public Vector3 GetCenterPointOfTile(Tile tile) {
         return new Vector3(tile.X + 0.5f, 0.5f, tile.Y + 0.5f);
     }
 
+    /// <summary>
+    /// Returns the center point of the given tile coordinates
+    /// </summary>
+    /// <param name="x"> x coordinate of game board tile</param>
+    /// <param name="y"> y coordinate of game board tile</param>
+    /// <returns> center pont of the tile </returns>
     public Vector3 GetCenterPointOfTile(int x, int y) {
         return new Vector3(x + 0.5f, 0.5f, y + 0.5f);
     }
 
     /* =========================================================== GRID UPDATE METHODS =========================================================== */
 
+    /// <summary>
+    /// Updates the board tile grid color to signal if we are pointing to a clear tile or a filled one
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="isClear"></param>
     public void ShowSelectedTile(Vector2 point, bool isClear) {
 
         Tile selectedTile = GetTile(point);
@@ -77,7 +101,6 @@ public class BoardManager : MonoBehaviour {
             gridMaterial.SetInt("_SelectedCellX", selectedTile.X);
             gridMaterial.SetInt("_SelectedCellY", selectedTile.Y);
             gridMaterial.SetInt("_SelectCell", 1);
-
             // DEBUG_PrintTile(selectedTile);
         }
         else {
@@ -85,6 +108,10 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Shows or hides the board tile grid
+    /// </summary>
+    /// <param name="value"> tile grid visivility </param>
     public void ShowTileGrid(bool value) {
         gridPlane.SetActive(value);
     }
@@ -94,12 +121,4 @@ public class BoardManager : MonoBehaviour {
     private void DEBUG_PrintTile(Tile tile) { 
         Debug.Log("hitting the tile: (" + tile.X + "," + tile.Y + ")");
     }
-}
-
-/* =============================================================== AUXILIAR CLASS ================================================================ */
-// TODO: Extraer a un script separado
-public class Tile {
-    public int X { get; set; }
-    public int Y { get; set; }
-    public Tile(int x, int y) => (X, Y) = (x, y);
 }

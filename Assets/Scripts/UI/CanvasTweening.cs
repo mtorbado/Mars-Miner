@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//TODO: remove?
 public class CanvasTweening : MonoBehaviour {
 
     public GameObject panel, button;
@@ -15,7 +14,6 @@ public class CanvasTweening : MonoBehaviour {
     }
 
     public void AlternatePanel() {
-
         if (isDisplayed) LeanTween.moveLocalX(panel, DisplayPosition, 0.2f);
         else LeanTween.moveLocalX(panel, ClosedPosition, 0.2f);
         

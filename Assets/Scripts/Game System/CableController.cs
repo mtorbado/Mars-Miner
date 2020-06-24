@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class to update the position of the magnet cable when it's deployed and call its different animations
+/// </summary>
 public class CableController : MonoBehaviour {
     public AnimationClip dropCableClip;
     public AnimationClip retrieveCableClip;
@@ -16,7 +19,7 @@ public class CableController : MonoBehaviour {
     }
 
     private void Start() {
-        DropCable();
+        DropCable(); //TODO: move to an UI button
     }
 
     private void Update() {
@@ -33,14 +36,25 @@ public class CableController : MonoBehaviour {
         animation.AddClip(retrieveCableClip, "retrieveCableClip");
     }
 
+    /// <summary>
+    /// Plays the drop cable animation
+    /// </summary>
     public void DropCable() { 
         animation.PlayQueued("dropCableClip");
     }
 
+    /// <summary>
+    /// Plays the retrieve cable animation
+    /// </summary>
     public void RetrieveCable() {
         animation.PlayQueued("retrieveCableClip");
     }
 
+    /// <summary>
+    /// Function to recalculate the cable heith depending on it's position, to improve the visibility of the board
+    /// This function is calibrated acording to the camera position and angle of view, be careful if camera position is modified
+    /// </summary>
+    /// <returns></returns>
     private float HeithUpdater() {
         return 16 - (Input.mousePosition.y/250);
     }

@@ -90,15 +90,15 @@
      <Compile Include="Assets\Scripts\Game System\BoardManager.cs" />
      <Compile Include="Assets\Scripts\Game System\CableController.cs" />
      <Compile Include="Assets\Scripts\Game System\DragObjectController.cs" />
+     <Compile Include="Assets\Scripts\Game System\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\CoroutineWithData.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\AbsLevel.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\ILevel.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level0.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
-     <Compile Include="Assets\Scripts\Game System\Robot\SequencePlayer.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
+     <Compile Include="Assets\Scripts\Game System\Tile.cs" />
      <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
-     <Compile Include="Assets\Scripts\Progress System\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
