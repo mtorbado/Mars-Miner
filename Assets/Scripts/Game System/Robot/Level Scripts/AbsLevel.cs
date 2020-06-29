@@ -6,10 +6,20 @@ using UnityEngine;
 /// </summary>
 public abstract class AbsLevel : MonoBehaviour, ILevel {
 
-    // Must be overrided
+    public int oreGoal;
+    public int oreCount = 0;
+
+    /// <summary>
+    /// Abstract method to override with game loop for each level 
+    /// </summary>
+    /// <returns></returns>
     public abstract IEnumerator Play();
 
     // public void Pause() {}
 
     // public void ForceStop() {}
+
+    public void pickOre() {
+        this.oreCount++;
+    }
 }
