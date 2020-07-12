@@ -1275,6 +1275,7 @@ GameObject:
   - component: {fileID: 367898141}
   - component: {fileID: 367898140}
   - component: {fileID: 367898139}
+  - component: {fileID: 367898142}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1330,6 +1331,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &367898142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367898138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3492e194dc819d6479695818eb6c8c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &387198470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4975,7 +4988,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00003705821, y: 0.00009218644}
+  m_AnchoredPosition: {x: 0.000017379802, y: 0.000018719302}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1001 &1413004171
@@ -6093,6 +6106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1685086672}
   - component: {fileID: 1685086674}
+  - component: {fileID: 1685086675}
   - component: {fileID: 1685086673}
   m_Layer: 5
   m_Name: OreCountText
@@ -6238,6 +6252,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685086671}
   m_CullTransparentMesh: 0
+--- !u!114 &1685086675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685086671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122547e2dce9e854d89a3d6b70ba9493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1685427424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6397,7 +6423,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 811182849}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999998
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

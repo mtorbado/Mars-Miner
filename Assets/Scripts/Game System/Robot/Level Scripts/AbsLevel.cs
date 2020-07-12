@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Abstract class to define game levels
@@ -8,6 +9,10 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public int oreGoal;
     public int oreCount = 0;
+
+    private void Start() {
+        GameEvents.current.onPickOreTriggerEnter += PickOre;
+    }   
 
     /// <summary>
     /// Abstract method to override with game loop for each level 
@@ -19,7 +24,7 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     // public void ForceStop() {}
 
-    public void pickOre() {
+    public void PickOre() {
         this.oreCount++;
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using System; 
 
 /// <summary>
 /// Allows the robot to pick ores
@@ -14,10 +12,11 @@ public class OrePicker : MonoBehaviour {
         level =  gameObject.GetComponent<ILevel>();
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Ore")) {
-            Destroy(collision.gameObject);
-            level.pickOre();
+    private void OnTriggerEnter(Collider collider) {
+        Debug.Log("collided with something");
+        if (collider.gameObject.CompareTag("Ore")) {
+            Destroy(collider.gameObject);
+            GameEvents.current.PickOreTriggerEnter();
         }
     }
 }

@@ -99,8 +99,10 @@
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Game System\Tile.cs" />
+     <Compile Include="Assets\Scripts\GameEvents.cs" />
      <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
+     <Compile Include="Assets\Scripts\UI\CountOreScript.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
