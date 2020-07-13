@@ -1,23 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RockPariclesController : MonoBehaviour
-{
+/// <summary>
+/// Simple class to play and pause the particle animations of movable rocks
+/// </summary>
+public class RockPariclesController : MonoBehaviour {
 
     ParticleSystem particles;
-    private void Start() 
-    {
+
+    private void Start() {
         particles = GetComponentInChildren<ParticleSystem>();
         particles.Stop();
     }
-    private void OnMouseDown()
-    {
+
+    private void OnMouseDown() {
         particles.Play();
     }
 
-    private void OnMouseUp()
-    {
+    private void OnMouseUp() {
         particles.Stop();
     }
 
