@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public class Level0 : AbsLevel {
 
+    public GameObject oreCountText;
     private RobotActions robotActions;
 
     private void Awake() {

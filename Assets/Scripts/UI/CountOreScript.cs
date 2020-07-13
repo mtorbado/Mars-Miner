@@ -1,25 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Script to control the display of ores collected
+/// </summary>
 public class CountOreScript : MonoBehaviour
 {
 
-    private int currentCount = 0;
-    private int limitCount = 0;
-
-    public void setOreLimit(int limitCount) {
-        this.limitCount = limitCount;
-    }
+    private int oreCount = 0;
+    private int oreGoal = 0;
 
     void Start() {
+        oreGoal =  GameObject.FindGameObjectWithTag("CharacterCube").GetComponent<AbsLevel>().oreGoal;
+        gameObject.GetComponent<TextMeshProUGUI>().SetText(oreCount + " / " + oreGoal);
         GameEvents.current.onPickOreTriggerEnter += OnPickOre;
     }
 
     private void OnPickOre() {
-        currentCount ++;
-        gameObject.GetComponent<TextMeshProUGUI>().SetText(currentCount + " / " + limitCount);
+        oreCount ++;
+        gameObject.GetComponent<TextMeshProUGUI>().SetText(oreCount + " / " + oreGoal);
     }
 
 }
