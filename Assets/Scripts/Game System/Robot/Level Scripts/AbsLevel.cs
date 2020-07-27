@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public int oreGoal;
-    public int oreCount = 0;
+    public int oreCount;
 
     private void Start() {
         GameEvents.current.onPickOreTriggerEnter += PickOre;
@@ -26,5 +26,13 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public void PickOre() {
         this.oreCount++;
+    }
+
+    public bool checkLevelPassed() {
+        if (oreCount == oreGoal) {
+            GameEvents.current.LevelPassed();
+            return true;
+        }
+        return false;
     }
 }
