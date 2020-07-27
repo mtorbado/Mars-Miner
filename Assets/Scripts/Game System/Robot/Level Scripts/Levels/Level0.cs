@@ -16,6 +16,6 @@ public class Level0 : AbsLevel {
         while (oreCount < oreGoal) {
             yield return robotActions.MoveFoward();
         }
-        
+        checkLevelPassed();
     }
 }

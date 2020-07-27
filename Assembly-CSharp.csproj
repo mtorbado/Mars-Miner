@@ -103,7 +103,10 @@
      <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
      <Compile Include="Assets\Scripts\UI\CountOreScript.cs" />
+     <Compile Include="Assets\Scripts\UI\LevelButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\LevelSelector.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
+     <Compile Include="Assets\Scripts\UI\PageSwiper.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />

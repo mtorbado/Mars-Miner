@@ -13,17 +13,25 @@ public class LevelLoader : MonoBehaviour {
     public GameObject character;
     public GameObject ore;
 
-    const String LevelFolderPath = "LevelFiles/";
+    const string LevelFolderPath = "LevelFiles/";
     const string LevelFileNaming = "level_";
     const int TableSize = 20;
     BoardManager boardManager;
 
+    private void Start() {
+        GameEvents.current.onLevelLoad += LoadLevel;
+    }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
-        // this function calls will be done from level loading
-        SetTableElements(ReadLevelTable(0));
-        SetLevelScript(0);
+    }
 
+    /// <summary>
+    /// Loads a level given its number
+    /// </summary>
+    /// <param name="levelNumber"> Number of level to load </param>
+    public void LoadLevel(int levelNumber) {
+        SetTableElements(ReadLevelTable(levelNumber));
+        SetLevelScript(levelNumber);
     }
 
     /// <summary>
