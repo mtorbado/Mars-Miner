@@ -110,6 +110,6 @@ public class LevelSelector : MonoBehaviour {
     /// </summary>
     /// <param name="levelNumber"> not used </param>
     private void HideLevelSelection(int levelNumber) {
-        thisCanvas.SetActive(false);
+        thisCanvas.GetComponent<Canvas>().enabled = false;
     }
 }
