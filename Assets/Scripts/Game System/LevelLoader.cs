@@ -25,6 +25,10 @@ public class LevelLoader : MonoBehaviour {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
     }
 
+    /// <summary>
+    /// Loads a level given its number
+    /// </summary>
+    /// <param name="levelNumber"> Number of level to load </param>
     public void LoadLevel(int levelNumber) {
         SetTableElements(ReadLevelTable(levelNumber));
         SetLevelScript(levelNumber);

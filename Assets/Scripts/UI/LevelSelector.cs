@@ -105,6 +105,10 @@ public class LevelSelector : MonoBehaviour {
          }
     }
 
+    /// <summary>
+    /// Sets the level selection menu inactive (hides it)
+    /// </summary>
+    /// <param name="levelNumber"> not used </param>
     private void HideLevelSelection(int levelNumber) {
         thisCanvas.SetActive(false);
     }
