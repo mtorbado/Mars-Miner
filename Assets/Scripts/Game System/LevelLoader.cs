@@ -104,7 +104,7 @@ public class LevelLoader : MonoBehaviour {
     /// </summary>
     /// <param name="levelNumber">Number of level to load</param>
     private void SetLevelScript(int levelNumber) {
-        GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCubes");
+        GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach(GameObject cc in characterCubes) {
             cc.AddComponent(Type.GetType("Level" + levelNumber));
         }

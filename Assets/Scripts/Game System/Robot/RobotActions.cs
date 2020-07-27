@@ -16,7 +16,7 @@ public class RobotActions : MonoBehaviour {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
         CurrentPosition = transform.position;
     }
-    
+
     /* =========================================================== COROUTINES ====================================================================== */
 
     /// <summary>
@@ -29,7 +29,6 @@ public class RobotActions : MonoBehaviour {
         while (Vector3.Distance(transform.position, target) > 0.0f) {
             i += Time.deltaTime * moveSpeed;
             transform.position = Vector3.Lerp(transform.position, target, i);
-            // Debug.Log("moving to "+ target);
             yield return null;
         }
     }
