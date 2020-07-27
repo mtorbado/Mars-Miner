@@ -103,6 +103,7 @@
      <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
      <Compile Include="Assets\Scripts\UI\CountOreScript.cs" />
+     <Compile Include="Assets\Scripts\UI\LevelButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\LevelSelector.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\PageSwiper.cs" />

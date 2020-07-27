@@ -18,5 +18,8 @@ public class OrePicker : MonoBehaviour {
             Destroy(collider.gameObject);
             GameEvents.current.PickOreTriggerEnter();
         }
+        else {
+            
+        }
     }
 }

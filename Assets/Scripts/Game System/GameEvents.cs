@@ -9,6 +9,8 @@ public class GameEvents : MonoBehaviour
         current = this;
     }
 
+    public event Action onSelectLevel;
+    public event Action<int> onLevelLoad;
     public event Action onPickOreTriggerEnter;
     public event Action onLevelPassed;
     public event Action onLevelFailed;
@@ -18,6 +20,13 @@ public class GameEvents : MonoBehaviour
         if (onPickOreTriggerEnter != null) {
             onPickOreTriggerEnter();
         }
+    }
+
+    public void SelectLevel() {
+        onSelectLevel();
+    }
+    public void LoadLevel(int levelNumber) {
+        onLevelLoad(levelNumber);
     }
 
     public void LevelPassed() {
