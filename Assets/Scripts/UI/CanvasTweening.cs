@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
 
-//TODO: remove?
+/// <summary>
+/// 
+/// </summary>
 public class CanvasTweening : MonoBehaviour {
 
-    public GameObject panel, button;
-    public float ClosedPosition = 280f;
-    public float DisplayPosition = 520f;
+    public GameObject panel;
+    public float ClosedPosition, DisplayPosition;
+    public bool startsDisplayed;
+
     private bool isDisplayed;
 
     void Awake() {
-        isDisplayed = true;
-        panel = gameObject.transform.Find("Panel").gameObject;
+        isDisplayed = startsDisplayed;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void AlternatePanel() {
-        if (isDisplayed) LeanTween.moveLocalX(panel, DisplayPosition, 0.2f);
-        else LeanTween.moveLocalX(panel, ClosedPosition, 0.2f);
+        if (!isDisplayed) LeanTween.moveX(panel.GetComponent<RectTransform>(), DisplayPosition, 0.2f);
+        else LeanTween.moveX(panel.GetComponent<RectTransform>(), ClosedPosition, 0.2f);
         
         isDisplayed = !isDisplayed;
     }

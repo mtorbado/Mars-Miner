@@ -109,6 +109,7 @@
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\PageSwiper.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\RestartLevelButtonScript.cs" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\Imported Assets\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />

@@ -15,9 +15,9 @@ public class GameEvents : MonoBehaviour
     public event Action onPickOreTriggerEnter;
     public event Action onSelectLevel;
     public event Action<int> onLevelLoad;
+    public event Action onRestartLevel;
     public event Action onLevelPassed;
     public event Action onLevelFailed;
-    public event Action onLevelReset;
 
     /// <summary>
     /// (Event) Character cube picks ore
@@ -68,12 +68,10 @@ public class GameEvents : MonoBehaviour
     /// <summary>
     /// (Event) The current playing level is reseted
     /// </summary>
-    public void LevelReset() {
-        if (onLevelPassed != null) {
-            onLevelPassed();
+    public void RestartLevel() {
+        if (onRestartLevel != null) {
+            onRestartLevel();
         }
     }
-
-
 
 }
