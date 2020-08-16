@@ -13,13 +13,18 @@ public class LevelLoader : MonoBehaviour {
     public GameObject character;
     public GameObject ore;
 
+    const int GameElementsLayer = 9;
     const string LevelFolderPath = "LevelFiles/";
     const string LevelFileNaming = "level_";
     const int TableSize = 20;
+
     BoardManager boardManager;
+
+    private int? lastLoadedLevel;
 
     private void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
+        GameEvents.current.onRestartLevel += RestartLevel;
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
@@ -32,6 +37,11 @@ public class LevelLoader : MonoBehaviour {
     public void LoadLevel(int levelNumber) {
         SetTableElements(ReadLevelTable(levelNumber));
         SetLevelScript(levelNumber);
+        lastLoadedLevel = levelNumber;
+    }
+
+    public void RestartLevel() {
+        LoadLevel((int)lastLoadedLevel);
     }
 
     /// <summary>
@@ -40,6 +50,8 @@ public class LevelLoader : MonoBehaviour {
     /// <param name="table"> char table that contains the distribution of game objects in the board for each level </param>
     private void SetTableElements(char [,] table) {
 
+        CleanTable();
+        
         System.Random random = new System.Random();
  
         for (int i = 0; i < table.GetLength(0); i++) {
@@ -48,32 +60,32 @@ public class LevelLoader : MonoBehaviour {
                     
                     case '1': { // movable rock
                         int rnd = random.Next(0, movableRocks.Length -1);
-                        Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                        Instantiate(movableRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity, transform);
                         break;
                     }
                     case '2': { // fixed rock 
                         int rnd = random.Next(0, fixedRocks.Length -1);
-                        Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                        Instantiate(fixedRocks[rnd], boardManager.GetCenterPointOfTile(i,j), Quaternion.identity, transform);
                         break;
                     }
                     case '3': { // ore
-                        Instantiate(ore, boardManager.GetCenterPointOfTile(i,j), Quaternion.identity);
+                        Instantiate(ore, boardManager.GetCenterPointOfTile(i,j), Quaternion.identity, transform);
                         break;
                     }
                     case 'u': { // character cube (looking up) (-x)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f), transform);
                         break;
                     }
                     case 'd': { // character cube (looking down) (x)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f));
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f), transform);
                         break;
                     }
                     case 'l': { // character cube (looking left) (-z)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 90f, 0f));
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 90f, 0f), transform);
                         break;
                     }
                     case 'r': { // character cube (looking right) (z)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f));
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f), transform);
                         break;
                     }
                 }
@@ -105,6 +117,17 @@ public class LevelLoader : MonoBehaviour {
         } catch (InvalidOperationException) { throw new InvalidOperationException("The given jagged array is not rectangular.");}
 
         return table;
+    }
+
+    /// <summary>
+    /// Destroys all objects from Game Elements layer that exists in the current game scene
+    /// </summary>
+    private void CleanTable() {
+        foreach (Transform child in transform) {
+            if (child.gameObject.layer == GameElementsLayer) {
+                Destroy(child.gameObject);
+            }
+        }
     }
 
     /// <summary>

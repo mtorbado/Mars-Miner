@@ -11,6 +11,7 @@ public class PlayButtonScript : MonoBehaviour {
 
     private void Start() {
         button = GetComponent<Button>();
+        GameEvents.current.onRestartLevel += ReEnableButton;
     }
 
     /// <summary>
@@ -25,5 +26,13 @@ public class PlayButtonScript : MonoBehaviour {
         foreach (GameObject characterCube in characterCubes) {
             StartCoroutine(characterCube.GetComponent<ILevel>().Play());
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ReEnableButton() {
+        GetComponentInChildren<Text>().text = "Play";
+        button.interactable = true;
     }
 }
