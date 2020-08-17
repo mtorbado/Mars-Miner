@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 54922051162334082}
   - component: {fileID: 114196871183895626}
   - component: {fileID: 114207370379574612}
+  - component: {fileID: 65460607322081340}
   m_Layer: 9
   m_Name: MagneticRock4
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8172542356684475111}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 2379269076839136688}
   m_Father: {fileID: 0}
@@ -135,6 +136,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295e1d70526f6ab4db4d5cc9a9d4079d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &65460607322081340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172542356684475111}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8624565390529170374
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ public class DragObjectController : MonoBehaviour {
             boardManager.ShowTileGrid(true);
             transform.position = mouseRay.GetPoint(distance - distance / 10);
 
-            boardManager.ShowSelectedTile(GetHoverPoint(), IsTileUnderClear());
+            boardManager.ShowSelectedTile(GetHoverPoint());
             //DEBUG_GetPlaneHitPoint();
         }
     }
@@ -64,27 +64,13 @@ public class DragObjectController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Returns if the board tile upon which the object is hovering is clear or not
-    /// </summary>
-    /// <returns>true if tile is clear, false otherwise</returns>
-    private bool IsTileUnderClear() {
-        bool clear = true;
-        Vector3 toGround = this.transform.TransformDirection(Vector3.down);
-
-        if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, GameElement_LayerMask)) {
-            clear = false;
-        }
-        return clear;
-    }
-
-    /// <summary>
     /// Snaps the object into the board cell bellow it, if said cell is clear
     /// </summary>
     private void SnapIntoPlaneCell() {
 
         Tile tile = boardManager.GetTile(GetHoverPoint());
 
-        if (IsTileUnderClear() && tile.X!=-1) {
+        if (boardManager.isTileClear(tile) && tile.X!=-1) {
             Vector3 centerOfTile = boardManager.GetCenterPointOfTile(tile);
             // centerOfTile.y = transform.localScale.y / 2;
             transform.position = centerOfTile;
