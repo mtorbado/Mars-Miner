@@ -15,6 +15,7 @@ public class GameEvents : MonoBehaviour
     public event Action onPickOreTriggerEnter;
     public event Action onSelectLevel;
     public event Action<int> onLevelLoad;
+    public event Action onSetOreGoal;
     public event Action onRestartLevel;
     public event Action onLevelPassed;
     public event Action onLevelFailed;
@@ -44,6 +45,15 @@ public class GameEvents : MonoBehaviour
     public void LoadLevel(int levelNumber) {
         if (onLevelLoad !=null) {
             onLevelLoad(levelNumber);
+        }
+    }
+
+        /// <summary>
+    /// (Event) The ore goal is set for the level
+    /// </summary>
+    public void OnSetOreGoal() {
+        if (onSetOreGoal != null) {
+            onSetOreGoal();
         }
     }
 
