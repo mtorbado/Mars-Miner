@@ -42,6 +42,7 @@ public class LevelLoader : MonoBehaviour {
     }
 
     public void RestartLevel() {
+        Debug.Log("restarting level");
         LoadLevel((int)lastLoadedLevel);
     }
 

@@ -23,14 +23,11 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     private void ShowLevelFailedPanel() {
         background.SetActive(true);
-        
         LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);
     }
 
     private void ShowLevelPassedPanel() {
-        Debug.Log("game passed");
         background.SetActive(true);
-        
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);
     }
 

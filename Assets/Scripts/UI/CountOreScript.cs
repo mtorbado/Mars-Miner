@@ -29,8 +29,5 @@ public class CountOreScript : MonoBehaviour
     private void OnPickOre() {
         oreCount ++;
         gameObject.GetComponent<TextMeshProUGUI>().SetText(oreCount + " / " + oreGoal);
-        if (oreCount == oreGoal) {
-            GameEvents.current.LevelPassed();
-        }
     }
 }

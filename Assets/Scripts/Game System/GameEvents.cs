@@ -4,8 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Defines all events used in the game to notify the different systems when something happens
 /// </summary>
-public class GameEvents : MonoBehaviour
-{
+public class GameEvents : MonoBehaviour {
     public static GameEvents current;
 
     private void Awake() {
@@ -20,6 +19,7 @@ public class GameEvents : MonoBehaviour
     public event Action onRestartLevel;
     public event Action onLevelPassed;
     public event Action onLevelFailed;
+    public event Action onRockCollision;
 
     /// <summary>
     /// (Event) Character cube picks ore
@@ -49,7 +49,7 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-        /// <summary>
+    /// <summary>
     /// (Event) The current playing level is reseted
     /// </summary>
     public void RestartLevel() {
@@ -86,8 +86,14 @@ public class GameEvents : MonoBehaviour
     /// (Event) The current playing level is failed
     /// </summary>
     public void LevelFailed() {
-        if (onLevelPassed != null) {
-            onLevelPassed();
+        if (onLevelFailed != null) {
+            onLevelFailed();
+        }
+    }
+
+    public void RockCollision() {
+        if (onRockCollision != null) {
+            onRockCollision();
         }
     }
 
