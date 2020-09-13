@@ -11,7 +11,9 @@ public class PlayButtonScript : MonoBehaviour {
 
     private void Start() {
         button = GetComponent<Button>();
+        GameEvents.current.onNextLevelLoad += ReEnableButton;
         GameEvents.current.onRestartLevel += ReEnableButton;
+        GameEvents.current.onLevelLoad += ReEnableButton2;
     }
 
     /// <summary>
@@ -34,5 +36,13 @@ public class PlayButtonScript : MonoBehaviour {
     private void ReEnableButton() {
         GetComponentInChildren<Text>().text = "Play";
         button.interactable = true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="n"> not used </param>
+    private void ReEnableButton2(int n) {
+        ReEnableButton();
     }
 }

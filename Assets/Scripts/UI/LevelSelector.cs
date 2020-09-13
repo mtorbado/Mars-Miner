@@ -36,6 +36,7 @@ public class LevelSelector : MonoBehaviour {
         int totalPages = Mathf.CeilToInt((float)numOfLevels / maxPerPage);
 
         GameEvents.current.onLevelLoad += HideLevelSelection;
+        GameEvents.current.onSelectLevel += ShowLevelSelection;
 
 
         LoadPanels(totalPages);
@@ -111,5 +112,12 @@ public class LevelSelector : MonoBehaviour {
     /// <param name="levelNumber"> not used </param>
     private void HideLevelSelection(int levelNumber) {
         thisCanvas.GetComponent<Canvas>().enabled = false;
+    }
+
+    /// <summary>
+    /// Sets the level selection menu active (shows it)
+    /// </summary>
+    private void ShowLevelSelection() {
+        thisCanvas.GetComponent<Canvas>().enabled = true;
     }
 }

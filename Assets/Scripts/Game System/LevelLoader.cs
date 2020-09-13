@@ -25,6 +25,7 @@ public class LevelLoader : MonoBehaviour {
     private void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
         GameEvents.current.onRestartLevel += RestartLevel;
+        GameEvents.current.onNextLevelLoad += LoadNextLevel;
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
@@ -41,7 +42,12 @@ public class LevelLoader : MonoBehaviour {
     }
 
     public void RestartLevel() {
+        Debug.Log("restarting level");
         LoadLevel((int)lastLoadedLevel);
+    }
+
+    public void LoadNextLevel() {
+        LoadLevel((int)lastLoadedLevel + 1);
     }
 
     /// <summary>

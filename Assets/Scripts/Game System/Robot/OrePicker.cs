@@ -13,13 +13,13 @@ public class OrePicker : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider collider) {
-        Debug.Log("collided with something");
         if (collider.gameObject.CompareTag("Ore")) {
             Destroy(collider.gameObject);
             GameEvents.current.PickOreTriggerEnter();
         }
         else {
-            
+            Destroy(this.gameObject);
+            GameEvents.current.LevelFailed();
         }
     }
 }

@@ -6,7 +6,7 @@
 public class CanvasTweening : MonoBehaviour {
 
     public GameObject panel;
-    public float ClosedPosition, DisplayPosition;
+    public float closedPosition, displayPosition;
     public bool startsDisplayed;
 
     private bool isDisplayed;
@@ -19,8 +19,8 @@ public class CanvasTweening : MonoBehaviour {
     /// 
     /// </summary>
     public void AlternatePanel() {
-        if (!isDisplayed) LeanTween.moveX(panel.GetComponent<RectTransform>(), DisplayPosition, 0.2f);
-        else LeanTween.moveX(panel.GetComponent<RectTransform>(), ClosedPosition, 0.2f);
+        if (!isDisplayed) LeanTween.moveX(panel.GetComponent<RectTransform>(), displayPosition, 0.2f);
+        else LeanTween.moveX(panel.GetComponent<RectTransform>(), closedPosition, 0.2f);
         
         isDisplayed = !isDisplayed;
     }
