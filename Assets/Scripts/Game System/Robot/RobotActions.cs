@@ -12,9 +12,26 @@ public class RobotActions : MonoBehaviour {
     float moveSpeed = 1f;
     float rotationTime = 1f;
 
+    private ILevel level;
+
+    private void Start() {
+        level =  gameObject.GetComponent<ILevel>();
+    }
+
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
         CurrentPosition = transform.position;
+    }
+
+    private void OnTriggerEnter(Collider collider) {
+        if (collider.gameObject.CompareTag("Ore")) {
+            Destroy(collider.gameObject);
+            GameEvents.current.PickOreTriggerEnter();
+        }
+        else {
+            Destroy(this.gameObject);
+            GameEvents.current.LevelFailed();
+        }
     }
 
     /* =========================================================== COROUTINES ====================================================================== */
