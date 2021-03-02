@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3023942220329794101}
   - component: {fileID: 3023942220329794057}
   m_Layer: 9
-  m_Name: Character Cube
+  m_Name: Character Cube (old)
   m_TagString: CharacterCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

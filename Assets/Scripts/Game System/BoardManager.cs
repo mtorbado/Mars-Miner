@@ -92,7 +92,7 @@ public class BoardManager : MonoBehaviour {
         Vector3 up = this.transform.TransformDirection(Vector3.up);
         Vector3 tileCenter = GetCenterPointOfTile(tile);
         Vector3 rayOrigin = new Vector3(tileCenter.x, tileCenter.y -1f, tileCenter.z);
-        if (Physics.Raycast(rayOrigin, up, out RaycastHit hit, 0.6f, GameElement_LayerMask)) {
+        if (Physics.Raycast(rayOrigin, up, out RaycastHit hit, 1f, GameElement_LayerMask)) {
             return false;
         }
         return true;

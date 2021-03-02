@@ -23,13 +23,18 @@ public class RobotActions : MonoBehaviour {
         CurrentPosition = transform.position;
     }
 
+    /// <summary>
+    /// Manages robot collisions (with ores and rocks)
+    /// </summary>
+    /// <param name="collider"></param>
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.CompareTag("Ore")) {
             Destroy(collider.gameObject);
             GameEvents.current.PickOreTriggerEnter();
         }
         else {
-            Destroy(this.gameObject);
+            // Destroy(this.gameObject); // rework
+            this.gameObject.SetActive(false);
             GameEvents.current.LevelFailed();
         }
     }
