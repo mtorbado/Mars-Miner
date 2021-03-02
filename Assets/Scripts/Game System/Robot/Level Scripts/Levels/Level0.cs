@@ -12,9 +12,11 @@ public class Level0 : AbsLevel {
     
     public override IEnumerator Play() {
         
-        while (oreCount < oreGoal) {
+        while (!checkLevelPassed() && !checkLevelFailed()) {
             yield return robotActions.MoveFoward();
         }
-        checkLevelPassed();
+        if (checkLevelFailed()) {
+            yield return robotActions.BreakAnimation();
+        }
     }
 }

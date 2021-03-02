@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3430090065123194533}
   - component: {fileID: 114876758320832794}
   - component: {fileID: 65207089620762370}
+  - component: {fileID: 111193082706443712}
   m_Layer: 9
   m_Name: CharacterCube
   m_TagString: CharacterCube
@@ -62,6 +63,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!111 &111193082706443712
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430090065123194532}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 86e134c3fba013249ba77e8a4fb27e59, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 86e134c3fba013249ba77e8a4fb27e59, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!111 &3131966196639098432
 Animation:
   m_ObjectHideFlags: 0
@@ -349,19 +366,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 4.9935767e-10
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.9999953
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.0030650357
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.00000016291992
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_RootOrder
@@ -369,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -0.351
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 52d6c36918ba2e943ac06d0a2dfef426, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

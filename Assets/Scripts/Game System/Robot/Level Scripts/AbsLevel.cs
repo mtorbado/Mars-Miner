@@ -9,9 +9,12 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public int oreGoal;
     public int oreCount;
+    private bool failLevel;
 
     private void Start() {
+        failLevel = false;
         GameEvents.current.onPickOreTriggerEnter += PickOre;
+        GameEvents.current.onLevelFailed += FailLevel;
     }   
 
     /// <summary>
@@ -28,11 +31,19 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
         this.oreCount++;
     }
 
+    public void FailLevel() {
+        failLevel = true;
+    }
+
     public bool checkLevelPassed() {
         if (oreCount == oreGoal) {
             GameEvents.current.LevelPassed();
             return true;
         }
         return false;
+    }
+
+    public bool checkLevelFailed() {
+        return failLevel;
     }
 }

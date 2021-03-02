@@ -11,6 +11,7 @@ public class RobotActions : MonoBehaviour {
     Vector3 CurrentPosition;
     float moveSpeed = 1f;
     float rotationTime = 1f;
+    bool canMove = true;
 
     private ILevel level;
 
@@ -33,8 +34,7 @@ public class RobotActions : MonoBehaviour {
             GameEvents.current.PickOreTriggerEnter();
         }
         else {
-            // Destroy(this.gameObject); // rework
-            this.gameObject.SetActive(false);
+            canMove = false;
             GameEvents.current.LevelFailed();
         }
     }
@@ -48,7 +48,7 @@ public class RobotActions : MonoBehaviour {
     public IEnumerator MoveFoward() {
         Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile());
         float i = 0.0f;
-        while (Vector3.Distance(transform.position, target) > 0.0f) {
+        while (Vector3.Distance(transform.position, target) > 0.0f && canMove) {
             i += Time.deltaTime * moveSpeed;
             transform.position = Vector3.Lerp(transform.position, target, i);
             yield return null;
@@ -71,7 +71,7 @@ public class RobotActions : MonoBehaviour {
         float startRotation = transform.eulerAngles.y;
         float endRotation = startRotation + 90f;
         float t = 0.0f;
-        while ( t  < rotationTime ) {
+        while ( t  < rotationTime && canMove) {
             t += Time.deltaTime;
             float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
@@ -87,7 +87,7 @@ public class RobotActions : MonoBehaviour {
         float startRotation = transform.eulerAngles.y;
         float endRotation = startRotation - 90f;
         float t = 0.0f;
-        while ( t  < rotationTime ) {
+        while ( t  < rotationTime && canMove) {
             t += Time.deltaTime;
             float yRotation = Mathf.Lerp(startRotation, endRotation, t / rotationTime);
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
@@ -96,10 +96,15 @@ public class RobotActions : MonoBehaviour {
     }
 
     /// <summary>
-    /// Stops the robot from moving
+    /// Displays the breaking robot animation
     /// </summary>
-    public void Stop() {
-       throw new NotImplementedException();
+    /// <returns> null </returns>
+    public IEnumerator BreakAnimation() {
+        Animation a = GetComponent<Animation>();
+        a.Play();
+        while(a.isPlaying) {
+            yield return null;
+        }
     }
 
     /* ============================================================ PRIVATE FUNCTIONS ============================================================= */
