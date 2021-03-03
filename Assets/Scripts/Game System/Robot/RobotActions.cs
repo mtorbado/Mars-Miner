@@ -102,6 +102,7 @@ public class RobotActions : MonoBehaviour {
     public IEnumerator BreakAnimation() {
         Animation a = GetComponent<Animation>();
         a.Play();
+        GetComponent<ParticleSystem>().Play();
         while(a.isPlaying) {
             yield return null;
         }
