@@ -96,7 +96,6 @@
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\AbsLevel.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\ILevel.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level0.cs" />
-     <Compile Include="Assets\Scripts\Game System\Robot\OrePicker.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Game System\Tile.cs" />
