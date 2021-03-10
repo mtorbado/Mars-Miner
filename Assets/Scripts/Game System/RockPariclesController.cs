@@ -5,19 +5,25 @@
 /// </summary>
 public class RockPariclesController : MonoBehaviour {
 
-    ParticleSystem particles;
+    ParticleSystem[] particles;
 
     private void Start() {
-        particles = GetComponentInChildren<ParticleSystem>();
-        particles.Stop();
+        particles = GetComponentsInChildren<ParticleSystem>();
+        foreach( ParticleSystem p in particles) {
+            p.Stop();
+        }
     }
 
     private void OnMouseDown() {
-        particles.Play();
+        foreach( ParticleSystem p in particles) {
+            p.Play();
+        }
     }
 
     private void OnMouseUp() {
-        particles.Stop();
+        foreach( ParticleSystem p in particles) {
+            p.Stop();
+        }
     }
 
 }

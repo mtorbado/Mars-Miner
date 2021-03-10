@@ -8,7 +8,8 @@ using UnityEngine;
 public class RobotActions : MonoBehaviour {
 
     BoardManager boardManager;
-    Vector3 CurrentPosition;
+    Vector3 currentPosition;
+    Animation animation;
     float moveSpeed = 1f;
     float rotationTime = 1f;
     bool canMove = true;
@@ -21,7 +22,9 @@ public class RobotActions : MonoBehaviour {
 
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
-        CurrentPosition = transform.position;
+        currentPosition = transform.position;
+        animation = gameObject.GetComponent<Animation>();
+        animation.PlayQueued("RunningRobotAnimation");
     }
 
     /// <summary>
@@ -100,9 +103,10 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator BreakAnimation() {
-        Animation a = GetComponent<Animation>();
-        a.Play();
-        while(a.isPlaying) {
+        animation.Stop();
+        animation.PlayQueued("BreakingRobotAnimation");
+        GetComponent<ParticleSystem>().Play();
+        while(animation.isPlaying) {
             yield return null;
         }
     }
