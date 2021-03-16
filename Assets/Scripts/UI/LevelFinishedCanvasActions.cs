@@ -27,6 +27,12 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     }
 
     private void ShowLevelPassedPanel() {
+
+        if (LevelLoader.IsLastLevel()) {
+            levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(false);
+            //TODO: change panel text to inform that it's the last level?
+        }
+
         background.SetActive(true);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);
     }

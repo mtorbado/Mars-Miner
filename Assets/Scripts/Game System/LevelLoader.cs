@@ -14,13 +14,14 @@ public class LevelLoader : MonoBehaviour {
     public GameObject ore;
 
     const int GameElementsLayer = 9;
-    const string LevelFolderPath = "LevelFiles/";
+    const string LevelFolder = "LevelFiles";
     const string LevelFileNaming = "level_";
     const int TableSize = 20;
 
     BoardManager boardManager;
 
-    private int? lastLoadedLevel;
+    private static int numOfLevels;
+    private static int? lastLoadedLevel;
 
     private void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
@@ -29,7 +30,11 @@ public class LevelLoader : MonoBehaviour {
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
+        numOfLevels = GetNumOfLevels(new DirectoryInfo(LevelFolder));
     }
+
+
+    /* =============================================================== PUBLIC METHODS =============================================================== */
 
     /// <summary>
     /// Loads a level given its number
@@ -41,14 +46,50 @@ public class LevelLoader : MonoBehaviour {
         lastLoadedLevel = levelNumber;
     }
 
+    /// <summary>
+    /// Restarts the current playing level
+    /// </summary>
     public void RestartLevel() {
         Debug.Log("restarting level");
         LoadLevel((int)lastLoadedLevel);
     }
 
+    /// <summary>
+    /// Loads next level
+    /// </summary>
     public void LoadNextLevel() {
         LoadLevel((int)lastLoadedLevel + 1);
     }
+
+    /// <summary>
+    /// Returns the current number of levels in the game
+    /// </summary>
+    /// <param name="di"> DirectoryInfo of folder that contains the level scripts </param>
+    /// <returns></returns>
+    public static int GetNumOfLevels(DirectoryInfo di) {
+        int numOfLevels = 0; 
+        FileInfo[] fiList = di.GetFiles();
+        foreach (FileInfo fi in fiList) {
+            if (fi.Name.Contains(LevelFileNaming) && fi.Extension.Contains("cs")) {
+                numOfLevels++;
+            }
+        }
+        return numOfLevels;
+    }
+
+    /// <summary>
+    /// Check if the current playing level is the last one
+    /// </summary>
+    /// <returns> true if current level is the last one, false otherwise</returns>
+    public static bool IsLastLevel() {
+        Debug.Log((int)lastLoadedLevel + ", " + (numOfLevels - 1));
+        if ((int)lastLoadedLevel == numOfLevels - 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /* =============================================================== PRIVATE METHODS =============================================================== */
 
     /// <summary>
     /// Sets the game elements onto the game board acording to the given level table
@@ -107,7 +148,7 @@ public class LevelLoader : MonoBehaviour {
     private char[,] ReadLevelTable(int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
-        var string_table = File.ReadAllLines(LevelFolderPath + LevelFileNaming + levelNumber + ".csv").Select(l => l.Split(',').ToArray()).ToArray();
+        var string_table = File.ReadAllLines(LevelFolder + "/" + LevelFileNaming + levelNumber + ".csv").Select(l => l.Split(',').ToArray()).ToArray();
         
         try {
             for (int i = 0; i < TableSize; i++) {
