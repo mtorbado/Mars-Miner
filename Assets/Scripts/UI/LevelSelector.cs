@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
+
 /// <summary>
 /// Generates de level selection UI panels dinamically
 /// Based on https://pressstart.vip/tutorials/2019/06/1/96/level-selector.html
@@ -20,8 +21,7 @@ public class LevelSelector : MonoBehaviour {
     private int maxPerPage;
     private int currentLevelCount;
 
-    const string LevelFolder = "LevelFiles";
-    const string LevelFileNaming = "level_";
+    const string LevelFolder = "LevelFiles/";
 
     private void Start() {
         panelDimensions = levelHolder.GetComponent<RectTransform>().rect;
@@ -30,7 +30,7 @@ public class LevelSelector : MonoBehaviour {
         int maxInRow = Mathf.FloorToInt((panelDimensions.width + iconSpacing.x) / (iconDimensions.width + iconSpacing.x));
         int maxInCol = Mathf.FloorToInt((panelDimensions.height + iconSpacing.y) / (iconDimensions.height + iconSpacing.y));
 
-        numOfLevels = GetNumOfLevels(new DirectoryInfo(LevelFolder));
+        numOfLevels = LevelLoader.GetNumOfLevels(new DirectoryInfo(LevelFolder));
 
         maxPerPage = maxInCol * maxInRow;
         int totalPages = Mathf.CeilToInt((float)numOfLevels / maxPerPage);
@@ -38,24 +38,7 @@ public class LevelSelector : MonoBehaviour {
         GameEvents.current.onLevelLoad += HideLevelSelection;
         GameEvents.current.onSelectLevel += ShowLevelSelection;
 
-
         LoadPanels(totalPages);
-    }
-
-    /// <summary>
-    /// Returns the current number of levels in the game
-    /// </summary>
-    /// <param name="di"> DirectoryInfo of folder that contains the level scripts </param>
-    /// <returns></returns>
-    private int GetNumOfLevels(DirectoryInfo di) {
-        int numOfLevels = 0; 
-        FileInfo[] fiList = di.GetFiles();
-        foreach (FileInfo fi in fiList) {
-            if (fi.Name.Contains(LevelFileNaming) && fi.Extension.Contains("cs")) {
-                numOfLevels++;
-            }
-        }
-        return numOfLevels;
     }
 
     /// <summary>
