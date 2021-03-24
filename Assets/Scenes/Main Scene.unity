@@ -6454,8 +6454,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1175877111}
   - component: {fileID: 1175877112}
+  - component: {fileID: 1175877113}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Level Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6500,6 +6501,18 @@ MonoBehaviour:
   character: {fileID: 3430090065123194532, guid: 9420c4c8d18c701458cf20cb033ae51d,
     type: 3}
   ore: {fileID: 7885983459217653965, guid: a4a1fea93e5ceb641a903d07c80bae68, type: 3}
+--- !u!114 &1175877113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175877110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b309b5610d30afe43b61ae250383d725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266468757
 GameObject:
   m_ObjectHideFlags: 0
@@ -7209,7 +7222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000000069639476, y: 0.00008142529}
+  m_AnchoredPosition: {x: -0.000009568748, y: 0.000029262541}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1001 &1413004171
@@ -7702,7 +7715,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 65178738}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999964
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9019,7 +9032,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 811182850}
   m_HandleRect: {fileID: 811182849}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:

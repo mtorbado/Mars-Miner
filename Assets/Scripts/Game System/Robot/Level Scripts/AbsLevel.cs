@@ -9,10 +9,13 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public int oreGoal;
     public int oreCount;
+    public int numOfAttempts;
+    public LevelDificulty dificulty;
     private bool failLevel;
-
+    
     private void Start() {
         failLevel = false;
+        numOfAttempts = 0;
         GameEvents.current.onPickOreTriggerEnter += PickOre;
         GameEvents.current.onLevelFailed += FailLevel;
     }   
@@ -22,10 +25,6 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
     /// </summary>
     /// <returns></returns>
     public abstract IEnumerator Play();
-
-    // public void Pause() {}
-
-    // public void ForceStop() {}
 
     public void PickOre() {
         this.oreCount++;

@@ -23,7 +23,8 @@ public class PlayButtonScript : MonoBehaviour {
         
         button.interactable = false;
         GetComponentInChildren<Text>().text = "Running!";
-
+        GameEvents.current.PlayLevel();
+        
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach (GameObject characterCube in characterCubes) {
             StartCoroutine(characterCube.GetComponent<ILevel>().Play());

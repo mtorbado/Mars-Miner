@@ -16,6 +16,7 @@ public class GameEvents : MonoBehaviour {
     public event Action<int> onLevelLoad;
     public event Action onNextLevelLoad;
     public event Action onSetOreGoal;
+    public event Action onPlayLevel;
     public event Action onRestartLevel;
     public event Action onLevelPassed;
     public event Action onLevelFailed;
@@ -58,18 +59,30 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// (Event) The next level is loaded
+    /// </summary>
     public void LoadNextLevel() {
         if (onNextLevelLoad != null) {
             onNextLevelLoad();
         }
     }
 
-        /// <summary>
+    /// <summary>
     /// (Event) The ore goal is set for the level
     /// </summary>
-    public void OnSetOreGoal() {
+    public void SetOreGoal() {
         if (onSetOreGoal != null) {
             onSetOreGoal();
+        }
+    }
+
+    /// <summary>
+    /// (Event) The current level started to play (attempt)
+    /// </summary>
+    public void PlayLevel() {
+        if (onPlayLevel != null) {
+            onPlayLevel();
         }
     }
 
@@ -91,6 +104,9 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// (Event) The robot collided with something
+    /// </summary>
     public void RockCollision() {
         if (onRockCollision != null) {
             onRockCollision();

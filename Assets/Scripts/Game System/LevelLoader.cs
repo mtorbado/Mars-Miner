@@ -82,7 +82,6 @@ public class LevelLoader : MonoBehaviour {
     /// </summary>
     /// <returns> true if current level is the last one, false otherwise</returns>
     public static bool IsLastLevel() {
-        Debug.Log((int)lastLoadedLevel + ", " + (numOfLevels - 1));
         if ((int)lastLoadedLevel == numOfLevels - 1) {
             return true;
         }
@@ -186,6 +185,6 @@ public class LevelLoader : MonoBehaviour {
         foreach(GameObject cc in characterCubes) {
             cc.AddComponent(Type.GetType("Level" + levelNumber));
         }
-        GameEvents.current.OnSetOreGoal();
+        GameEvents.current.SetOreGoal();
     }
 }

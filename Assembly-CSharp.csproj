@@ -149,11 +149,14 @@
      <Compile Include="Assets\Scripts\Game System\Robot\CoroutineWithData.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\AbsLevel.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\ILevel.cs" />
+     <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\LevelDificulty.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level0.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Game System\Tile.cs" />
-     <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
+     <Compile Include="Assets\Scripts\Progress System\LevelData.cs" />
+     <Compile Include="Assets\Scripts\Progress System\SaveData.cs" />
+     <Compile Include="Assets\Scripts\Progress System\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
      <Compile Include="Assets\Scripts\UI\CountOreScript.cs" />
      <Compile Include="Assets\Scripts\UI\InGameUICanvasActions.cs" />
