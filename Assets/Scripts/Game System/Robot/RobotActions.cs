@@ -9,7 +9,7 @@ public class RobotActions : MonoBehaviour {
 
     BoardManager boardManager;
     Vector3 currentPosition;
-    Animation animation;
+    new Animation animation;
     float moveSpeed = 1f;
     float rotationTime = 1f;
     bool canMove = true;
