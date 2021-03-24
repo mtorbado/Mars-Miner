@@ -29,15 +29,15 @@ public class ScoreManager : MonoBehaviour {
 
     private void AddAttempt() {
         if (!levelData.passed) {
-            levelData.numberOfAttempts++;
+            levelData.attempts++;
         }
     }
 
     private void LevelPassed() {
         levelData.passed = true;
-        levelData.points = (int) GetDificulty(levelData.levelNumber) - (100 * (levelData.numberOfAttempts -1));
+        levelData.points = (int) GetDificulty(levelData.levelNumber) - (100 * (levelData.attempts -1));
         // DEBUG_PrintAttempts();
-        DEBUG_PrintPoints();
+        // DEBUG_PrintPoints();
     }
 
     /* ============================================================= AUXILIAR METHODS ============================================================= */
@@ -51,7 +51,7 @@ public class ScoreManager : MonoBehaviour {
     /* ============================================================= DEBUG FUNCTIONS ============================================================= */
 
      private void DEBUG_PrintAttempts() {
-         Debug.Log("attempts: " + levelData.numberOfAttempts);
+         Debug.Log("attempts: " + levelData.attempts);
      }
 
      private void DEBUG_PrintPoints() {
