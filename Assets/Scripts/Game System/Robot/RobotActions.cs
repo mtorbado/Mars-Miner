@@ -16,7 +16,6 @@ public class RobotActions : MonoBehaviour {
     bool canMove = true;
 
     private ILevel level;
-    private String rockPattern = "(Magnetic)?Rock[1-9]";
 
     private void Start() {
         level =  gameObject.GetComponent<ILevel>();
@@ -131,14 +130,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> true if tile in front is a rock, false otherwise</returns>
     public bool IsRockInFront() {
-        Regex rg = new Regex(rockPattern);
-        UnityEngine.Object frontObject = boardManager.GetTileObject(GetFowardTile());
-        if (frontObject != null) {
-            if (rg.IsMatch(boardManager.GetTileObject(GetFowardTile()).name)) {
-                return true;
-            }
-        }
-        return false;
+        return IsGameElementInFront("Rock");
     }
 
     /// <summary>  
@@ -146,13 +138,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> true if tile in front is an ore, false otherwise</returns>
     public bool IsOreInFront() {
-        UnityEngine.Object frontObject = boardManager.GetTileObject(GetFowardTile());
-        if (frontObject != null) {
-            if (boardManager.GetTileObject(GetFowardTile()).name.Equals("Ore")) {
-                return true;
-            }
-        }
-        return false;
+        return IsGameElementInFront("Ore");
     }
 
     /* ============================================================ PRIVATE FUNCTIONS ============================================================= */
@@ -180,5 +166,20 @@ public class RobotActions : MonoBehaviour {
         else { //(transform.rotation.y < 0)
             return new Tile (t.X, t.Y + 1);
         }
+    }
+
+    /// <summary>  
+    /// Checks if the tile in front of the robot has a game element with the given tag
+    /// </summary>
+    /// /// <param name="tag"> tag of the game element</param>
+    /// <returns> true if there's a game object in front of the robot that mathes the tag, false otherwise</returns>
+    private bool IsGameElementInFront(String tag) {
+        GameObject frontObject = boardManager.GetTileObject(GetFowardTile());
+        if (frontObject != null) {
+            if (boardManager.GetTileObject(GetFowardTile()).CompareTag(tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
