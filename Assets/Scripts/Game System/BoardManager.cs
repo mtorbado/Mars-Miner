@@ -86,7 +86,7 @@ public class BoardManager : MonoBehaviour {
     /// </summary>
     /// <param name="tile"> tile where the wanted game element is</param>
     /// <returns>the game element object if there's any, null otherwise</returns>
-    public UnityEngine.Object GetTileObject(Tile tile) {
+    public GameObject GetTileObject(Tile tile) {
         Vector3 up = this.transform.TransformDirection(Vector3.up);
         Vector3 tileCenter = GetCenterPointOfTile(tile);
         Vector3 rayOrigin = new Vector3(tileCenter.x, tileCenter.y -1f, tileCenter.z);
