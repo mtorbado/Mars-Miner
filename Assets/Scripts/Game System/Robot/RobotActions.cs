@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +16,7 @@ public class RobotActions : MonoBehaviour {
     bool canMove = true;
 
     private ILevel level;
+    private String rockPattern = "(Magnetic)?Rock[1-9]";
 
     private void Start() {
         level =  gameObject.GetComponent<ILevel>();
@@ -109,6 +111,48 @@ public class RobotActions : MonoBehaviour {
         while(animation.isPlaying) {
             yield return null;
         }
+    }
+
+    /* =========================================================== TILE CHECKS ====================================================================== */
+
+    /// <summary>  
+    /// Checks if the tile in front is clear
+    /// </summary>
+    /// <returns> true if tile in front is clear, false otherwise</returns>
+    public bool IsFrontTileClear() {
+        if (boardManager.isTileClear(GetFowardTile())) {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>  
+    /// Checks if the tile in front has a rock
+    /// </summary>
+    /// <returns> true if tile in front is a rock, false otherwise</returns>
+    public bool IsRockInFront() {
+        Regex rg = new Regex(rockPattern);
+        UnityEngine.Object frontObject = boardManager.GetTileObject(GetFowardTile());
+        if (frontObject != null) {
+            if (rg.IsMatch(boardManager.GetTileObject(GetFowardTile()).name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>  
+    /// Checks if the tile in front has an ore
+    /// </summary>
+    /// <returns> true if tile in front is an ore, false otherwise</returns>
+    public bool IsOreInFront() {
+        UnityEngine.Object frontObject = boardManager.GetTileObject(GetFowardTile());
+        if (frontObject != null) {
+            if (boardManager.GetTileObject(GetFowardTile()).name.Equals("Ore")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /* ============================================================ PRIVATE FUNCTIONS ============================================================= */

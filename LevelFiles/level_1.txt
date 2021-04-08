@@ -1,0 +1,8 @@
+while (true) {
+    if(robot.seesRock()) {
+        robot.turnLeft();
+    }
+    else {
+        robot.moveForward();
+    }
+}
