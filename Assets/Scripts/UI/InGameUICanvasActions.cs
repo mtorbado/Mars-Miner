@@ -5,12 +5,14 @@ using TMPro;
 public class InGameUICanvasActions : MonoBehaviour {
 
     public GameObject codeHolder;
+    private static int? lastLoadedLevel;
 
     const string LevelFolder = "LevelFiles";
     const string LevelFileNaming = "level_";
     
     private void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
+        GameEvents.current.onNextLevelLoad += LoadNextLevel;
         GameEvents.current.onRestartLevel += ShowInGameUI;
         GameEvents.current.onSelectLevel += HideInGameUI;
         GameEvents.current.onLevelFailed += HideInGameUI;
@@ -27,6 +29,14 @@ public class InGameUICanvasActions : MonoBehaviour {
         codeHolder.GetComponent<TextMeshProUGUI>().SetText(reader.ReadToEnd());
         reader.Close();
         ShowInGameUI();
+        lastLoadedLevel = levelNumber;
+    }
+
+    /// <summary>
+    /// Sets the game UI pannels for the next level
+    /// </summary>
+    private void LoadNextLevel() {
+        LoadLevel((int)lastLoadedLevel +1);
     }
 
     /// <summary>
