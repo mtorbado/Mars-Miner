@@ -5,26 +5,44 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour {
 
     private LevelDificulty dificulty;
-    private LevelData levelData;
+    private static LevelData levelData;
     
     void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
+        GameEvents.current.onNextLevelLoad += LoadNextLevel;
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += LevelPassed;
     }
 
     /* =============================================================== GET METHODS =============================================================== */
 
-    public LevelData getCurrentLevelData() {
+    public LevelData GetCurrentLevelData() {
         return levelData;
+    }
+
+    public int GetCurrentScore() {
+        return (int) GetDificulty(levelData.levelNumber) - (100 * (levelData.attempts -1));
+    }
+
+    public int GetCurrentAttempts() {
+        return levelData.attempts;
+    }
+
+    public int GetCurrentLevelNumber() {
+        return levelData.levelNumber;
     }
 
     /* ============================================================ EVENT CALL METHODS ============================================================ */
 
     private void LoadLevel(int levelNumber) {
-        if (levelData == null || levelData.levelNumber != levelNumber) {
+        //TODO: search if there's a saved game data for the level number
+       // if (levelData == null || levelData.levelNumber != levelNumber) {
             levelData = new LevelData(levelNumber);
-        }
+        // }
+    }
+
+    private void LoadNextLevel() {
+        LoadLevel(levelData.levelNumber + 1);
     }
 
     private void AddAttempt() {

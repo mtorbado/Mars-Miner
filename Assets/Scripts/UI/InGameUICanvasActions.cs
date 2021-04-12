@@ -2,6 +2,9 @@
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Manages the UI elements displayed while playing a level
+/// </summary>
 public class InGameUICanvasActions : MonoBehaviour {
 
     public GameObject codeHolder;

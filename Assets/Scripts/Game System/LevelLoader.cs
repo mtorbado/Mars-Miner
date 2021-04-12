@@ -50,7 +50,6 @@ public class LevelLoader : MonoBehaviour {
     /// Restarts the current playing level
     /// </summary>
     public void RestartLevel() {
-        Debug.Log("restarting level");
         LoadLevel((int)lastLoadedLevel);
     }
 
