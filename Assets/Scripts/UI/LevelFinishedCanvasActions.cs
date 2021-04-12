@@ -34,11 +34,8 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     private void ShowLevelPassedPanel() {
 
-        if (LevelLoader.IsLastLevel()) {
-            levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(false);
-            //TODO: change panel text to inform that it's the last level?
-        }
-        
+        levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!LevelLoader.IsLastLevel());
+    
         levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentScore() + " puntos");
         levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentAttempts() + " intentos");
 
