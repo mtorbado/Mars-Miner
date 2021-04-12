@@ -16,7 +16,6 @@ public class LevelButtonScript : MonoBehaviour {
     /// 
     /// </summary>
     public void LoadLevel() {
-        Debug.Log("Loading level " + levelNumber);
         GameEvents.current.LoadLevel(levelNumber);
     }
 }
