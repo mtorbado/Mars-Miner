@@ -4,16 +4,14 @@ using UnityEngine.UI;
 /// <summary>
 /// 
 /// </summary>
-public class PlayButtonScript : MonoBehaviour {
+public class PlayButtonScript : AbsButton {
 
     bool isCoroutineStarted;
-    Button button;
 
-    private void Start() {
-        button = GetComponent<Button>();
-        GameEvents.current.onNextLevelLoad += ReEnableButton;
-        GameEvents.current.onRestartLevel += ReEnableButton;
-        GameEvents.current.onLevelLoad += ReEnableButton2;
+    private void Awake() {
+        GameEvents.current.onNextLevelLoad += EnableButton;
+        GameEvents.current.onRestartLevel += EnableButton;
+        GameEvents.current.onLevelLoad += EnableButton2;
     }
 
     /// <summary>
@@ -34,8 +32,8 @@ public class PlayButtonScript : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
-    private void ReEnableButton() {
-        GetComponentInChildren<Text>().text = "Play";
+    private void EnableButton() {
+        GetComponentInChildren<Text>().text = "Start";
         button.interactable = true;
     }
 
@@ -43,7 +41,7 @@ public class PlayButtonScript : MonoBehaviour {
     /// 
     /// </summary>
     /// <param name="n"> not used </param>
-    private void ReEnableButton2(int n) {
-        ReEnableButton();
+    private void EnableButton2(int n) {
+        EnableButton();
     }
 }

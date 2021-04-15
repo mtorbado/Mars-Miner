@@ -3,7 +3,7 @@
 /// <summary>
 /// 
 /// </summary>
-public class CanvasTweening : MonoBehaviour {
+public class CanvasTweening : AbsButton {
 
     public GameObject panel;
     public float closedPosition, displayPosition;

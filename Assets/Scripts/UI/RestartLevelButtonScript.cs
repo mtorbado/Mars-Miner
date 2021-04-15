@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RestartLevelButtonScript : MonoBehaviour
-{
+public class RestartLevelButtonScript : MonoBehaviour {
+
     /// <summary>
     /// 
     /// </summary>

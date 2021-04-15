@@ -11,25 +11,26 @@ public class GameEvents : MonoBehaviour {
         current = this;
     }
 
-    public event Action onPickOreTriggerEnter;
+    
     public event Action onSelectLevel;
     public event Action<int> onLevelLoad;
+    public event Action onRestartLevel;
     public event Action onNextLevelLoad;
     public event Action onSetOreGoal;
+
     public event Action onPlayLevel;
-    public event Action onRestartLevel;
+    public event Action onPickOreTriggerEnter;
+    public event Action onRockCollision;
+    
+    
     public event Action onLevelPassed;
     public event Action onLevelFailed;
-    public event Action onRockCollision;
+    
+    public event Action onDisableAllForTutorial;
+    public event Action onEnableAllAfterTutorial;
 
-    /// <summary>
-    /// (Event) Character cube picks ore
-    /// </summary>
-    public void PickOreTriggerEnter() {
-        if (onPickOreTriggerEnter != null) {
-            onPickOreTriggerEnter();
-        }
-    }
+
+    /* ======================================================== SELECTING/LOADING LEVEL ======================================================== */
 
     /// <summary>
     /// (Event) Load the level selection menu
@@ -77,6 +78,8 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
+    /* ============================================================== GAME LOOP ============================================================== */
+
     /// <summary>
     /// (Event) The current level started to play (attempt)
     /// </summary>
@@ -85,6 +88,26 @@ public class GameEvents : MonoBehaviour {
             onPlayLevel();
         }
     }
+
+    /// <summary>
+    /// (Event) Character cube picks ore
+    /// </summary>
+    public void PickOreTriggerEnter() {
+        if (onPickOreTriggerEnter != null) {
+            onPickOreTriggerEnter();
+        }
+    }
+
+    /// <summary>
+    /// (Event) The robot collided with something
+    /// </summary>
+    public void RockCollision() {
+        if (onRockCollision != null) {
+            onRockCollision();
+        }
+    }
+
+    /* ============================================================ LEVEL FINISHED ============================================================ */
 
     /// <summary>
     /// (Event) The current playing level is completed
@@ -104,13 +127,25 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
+    
+
+    /* ============================================================ TUTORIAL LEVEL ============================================================ */
+    
     /// <summary>
-    /// (Event) The robot collided with something
+    /// (Event) Disables all the interactable elements of the game screen for the tutorial
     /// </summary>
-    public void RockCollision() {
-        if (onRockCollision != null) {
-            onRockCollision();
+    public void DisableAllForTutorial() {
+        if (onDisableAllForTutorial != null) {
+            onDisableAllForTutorial();
         }
     }
 
+    /// <summary>
+    /// (Event) Disables all the interactable elements of the game screen for the tutorial
+    /// </summary>
+    public void EnableAllAfterTutorial() {
+        if (onEnableAllAfterTutorial != null) {
+            onEnableAllAfterTutorial();
+        }
+    }
 }

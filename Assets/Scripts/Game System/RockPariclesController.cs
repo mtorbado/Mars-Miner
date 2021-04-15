@@ -6,6 +6,7 @@
 public class RockPariclesController : MonoBehaviour {
 
     ParticleSystem[] particles;
+    private bool showParticles;
 
     private void Start() {
         particles = GetComponentsInChildren<ParticleSystem>();
@@ -14,9 +15,17 @@ public class RockPariclesController : MonoBehaviour {
         }
     }
 
+    private void Awake() {
+        showParticles = true;
+        GameEvents.current.onDisableAllForTutorial += DisableParticles;
+        GameEvents.current.onEnableAllAfterTutorial += EnableParticles; 
+    }
+
     private void OnMouseDown() {
-        foreach( ParticleSystem p in particles) {
-            p.Play();
+        if(showParticles) {
+            foreach( ParticleSystem p in particles) {
+             p.Play();
+            }
         }
     }
 
@@ -24,6 +33,14 @@ public class RockPariclesController : MonoBehaviour {
         foreach( ParticleSystem p in particles) {
             p.Stop();
         }
+    }
+
+    private void EnableParticles() {
+        showParticles = true;
+    }
+
+    private void DisableParticles() {
+        showParticles = false;
     }
 
 }

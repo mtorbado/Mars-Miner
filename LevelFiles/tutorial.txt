@@ -1,0 +1,22 @@
+¡Bienvenido a Mars Miner! En este juego aprenderemos a interpretar estructuras de código condicionales e iterativas.
+
+Tu misión es guiar a este pequeño robot, el Mars Hoover, para que recoja los valiosos minerales esparcidos por la superficie de Marte.
+
+Aunque el Mars Hoover es un poco terco y no podemos decirle qué hacer. para cada nivel nos indicará los movimientos que hará por su cuenta, en el panel de codigo de la derecha.
+Nuestro trabajo es analizar su código y tratar de despejarle e el camino.
+
+En algunos niveles, el Mars Rover pedirá que le indiques algunos valores para su código, escríbelos en la caja de entrada, separados por comas.
+
+Si tienes alguna duda respecto al código del Mars Hoover, podrás acceder al HooverDoc pulsando el botón que aparece en la parte inferior del panel de la derecha.
+
+¡La superficie de Marte está repleta de obstáculos! Estas rocas son pesadas y hay poco que podamos hacer con ellas. Tendremos que esquivarlas cuando nos las encontremos.
+
+Sin embargo, ¡las rocas plateadas son magnéticas! Lo que significa que podemos moverlas con la ayuda de nuestro electroimán.
+Quítalas del medio o úsalas para indicar al Mars Hoover el camino correcto hacia los minerales azules.
+
+Cuando esté todo listo, ¡pulsa el botón "Start" para que el Mars Hoover empiece a moverse!
+Este botón inicia su secuencia de código, y una vez iniciado no podrá detenerse.
+¡Espero que hayas quitado esas molestas rocas del medio! Aunque si eres suficientemente rápido... quizá estés a tiempo de mover alguna después.
+
+Si en algún momento te atascas, podrás reiniciar el nivel. También puedes acceder a los ajustes o volver al menú el juego. Encontrarás todas estas opciones durante el juego pulsando el botón de la esquina superior izquierda.
+¡Suerte en tu aventura!	 
