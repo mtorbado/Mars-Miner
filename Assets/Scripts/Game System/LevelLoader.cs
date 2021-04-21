@@ -184,6 +184,9 @@ public class LevelLoader : MonoBehaviour {
         foreach(GameObject cc in characterCubes) {
             cc.AddComponent(Type.GetType("Level" + levelNumber));
         }
+        if (characterCubes.First().GetComponent<AbsLevel>().isTutorial) {
+            GameEvents.current.DisableAllForTutorial();
+        }
         GameEvents.current.SetOreGoal();
     }
 }

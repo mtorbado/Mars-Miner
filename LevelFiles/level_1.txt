@@ -1,8 +1,10 @@
-while (true) {
-    if(robot.seesRock()) {
-        robot.turnLeft();
-    }
-    else {
-        robot.moveForward();
+public void start(String[] args) {
+    while (true) {
+        if(robot.seesRock()) {
+            robot.turnLeft();
+        }
+        else {
+            robot.moveForward();
+        }
     }
 }

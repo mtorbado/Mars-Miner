@@ -7,6 +7,7 @@ public class Level0 : AbsLevel {
 
     private void Awake() {
         robotActions = (RobotActions)transform.GetComponent<RobotActions>(); // si Level0 está en character cube
+        isTutorial = true;
         oreGoal = 1;
         dificulty = LevelDificulty.Easy;
     }

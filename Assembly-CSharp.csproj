@@ -138,7 +138,6 @@
      <Compile Include="Assets\Imported Assets\Standard Assets\Utility\SimpleMouseRotator.cs" />
      <Compile Include="Assets\Imported Assets\Standard Assets\Utility\SmoothFollow.cs" />
      <Compile Include="Assets\Imported Assets\Standard Assets\Utility\TimedObjectActivator.cs" />
-     <Compile Include="Assets\Imported Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
      <Compile Include="Assets\Imported Assets\Standard Assets\Utility\WaypointCircuit.cs" />
      <Compile Include="Assets\Imported Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
      <Compile Include="Assets\Scripts\Game System\BoardManager.cs" />
@@ -158,6 +157,7 @@
      <Compile Include="Assets\Scripts\Progress System\LevelData.cs" />
      <Compile Include="Assets\Scripts\Progress System\SaveData.cs" />
      <Compile Include="Assets\Scripts\Progress System\ScoreManager.cs" />
+     <Compile Include="Assets\Scripts\UI\AbsButton.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
      <Compile Include="Assets\Scripts\UI\CountOreScript.cs" />
      <Compile Include="Assets\Scripts\UI\InGameUICanvasActions.cs" />
@@ -168,6 +168,7 @@
      <Compile Include="Assets\Scripts\UI\PageSwiper.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\RestartLevelButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\TutorialCanvasActions.cs" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
