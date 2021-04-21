@@ -1,3 +1,5 @@
-while (true) {
-    robot.moveForward();
+public void start(String[] args) {
+    while (true) {
+        robot.moveForward();
+    }
 }

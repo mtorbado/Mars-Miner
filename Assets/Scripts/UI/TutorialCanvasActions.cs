@@ -13,9 +13,13 @@ public class TutorialCanvasActions : MonoBehaviour {
     public GameObject textHolder;
     public GameObject nextPanelButton;
     public GameObject previousPanelButton;
+    public GameObject image;
+
+    public Sprite[] tutorialImages;
 
     const string LevelFolder = "LevelFiles";
     const string TutorialFileNaming = "tutorial";
+    const string ImageFolder = "Assets/Prefabs/UI/Images/";
 
     private int currentPanel;
     private String[] tutorialText;
@@ -27,13 +31,15 @@ public class TutorialCanvasActions : MonoBehaviour {
 
     private void LoadFirstTutorialPanel() {
         tutorialPanel.SetActive(true);
-        textHolder.GetComponent<TextMeshProUGUI>().SetText(tutorialText[0]);
         currentPanel = 0;
+        UpdateText(currentPanel);
+        UpdateImage(currentPanel);
     }
 
     public void LoadNextTutorialPanel() {
         if (currentPanel >= 0 && currentPanel < tutorialText.Length-1) {
-            textHolder.GetComponent<TextMeshProUGUI>().SetText(tutorialText[currentPanel+1]);
+            UpdateText(currentPanel+1);
+            UpdateImage(currentPanel+1);
             currentPanel ++;
         }
         else if (currentPanel == tutorialText.Length-1) {
@@ -45,7 +51,8 @@ public class TutorialCanvasActions : MonoBehaviour {
 
     public void LoadPreviousTutorialPanel() {
         if (currentPanel >= 1 && currentPanel < tutorialText.Length-1) {
-            textHolder.GetComponent<TextMeshProUGUI>().SetText(tutorialText[currentPanel-1]);
+            UpdateText(currentPanel-1);
+            UpdateImage(currentPanel-1);
             currentPanel --;
         }
         else if (currentPanel == tutorialText.Length-1) {
@@ -67,7 +74,14 @@ public class TutorialCanvasActions : MonoBehaviour {
         else if (currentPanel == tutorialText.Length-1) {
             nextPanelButton.GetComponentInChildren<Text>().text = "Comenzar";
         }
-        
+    }
+
+    private void UpdateImage(int n) {
+        image.GetComponent<Image>().sprite = tutorialImages[n] as Sprite;
+    }
+
+    private void UpdateText(int n) {
+        textHolder.GetComponent<TextMeshProUGUI>().SetText(tutorialText[n]);
     }
 
     private String[] ReadTutorialTextFile() {
