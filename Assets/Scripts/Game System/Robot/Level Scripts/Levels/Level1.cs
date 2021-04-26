@@ -14,7 +14,7 @@ public class Level1 : AbsLevel {
     public override IEnumerator Play() {
         
         while (!checkLevelPassed() && !checkLevelFailed()) {
-            if (robotActions.IsRockInFront()) {
+            if (robotActions.IsRockInFront(1)) {
                 yield return robotActions.TurnLeft();
             } else yield return robotActions.MoveFoward();
         }

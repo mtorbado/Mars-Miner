@@ -50,7 +50,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator MoveFoward() {
-        Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile());
+        Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile(1));
         float i = 0.0f;
         while (Vector3.Distance(transform.position, target) > 0.0f && canMove) {
             i += Time.deltaTime * moveSpeed;
@@ -64,7 +64,13 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator MoveBackward() {
-        throw new NotImplementedException();
+        Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile(-1));
+        float i = 0.0f;
+        while (Vector3.Distance(transform.position, target) > 0.0f && canMove) {
+            i += Time.deltaTime * moveSpeed;
+            transform.position = Vector3.Lerp(transform.position, target, i);
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -115,68 +121,60 @@ public class RobotActions : MonoBehaviour {
     /* =========================================================== TILE CHECKS ====================================================================== */
 
     /// <summary>  
-    /// Checks if the tile in front is clear
+    /// Checks if the n tile in front has a rock
     /// </summary>
-    /// <returns> true if tile in front is clear, false otherwise</returns>
-    public bool IsFrontTileClear() {
-        if (boardManager.isTileClear(GetFowardTile())) {
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>  
-    /// Checks if the tile in front has a rock
-    /// </summary>
+    /// <param name="n"> distance (in tiles) from the robot to the tile to check </param>
     /// <returns> true if tile in front is a rock, false otherwise</returns>
-    public bool IsRockInFront() {
-        return IsGameElementInFront("Rock");
+    public bool IsRockInFront(int n) {
+        return IsGameElementInFront(n, "Rock");
     }
 
     /// <summary>  
-    /// Checks if the tile in front has an ore
+    /// Checks if the n tile in front has an ore
     /// </summary>
+    /// <param name="n"> distance (in tiles) from the robot to the tile to check </param>
     /// <returns> true if tile in front is an ore, false otherwise</returns>
-    public bool IsOreInFront() {
-        return IsGameElementInFront("Ore");
+    public bool IsOreInFront(int n) {
+        return IsGameElementInFront(n, "Ore");
     }
 
     /* ============================================================ PRIVATE FUNCTIONS ============================================================= */
 
     /// <summary>
-    /// Returns the tile in front of the robot
+    /// Returns the n tile in front of the robot
     /// </summary>
+    /// <param name="n"> distance (in tiles) from the robot to the returned tile </param>
     /// <returns> tile in front </returns>
-    private Tile GetFowardTile() {
+    private Tile GetFowardTile(int n) {
 
         Tile t = boardManager.GetTile(transform.position);
 
         if (transform.rotation.y == 0) {
-            return new Tile(t.X + 1, t.Y);
+            return new Tile(t.X + n, t.Y);
         }
 
         else if (transform.rotation.y == 1) {
-            return new Tile (t.X - 1 , t.Y);
+            return new Tile (t.X - n , t.Y);
         }
 
         else if (transform.rotation.y > 0) {
-            return new Tile (t.X, t.Y - 1);
+            return new Tile (t.X, t.Y - n);
         }
 
         else { //(transform.rotation.y < 0)
-            return new Tile (t.X, t.Y + 1);
+            return new Tile (t.X, t.Y + n);
         }
     }
 
     /// <summary>  
     /// Checks if the tile in front of the robot has a game element with the given tag
     /// </summary>
-    /// /// <param name="tag"> tag of the game element</param>
+    /// <param name="tag"> tag of the game element</param>
     /// <returns> true if there's a game object in front of the robot that mathes the tag, false otherwise</returns>
-    private bool IsGameElementInFront(String tag) {
-        GameObject frontObject = boardManager.GetTileObject(GetFowardTile());
+    private bool IsGameElementInFront(int n, String tag) {
+        GameObject frontObject = boardManager.GetTileObject(GetFowardTile(n));
         if (frontObject != null) {
-            if (boardManager.GetTileObject(GetFowardTile()).CompareTag(tag)) {
+            if (boardManager.GetTileObject(GetFowardTile(n)).CompareTag(tag)) {
                 return true;
             }
         }

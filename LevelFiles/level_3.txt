@@ -1,0 +1,14 @@
+public void start(String[] args) {
+    while (true) {
+        if (robot.seesRock()) {
+            robot.turnRight();
+        }
+        else if (!robot.seesRock()) {
+            robot.moveForward();
+        }
+        else if(robot.seesRock()) {
+            robot.turnLeft();
+        }
+        robot.moveForward();
+    }
+}
