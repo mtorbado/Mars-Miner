@@ -6,18 +6,17 @@ public class Level0 : AbsLevel {
     private RobotActions robotActions;
 
     private void Awake() {
-        robotActions = (RobotActions)transform.GetComponent<RobotActions>(); // si Level0 está en character cube
+        robotActions = (RobotActions)transform.GetComponent<RobotActions>();
         isTutorial = true;
         oreGoal = 1;
         dificulty = LevelDificulty.Easy;
     }
     
-    public override IEnumerator Play() {
-        
-        while (!checkLevelPassed() && !checkLevelFailed()) {
+    public override IEnumerator Play(string[] args) {
+        while (!CheckLevelPassed() && !CheckLevelFailed()) {
             yield return robotActions.MoveFoward();
         }
-        if (checkLevelFailed()) {
+        if (CheckLevelFailed()) {
             yield return robotActions.BreakAnimation();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,7 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
     /// Abstract method to override with game loop for each level 
     /// </summary>
     /// <returns></returns>
-    public abstract IEnumerator Play();
+    public abstract IEnumerator Play(string [] args);
 
     public void PickOre() {
         this.oreCount++;
@@ -37,7 +38,7 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
         failLevel = true;
     }
 
-    public bool checkLevelPassed() {
+    public bool CheckLevelPassed() {
         if (oreCount == oreGoal) {
             GameEvents.current.LevelPassed();
             return true;
@@ -45,7 +46,25 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
         return false;
     }
 
-    public bool checkLevelFailed() {
+    public bool CheckLevelFailed() {
         return failLevel;
+    }
+
+    /* ============================================================ LEVEL IMPUT CONVERSIONS ============================================================= */
+
+    public bool[] InputToBool(string[] input) {
+        try {
+            return input.Select(bool.Parse).ToArray();
+        } catch {
+            return null;
+        }
+    }
+
+    public int[] InputToInt(string[] input) {
+        try {
+            return input.Select(int.Parse).ToArray();
+        } catch {
+            return null;
+        }
     }
 }

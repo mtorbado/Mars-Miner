@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayButtonScript : AbsButton {
 
-    bool isCoroutineStarted;
+    public GameObject programInput;
 
     private void Awake() {
         GameEvents.current.onNextLevelLoad += EnableButton;
@@ -20,12 +20,12 @@ public class PlayButtonScript : AbsButton {
     public void Play() {
         
         button.interactable = false;
-        GetComponentInChildren<Text>().text = "Running!";
+        GetComponentInChildren<Text>().text = "¡Iniciado!";
         GameEvents.current.PlayLevel();
         
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach (GameObject characterCube in characterCubes) {
-            StartCoroutine(characterCube.GetComponent<ILevel>().Play());
+            StartCoroutine(characterCube.GetComponent<ILevel>().Play(programInput.GetComponent<ProgramInputScript>().GetInputArrayStr()));
         }
     }
 
