@@ -151,7 +151,6 @@
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\LevelDificulty.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level0.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level1.cs" />
-     <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level2.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Game System\Tile.cs" />
@@ -161,6 +160,7 @@
      <Compile Include="Assets\Scripts\UI\AbsButton.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
      <Compile Include="Assets\Scripts\UI\CountOreScript.cs" />
+     <Compile Include="Assets\Scripts\UI\DocButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\InGameUICanvasActions.cs" />
      <Compile Include="Assets\Scripts\UI\LevelButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\LevelFinishedCanvasActions.cs" />
@@ -168,6 +168,7 @@
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\PageSwiper.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\ProgramInputScript.cs" />
      <Compile Include="Assets\Scripts\UI\RestartLevelButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\TutorialCanvasActions.cs" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

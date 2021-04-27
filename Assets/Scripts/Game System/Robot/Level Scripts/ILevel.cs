@@ -4,6 +4,6 @@
 /// Game level interface
 /// </summary>
 public interface ILevel {
-    IEnumerator Play();
+    IEnumerator Play(string[] args);
     void PickOre();
 }

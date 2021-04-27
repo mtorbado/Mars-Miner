@@ -11,14 +11,14 @@ public class Level1 : AbsLevel {
         dificulty = LevelDificulty.Easy;
     }
     
-    public override IEnumerator Play() {
+    public override IEnumerator Play(string[] args) {
         
-        while (!checkLevelPassed() && !checkLevelFailed()) {
+        while (!CheckLevelPassed() && !CheckLevelFailed()) {
             if (robotActions.IsRockInFront(1)) {
                 yield return robotActions.TurnLeft();
             } else yield return robotActions.MoveFoward();
         }
-        if (checkLevelFailed()) {
+        if (CheckLevelFailed()) {
             yield return robotActions.BreakAnimation();
         }
     }
