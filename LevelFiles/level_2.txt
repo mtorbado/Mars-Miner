@@ -1,8 +1,8 @@
-public void start(String[] args) {
+public void start (String[] args) {
     while (true) {
-        if (robot.seesRock()) {
-            robot.turnLeft();
+        if (robot.<color=#00ffff>seesRock</color>()()) {
+            robot.<color=#00ffff>turnLeft</color>()();
         }
-        robot.moveForward();
+        robot.<color=#00ffff>moveForwar</color>()();
     }
 }
