@@ -32,6 +32,7 @@ public class TutorialCanvasActions : MonoBehaviour {
     private void LoadFirstTutorialPanel() {
         tutorialPanel.SetActive(true);
         currentPanel = 0;
+        previousPanelButton.SetActive(false);
         UpdateText(currentPanel);
         UpdateImage(currentPanel);
     }
