@@ -1,8 +1,8 @@
 public void start (String[] args) {
     while (true) {
-        if (robot.<color=#00ffff>seesRock</color>()()) {
-            robot.<color=#00ffff>turnLeft</color>()();
+        if (robot.<color=#00ffff>seesRock</color>()) {
+            robot.<color=#00ffff>turnLeft</color>();
         }
-        robot.<color=#00ffff>moveForwar</color>()();
+        robot.<color=#00ffff>moveForwar</color>();
     }
 }
