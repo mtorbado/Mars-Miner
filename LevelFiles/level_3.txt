@@ -1,14 +1,14 @@
-public void start(String[] args) {
+public void start (String[] args) {
     while (true) {
-        if (robot.seesRock()) {
-            robot.turnRight();
+        if (robot.<color=#00ffff>seesRock</color>()()) {
+            robot.<color=#00ffff>turnRight</color>()();
         }
-        else if (!robot.seesRock()) {
-            robot.moveForward();
+        else if (!robot.<color=#00ffff>seesRock</color>()()) {
+            robot..<color=#00ffff>moveForward</color>()();
         }
-        else if(robot.seesRock()) {
-            robot.turnLeft();
+        else if (robot.<color=#00ffff>seesRock</color>()()) {
+            robot.<color=#00ffff>turnLeft</color>()();
         }
-        robot.moveForward();
+        robot.<color=#00ffff>moveForward</color>()();
     }
 }

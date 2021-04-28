@@ -8,12 +8,14 @@ using TMPro;
 public class InGameUICanvasActions : MonoBehaviour {
 
     public GameObject codeHolder;
+    public GameObject docHolder;
     private static int? lastLoadedLevel;
 
     const string LevelFolder = "LevelFiles";
     const string LevelFileNaming = "level_";
     
     private void Start() {
+        LoadHooverDoc();
         GameEvents.current.onLevelLoad += LoadLevel;
         GameEvents.current.onNextLevelLoad += LoadNextLevel;
         GameEvents.current.onRestartLevel += ShowInGameUI;
@@ -21,6 +23,15 @@ public class InGameUICanvasActions : MonoBehaviour {
         GameEvents.current.onLevelFailed += HideInGameUI;
         GameEvents.current.onLevelPassed += HideInGameUI;
         this.gameObject.GetComponent<Canvas>().enabled = false;
+    }
+
+    /// <summary>
+    /// Loads the code documentation file into de HooverDoc panel
+    /// </summary>
+    private void LoadHooverDoc() {
+        StreamReader reader = new StreamReader(LevelFolder + "/" + "hoover_doc.txt"); 
+        docHolder.GetComponent<TextMeshProUGUI>().SetText(reader.ReadToEnd());
+        reader.Close();
     }
 
     /// <summary>
