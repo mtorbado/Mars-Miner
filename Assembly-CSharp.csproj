@@ -154,8 +154,9 @@
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Game System\Tile.cs" />
+     <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
      <Compile Include="Assets\Scripts\Progress System\LevelData.cs" />
-     <Compile Include="Assets\Scripts\Progress System\SaveData.cs" />
+     <Compile Include="Assets\Scripts\Progress System\OpenField.cs" />
      <Compile Include="Assets\Scripts\Progress System\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\UI\AbsButton.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />

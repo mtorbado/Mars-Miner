@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.IO;
-
+using System.Collections.Generic;
 
 /// <summary>
 /// Generates de level selection UI panels dinamically
@@ -30,7 +30,7 @@ public class LevelSelector : MonoBehaviour {
         int maxInRow = Mathf.FloorToInt((panelDimensions.width + iconSpacing.x) / (iconDimensions.width + iconSpacing.x));
         int maxInCol = Mathf.FloorToInt((panelDimensions.height + iconSpacing.y) / (iconDimensions.height + iconSpacing.y));
 
-        numOfLevels = LevelLoader.GetNumOfLevels(new DirectoryInfo(LevelFolder));
+        numOfLevels = LevelLoader.GetNumOfLevels(LevelFolder);
 
         maxPerPage = maxInCol * maxInRow;
         int totalPages = Mathf.CeilToInt((float)numOfLevels / maxPerPage);
@@ -79,13 +79,14 @@ public class LevelSelector : MonoBehaviour {
     /// <param name="numOfIcons"> number of level buttons </param>
     /// <param name="parentObject"> object to set as parent (panel) </param>
     private void LoadIcons(int numOfIcons, GameObject parentObject) {
-         for (int i=0; i < numOfIcons; i++) {
-             currentLevelCount++;
-             GameObject icon = Instantiate(levelIcon) as GameObject;
-             icon.transform.SetParent(thisCanvas.transform, false);
-             icon.transform.SetParent(parentObject.transform);
-             icon.name = "Level" + i;
-             icon.GetComponentInChildren<TextMeshProUGUI>().SetText("Level " + i);
+        for (int i=0; i < numOfIcons; i++) {
+            currentLevelCount++;
+            GameObject icon = Instantiate(levelIcon) as GameObject;
+            icon.transform.SetParent(thisCanvas.transform, false);
+            icon.transform.SetParent(parentObject.transform);
+            icon.name = "Level" + i;
+            // icon.GetComponentInChildren<TextMeshProUGUI>().SetText("Nivel " + i);
+            icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + i);
          }
     }
 

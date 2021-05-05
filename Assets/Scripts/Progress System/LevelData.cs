@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-
-
 public class LevelData {
 
     public int levelNumber;

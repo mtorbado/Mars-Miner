@@ -10,6 +10,9 @@ public class MainMenuController : MonoBehaviour {
     }
 
     public void QuitGame() {
+        #pragma warning disable CS0618
+        Application.ExternalCall ("salir");
+        #pragma warning restore CS0618
         Application.Quit();
         Debug.Log("Game was closed");
     }

@@ -30,7 +30,7 @@ public class LevelLoader : MonoBehaviour {
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
-        numOfLevels = GetNumOfLevels(new DirectoryInfo(LevelFolder));
+        numOfLevels = GetNumOfLevels(LevelFolder);
     }
 
 
@@ -63,13 +63,14 @@ public class LevelLoader : MonoBehaviour {
     /// <summary>
     /// Returns the current number of levels in the game
     /// </summary>
-    /// <param name="di"> DirectoryInfo of folder that contains the level scripts </param>
+    /// <param name="folder"> name of folder that contains the level scripts </param>
     /// <returns></returns>
-    public static int GetNumOfLevels(DirectoryInfo di) {
+    public static int GetNumOfLevels(String folder) {
         int numOfLevels = 0; 
+        DirectoryInfo di = new DirectoryInfo(LevelFolder);
         FileInfo[] fiList = di.GetFiles();
         foreach (FileInfo fi in fiList) {
-            if (fi.Name.Contains(LevelFileNaming) && fi.Extension.Contains("cs")) {
+            if (fi.Name.Contains(LevelFileNaming) && fi.Extension.Contains("csv")) {
                 numOfLevels++;
             }
         }

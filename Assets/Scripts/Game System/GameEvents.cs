@@ -29,6 +29,7 @@ public class GameEvents : MonoBehaviour {
     public event Action onDisableAllForTutorial;
     public event Action onEnableAllAfterTutorial;
 
+    public event Action<string> onLoadGameData;
 
     /* ======================================================== SELECTING/LOADING LEVEL ======================================================== */
 
@@ -146,6 +147,18 @@ public class GameEvents : MonoBehaviour {
     public void EnableAllAfterTutorial() {
         if (onEnableAllAfterTutorial != null) {
             onEnableAllAfterTutorial();
+        }
+    }
+
+    /* ============================================================ LOAD GAME DATA ============================================================ */
+
+    /// <summary>
+    /// (Event) 
+    /// </summary>
+    /// <param name="gameData"> GameData object in JSON string form</param>
+    public void LoadGameData(String gameData) {
+        if (onLoadGameData !=null) {
+            onLoadGameData(gameData);
         }
     }
 }
