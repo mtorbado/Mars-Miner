@@ -8,19 +8,16 @@ using UnityEngine;
 [System.Serializable] public class GameData {
 
     public int lastLevelCompleted;
-    public List<LevelData> levelScoreTable;
+    public LevelData[] levelArray;
     public float timePlayed;
 
     /// <summary>
     /// Initializes a newly created GameData object 
     /// </summary>
-    /// <param name="lastLevelCompleted"> number of the last level that was completed</param>
-    /// <param name="scoreTable"> LevelData List with the scores for all levels played</param>
-    /// <param name="timePlayed"> time played, in seconds</param>
-    public GameData(int lastLevelCompleted, List<LevelData> scoreTable, float timePlayed) {
-         this.lastLevelCompleted = lastLevelCompleted;
-         this.levelScoreTable = scoreTable;
-         this.timePlayed = timePlayed;
+    public GameData() {
+        this.lastLevelCompleted = -1;
+        this.levelArray = LeverArrayInitializer();
+        this.timePlayed = 0;
     }
 
     /// <summary>
@@ -28,18 +25,26 @@ using UnityEngine;
     /// </summary>
     /// <param name="newLD"> LevelData to update</param>
     public void UpdateLevel(LevelData newLD) {
-        try { 
-            LevelData oldLD = levelScoreTable[newLD.levelNumber];
-
-            if (!oldLD.passed) {
-                newLD.attempts += oldLD.attempts;
-            }
-            else if (newLD.points < oldLD.points) {
-                newLD.points = oldLD.points;
-            }
-        } catch { Debug.Log("no old level data"); }
-        levelScoreTable.Insert(newLD.levelNumber, newLD);
+        levelArray[newLD.levelNumber] = newLD;
     }
 
-    
+    public LevelData GetLevel(int levelNumber) {
+        return levelArray[levelNumber];
+    }  
+
+    public float GetTime() {
+        return timePlayed;
+    }
+
+    public int GetLastLevelCompleted() {
+        return lastLevelCompleted;
+    }
+
+    private LevelData[] LeverArrayInitializer() {
+        LevelData[] levelArray = new LevelData[LevelLoader.GetNumOfLevels("LevelFiles")];
+        for (int i = 0; i < levelArray.Length; ++i) {
+            levelArray[i] = new LevelData(i);
+        }
+        return levelArray;
+    }
 }

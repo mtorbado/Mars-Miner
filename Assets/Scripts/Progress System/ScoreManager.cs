@@ -7,9 +7,8 @@ using UnityEngine;
 /// </summary>
 public class ScoreManager : MonoBehaviour {
 
-    private LevelDificulty dificulty;
-    private static GameData gameData;
-    private static LevelData currentLD;
+    private LevelData currentLevelData;
+    private GameData gameData;
     
     void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
@@ -18,66 +17,63 @@ public class ScoreManager : MonoBehaviour {
         GameEvents.current.onLevelPassed += LevelPassed;
         GameEvents.current.onLevelFailed += LevelFailed;
         GameEvents.current.onLoadGameData += ReadGameData;
+
+        gameData = new GameData();
+        GameEvents.current.UpdateScores();
         RetrieveGameData();
     }
 
     /* =============================================================== GET METHODS =============================================================== */
 
-    public LevelData GetCurrentLevelData() {
-        return currentLD;
-    }
-
-    public int GetCurrentScore() {
-        return (int) GetDificulty(currentLD.levelNumber) - (100 * (currentLD.attempts -1));
+    public int GetCurrentPoints() {
+        return Math.Max((Int32)GetDificulty(currentLevelData.levelNumber) - (100 * (currentLevelData.attempts -1)), 100);
     }
 
     public int GetCurrentAttempts() {
-        return currentLD.attempts;
+        return currentLevelData.attempts;
     }
 
     public int GetCurrentLevelNumber() {
-        return currentLD.levelNumber;
+        return currentLevelData.levelNumber;
     }
 
     public int GetLevelScore(int levelNumber) {
-        return gameData.levelScoreTable[levelNumber].points;
+        return gameData.GetLevel(levelNumber).points;
     } 
 
-    /* ============================================================ EVENT CALL METHODS ============================================================ */
+    /* ============================================================ EVENT CALLED METHODS ============================================================ */
 
     private void LoadLevel(int levelNumber) {
-        currentLD = new LevelData(levelNumber);
+        currentLevelData = gameData.GetLevel(levelNumber);
     }
 
     private void LoadNextLevel() {
-        LoadLevel(currentLD.levelNumber + 1);
+        LoadLevel(currentLevelData.levelNumber + 1);
     }
 
     private void AddAttempt() {
-        if (!currentLD.passed) {
-            currentLD.attempts++;
+        if (!currentLevelData.passed) {
+            currentLevelData.attempts++;
         }
     }
 
     private void LevelPassed() {
-        currentLD.passed = true;
-        currentLD.points = (int) GetDificulty(currentLD.levelNumber) - (100 * (currentLD.attempts -1));
+        currentLevelData.passed = true;
+        currentLevelData.points = GetCurrentPoints();
         // DEBUG_PrintAttempts();
         // DEBUG_PrintPoints();
-        gameData.UpdateLevel(currentLD);
+        gameData.UpdateLevel(currentLevelData);
         SaveGameData();
     }
 
     private void LevelFailed() {
-        gameData.UpdateLevel(currentLD);
+        gameData.UpdateLevel(currentLevelData);
+        SaveGameData();
     }
 
     /* =============================================================== LOAD GAME DATA ============================================================= */
 
     private void RetrieveGameData() {
-        List<LevelData> LDList = new List<LevelData>(LevelLoader.GetNumOfLevels("LevelFiles"));
-        gameData = new GameData(0, LDList, 0);
-
         #pragma warning disable CS0618
         Application.ExternalCall ("getCampoLibre");
         #pragma warning restore CS0618
@@ -86,6 +82,7 @@ public class ScoreManager : MonoBehaviour {
     private void ReadGameData(string gameDataStr) {
         try {
             gameData = JsonUtility.FromJson<GameData>(gameDataStr);
+            GameEvents.current.UpdateScores();
         } catch (Exception e) {
             DEBUG_ReadGameDataError(e);
         }
@@ -94,7 +91,7 @@ public class ScoreManager : MonoBehaviour {
     /* =============================================================== SAVE GAME DATA ============================================================= */
 
     private void SaveGameData() {
-        string jsonGD = JsonUtility.ToJson(gameData);
+        string jsonGD = JsonUtility.ToJson(gameData, true);
         #pragma warning disable CS0618
         Application.ExternalCall ("setCampoLibre", jsonGD );
         #pragma warning restore CS0618
@@ -121,11 +118,11 @@ public class ScoreManager : MonoBehaviour {
     /* ============================================================= DEBUG FUNCTIONS ============================================================= */
 
     private void DEBUG_PrintAttempts() {
-        Debug.Log("attempts: " + currentLD.attempts);
+        Debug.Log("attempts: " + currentLevelData.attempts);
     }
 
     private void DEBUG_PrintPoints() {
-        Debug.Log("points: " + currentLD.points + "/ " + (int) GetDificulty(currentLD.levelNumber));
+        Debug.Log("points: " + currentLevelData.points + "/ " + (int) GetDificulty(currentLevelData.levelNumber));
     }
 
     private void DEBUG_ReadGameDataError(Exception e) {

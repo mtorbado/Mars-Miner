@@ -1051,6 +1051,7 @@ MonoBehaviour:
     type: 3}
   thisCanvas: {fileID: 156141930}
   iconSpacing: {x: 10, y: 10}
+  levelManager: {fileID: 1175877110}
 --- !u!1001 &164171643
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,15 +15,21 @@ public class LevelSelector : MonoBehaviour {
     public GameObject thisCanvas;
     public Vector2 iconSpacing;
 
+    public GameObject levelManager;
+
     private int numOfLevels;
     private Rect panelDimensions;
     private Rect iconDimensions;
     private int maxPerPage;
     private int currentLevelCount;
 
+    private List<GameObject> icons;
+
     const string LevelFolder = "LevelFiles/";
 
     private void Start() {
+        icons = new List<GameObject>();
+
         panelDimensions = levelHolder.GetComponent<RectTransform>().rect;
         iconDimensions = levelIcon.GetComponent<RectTransform>().rect;
 
@@ -37,6 +43,8 @@ public class LevelSelector : MonoBehaviour {
 
         GameEvents.current.onLevelLoad += HideLevelSelection;
         GameEvents.current.onSelectLevel += ShowLevelSelection;
+        GameEvents.current.onSelectLevel += UpdateScores;
+        GameEvents.current.onUpdateScores += UpdateScores;
 
         LoadPanels(totalPages);
     }
@@ -84,9 +92,10 @@ public class LevelSelector : MonoBehaviour {
             GameObject icon = Instantiate(levelIcon) as GameObject;
             icon.transform.SetParent(thisCanvas.transform, false);
             icon.transform.SetParent(parentObject.transform);
-            icon.name = "Level" + i;
+            icon.name = i.ToString();
             // icon.GetComponentInChildren<TextMeshProUGUI>().SetText("Nivel " + i);
             icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + i);
+            icons.Add(icon);
          }
     }
 
@@ -103,5 +112,17 @@ public class LevelSelector : MonoBehaviour {
     /// </summary>
     private void ShowLevelSelection() {
         thisCanvas.GetComponent<Canvas>().enabled = true;
+    }
+
+    /// <summary>
+    /// Updates the displayed scores in the level selection menu
+    /// </summary>
+    private void UpdateScores() {
+        foreach(GameObject icon in icons) {
+            try {
+                int score = levelManager.GetComponent<ScoreManager>().GetLevelScore(int.Parse(icon.name));
+                icon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(score.ToString());
+            } catch {}
+        }
     }
 }

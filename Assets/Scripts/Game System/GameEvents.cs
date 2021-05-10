@@ -30,6 +30,7 @@ public class GameEvents : MonoBehaviour {
     public event Action onEnableAllAfterTutorial;
 
     public event Action<string> onLoadGameData;
+    public event Action onUpdateScores;
 
     /* ======================================================== SELECTING/LOADING LEVEL ======================================================== */
 
@@ -128,8 +129,6 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
-    
-
     /* ============================================================ TUTORIAL LEVEL ============================================================ */
     
     /// <summary>
@@ -153,12 +152,21 @@ public class GameEvents : MonoBehaviour {
     /* ============================================================ LOAD GAME DATA ============================================================ */
 
     /// <summary>
-    /// (Event) 
+    /// (Event) The game data from the external call has been received and can be loaded by the ScoreManager
     /// </summary>
     /// <param name="gameData"> GameData object in JSON string form</param>
     public void LoadGameData(String gameData) {
         if (onLoadGameData !=null) {
             onLoadGameData(gameData);
+        }
+    }
+
+    /// <summary>
+    /// (Event) The game data has been read and the displayed scores can be updated
+    /// </summary>
+    public void UpdateScores() {
+        if (onUpdateScores !=null) {
+            onUpdateScores();
         }
     }
 }
