@@ -26,6 +26,9 @@ using UnityEngine;
     /// <param name="newLD"> LevelData to update</param>
     public void UpdateLevel(LevelData newLD) {
         levelArray[newLD.levelNumber] = newLD;
+        if (newLD.levelNumber > lastLevelCompleted && newLD.passed) {
+            lastLevelCompleted = newLD.levelNumber;
+        } 
     }
 
     public LevelData GetLevel(int levelNumber) {

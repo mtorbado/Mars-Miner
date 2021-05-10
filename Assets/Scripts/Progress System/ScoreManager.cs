@@ -39,7 +39,11 @@ public class ScoreManager : MonoBehaviour {
 
     public int GetLevelScore(int levelNumber) {
         return gameData.GetLevel(levelNumber).points;
-    } 
+    }
+
+    public int GetLastLevelCompleted() {
+        return gameData.GetLastLevelCompleted();
+    }
 
     /* ============================================================ EVENT CALLED METHODS ============================================================ */
 
