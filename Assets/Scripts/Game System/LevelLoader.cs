@@ -14,8 +14,6 @@ public class LevelLoader : MonoBehaviour {
     public GameObject ore;
 
     const int GameElementsLayer = 9;
-    const string LevelFolder = "LevelFiles";
-    const string LevelFileNaming = "level_";
     const int TableSize = 20;
 
     BoardManager boardManager;
@@ -30,7 +28,7 @@ public class LevelLoader : MonoBehaviour {
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
-        numOfLevels = GetNumOfLevels(LevelFolder);
+        numOfLevels = Resources.LoadAll("Level Tables").Length;
     }
 
 
@@ -61,19 +59,10 @@ public class LevelLoader : MonoBehaviour {
     }
 
     /// <summary>
-    /// Returns the current number of levels in the game
+    /// Returns the number of existing levels for the game
     /// </summary>
-    /// <param name="folder"> name of folder that contains the level scripts </param>
-    /// <returns></returns>
-    public static int GetNumOfLevels(String folder) {
-        int numOfLevels = 0; 
-        DirectoryInfo di = new DirectoryInfo(LevelFolder);
-        FileInfo[] fiList = di.GetFiles();
-        foreach (FileInfo fi in fiList) {
-            if (fi.Name.Contains(LevelFileNaming) && fi.Extension.Contains("csv")) {
-                numOfLevels++;
-            }
-        }
+    /// <returns> number of levels </returns>
+    public static int GetNumOfLevels() { //TODO rework
         return numOfLevels;
     }
 
@@ -147,8 +136,11 @@ public class LevelLoader : MonoBehaviour {
     private char[,] ReadLevelTable(int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
-        var string_table = File.ReadAllLines(LevelFolder + "/" + LevelFileNaming + levelNumber + ".csv").Select(l => l.Split(',').ToArray()).ToArray();
         
+        TextAsset csv = (TextAsset)Resources.Load("Level Tables/table_" + levelNumber);
+        String[] lines  = csv.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        var string_table = lines.Select(l => l.Split(',').ToArray()).ToArray();
+
         try {
             for (int i = 0; i < TableSize; i++) {
                 for (int j = 0; j < TableSize; j++) {

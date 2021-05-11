@@ -44,7 +44,7 @@ using UnityEngine;
     }
 
     private LevelData[] LeverArrayInitializer() {
-        LevelData[] levelArray = new LevelData[LevelLoader.GetNumOfLevels("LevelFiles")];
+        LevelData[] levelArray = new LevelData[LevelLoader.GetNumOfLevels()];
         for (int i = 0; i < levelArray.Length; ++i) {
             levelArray[i] = new LevelData(i);
         }

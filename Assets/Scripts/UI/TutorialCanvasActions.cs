@@ -17,8 +17,6 @@ public class TutorialCanvasActions : MonoBehaviour {
 
     public Sprite[] tutorialImages;
 
-    const string LevelFolder = "LevelFiles";
-    const string TutorialFileNaming = "tutorial";
     const string ImageFolder = "Assets/Prefabs/UI/Images/";
 
     private int currentPanel;
@@ -86,8 +84,8 @@ public class TutorialCanvasActions : MonoBehaviour {
     }
 
     private String[] ReadTutorialTextFile() {
-        StreamReader reader = new StreamReader(LevelFolder + "/" + TutorialFileNaming + ".txt"); 
-        String[] tutorialText = reader.ReadToEnd().Split(new string[] { "\r\n\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+        TextAsset txt = (TextAsset)Resources.Load("tutorial");
+        String[] tutorialText = txt.text.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         return tutorialText;
     }
 

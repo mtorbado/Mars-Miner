@@ -36,7 +36,7 @@ public class LevelSelector : MonoBehaviour {
         int maxInRow = Mathf.FloorToInt((panelDimensions.width + iconSpacing.x) / (iconDimensions.width + iconSpacing.x));
         int maxInCol = Mathf.FloorToInt((panelDimensions.height + iconSpacing.y) / (iconDimensions.height + iconSpacing.y));
 
-        numOfLevels = LevelLoader.GetNumOfLevels(LevelFolder);
+        numOfLevels = LevelLoader.GetNumOfLevels();
 
         maxPerPage = maxInCol * maxInRow;
         int totalPages = Mathf.CeilToInt((float)numOfLevels / maxPerPage);
