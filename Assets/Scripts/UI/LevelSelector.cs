@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.IO;
-
+using System.Collections.Generic;
 
 /// <summary>
 /// Generates de level selection UI panels dinamically
@@ -15,28 +15,36 @@ public class LevelSelector : MonoBehaviour {
     public GameObject thisCanvas;
     public Vector2 iconSpacing;
 
+    public GameObject levelManager;
+
     private int numOfLevels;
     private Rect panelDimensions;
     private Rect iconDimensions;
     private int maxPerPage;
     private int currentLevelCount;
 
+    private List<GameObject> icons;
+
     const string LevelFolder = "LevelFiles/";
 
     private void Start() {
+        icons = new List<GameObject>();
+
         panelDimensions = levelHolder.GetComponent<RectTransform>().rect;
         iconDimensions = levelIcon.GetComponent<RectTransform>().rect;
 
         int maxInRow = Mathf.FloorToInt((panelDimensions.width + iconSpacing.x) / (iconDimensions.width + iconSpacing.x));
         int maxInCol = Mathf.FloorToInt((panelDimensions.height + iconSpacing.y) / (iconDimensions.height + iconSpacing.y));
 
-        numOfLevels = LevelLoader.GetNumOfLevels(new DirectoryInfo(LevelFolder));
+        numOfLevels = LevelLoader.GetNumOfLevels();
 
         maxPerPage = maxInCol * maxInRow;
         int totalPages = Mathf.CeilToInt((float)numOfLevels / maxPerPage);
 
         GameEvents.current.onLevelLoad += HideLevelSelection;
         GameEvents.current.onSelectLevel += ShowLevelSelection;
+        GameEvents.current.onSelectLevel += UpdateScores;
+        GameEvents.current.onUpdateScores += UpdateScores;
 
         LoadPanels(totalPages);
     }
@@ -79,20 +87,22 @@ public class LevelSelector : MonoBehaviour {
     /// <param name="numOfIcons"> number of level buttons </param>
     /// <param name="parentObject"> object to set as parent (panel) </param>
     private void LoadIcons(int numOfIcons, GameObject parentObject) {
-         for (int i=0; i < numOfIcons; i++) {
-             currentLevelCount++;
-             GameObject icon = Instantiate(levelIcon) as GameObject;
-             icon.transform.SetParent(thisCanvas.transform, false);
-             icon.transform.SetParent(parentObject.transform);
-             icon.name = "Level" + i;
-             icon.GetComponentInChildren<TextMeshProUGUI>().SetText("Level " + i);
+        for (int i=0; i < numOfIcons; i++) {
+            currentLevelCount++;
+            GameObject icon = Instantiate(levelIcon) as GameObject;
+            icon.transform.SetParent(thisCanvas.transform, false);
+            icon.transform.SetParent(parentObject.transform);
+            icon.name = i.ToString();
+            icon.GetComponent<Button>().interactable = false;
+            icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + i);
+            icons.Add(icon);
          }
     }
 
     /// <summary>
     /// Sets the level selection menu inactive (hides it)
     /// </summary>
-    /// <param name="levelNumber"> not used </param>
+    /// <param name="levelNumber"> ignore parameter </param>
     private void HideLevelSelection(int levelNumber) {
         thisCanvas.GetComponent<Canvas>().enabled = false;
     }
@@ -102,5 +112,21 @@ public class LevelSelector : MonoBehaviour {
     /// </summary>
     private void ShowLevelSelection() {
         thisCanvas.GetComponent<Canvas>().enabled = true;
+    }
+
+    /// <summary>
+    /// Updates the displayed scores in the level selection menu
+    /// </summary>
+    private void UpdateScores() {
+        int lastLevelAlowed = levelManager.GetComponent<ScoreManager>().GetLastLevelCompleted() + 1;
+        foreach(GameObject icon in icons) {
+            try {
+                if(int.Parse(icon.name) <= lastLevelAlowed) {
+                    icon.GetComponent<Button>().interactable = true;
+                    int score = levelManager.GetComponent<ScoreManager>().GetLevelScore(int.Parse(icon.name));
+                    icon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(score.ToString());
+                }
+            } catch {}
+        }
     }
 }

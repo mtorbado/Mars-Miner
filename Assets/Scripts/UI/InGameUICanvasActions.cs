@@ -10,9 +10,6 @@ public class InGameUICanvasActions : MonoBehaviour {
     public GameObject codeHolder;
     public GameObject docHolder;
     private static int? lastLoadedLevel;
-
-    const string LevelFolder = "LevelFiles";
-    const string LevelFileNaming = "level_";
     
     private void Start() {
         LoadHooverDoc();
@@ -29,9 +26,8 @@ public class InGameUICanvasActions : MonoBehaviour {
     /// Loads the code documentation file into de HooverDoc panel
     /// </summary>
     private void LoadHooverDoc() {
-        StreamReader reader = new StreamReader(LevelFolder + "/" + "hoover_doc.txt"); 
-        docHolder.GetComponent<TextMeshProUGUI>().SetText(reader.ReadToEnd());
-        reader.Close();
+        TextAsset txt = (TextAsset)Resources.Load("hoover_doc");
+        docHolder.GetComponent<TextMeshProUGUI>().SetText(txt.text);
     }
 
     /// <summary>
@@ -39,9 +35,8 @@ public class InGameUICanvasActions : MonoBehaviour {
     /// </summary>
     /// <param name="levelNumber"> number of the loaded level </param>
     private void LoadLevel(int levelNumber) {
-        StreamReader reader = new StreamReader(LevelFolder + "/" + LevelFileNaming + levelNumber + ".txt"); 
-        codeHolder.GetComponent<TextMeshProUGUI>().SetText(reader.ReadToEnd());
-        reader.Close();
+        TextAsset txt=(TextAsset)Resources.Load("Level Code/level_" + levelNumber);
+        codeHolder.GetComponent<TextMeshProUGUI>().SetText(txt.text);
         ShowInGameUI();
         lastLoadedLevel = levelNumber;
     }

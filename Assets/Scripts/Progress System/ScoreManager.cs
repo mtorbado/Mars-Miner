@@ -1,79 +1,140 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class ScoreManager : MonoBehaviour {
 
-    private LevelDificulty dificulty;
-    private static LevelData levelData;
+    private LevelData currentLevelData;
+    private GameData gameData;
+
+    public int scoreToPass = 4000;
     
     void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
         GameEvents.current.onNextLevelLoad += LoadNextLevel;
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += LevelPassed;
+        GameEvents.current.onLevelFailed += LevelFailed;
+        GameEvents.current.onLoadGameData += LoadGameData;
+        GameEvents.current.onExitGame += SaveGlobalData;
+
+        gameData = new GameData();
+        GameEvents.current.UpdateScores();
+        RetrieveGameData();
     }
 
     /* =============================================================== GET METHODS =============================================================== */
 
-    public LevelData GetCurrentLevelData() {
-        return levelData;
-    }
-
-    public int GetCurrentScore() {
-        return (int) GetDificulty(levelData.levelNumber) - (100 * (levelData.attempts -1));
+    public int GetCurrentPoints() {
+        return Math.Max((Int32)GetDificulty(currentLevelData.levelNumber) - (100 * (currentLevelData.attempts -1)), 100);
     }
 
     public int GetCurrentAttempts() {
-        return levelData.attempts;
+        return currentLevelData.attempts;
     }
 
     public int GetCurrentLevelNumber() {
-        return levelData.levelNumber;
+        return currentLevelData.levelNumber;
     }
 
-    /* ============================================================ EVENT CALL METHODS ============================================================ */
+    public int GetLevelScore(int levelNumber) {
+        return gameData.GetLevel(levelNumber).points;
+    }
+
+    public int GetLastLevelCompleted() {
+        return gameData.LastLevelCompleted();
+    }
+
+    /* ============================================================ EVENT CALLED METHODS ============================================================ */
 
     private void LoadLevel(int levelNumber) {
-        //TODO: search if there's a saved game data for the level number
-       // if (levelData == null || levelData.levelNumber != levelNumber) {
-            levelData = new LevelData(levelNumber);
-        // }
+        currentLevelData = gameData.GetLevel(levelNumber);
     }
 
     private void LoadNextLevel() {
-        LoadLevel(levelData.levelNumber + 1);
+        LoadLevel(currentLevelData.levelNumber + 1);
     }
 
     private void AddAttempt() {
-        if (!levelData.passed) {
-            levelData.attempts++;
+        if (!currentLevelData.passed) {
+            currentLevelData.attempts++;
         }
     }
 
     private void LevelPassed() {
-        levelData.passed = true;
-        levelData.points = (int) GetDificulty(levelData.levelNumber) - (100 * (levelData.attempts -1));
+        currentLevelData.passed = true;
+        currentLevelData.points = GetCurrentPoints();
         // DEBUG_PrintAttempts();
         // DEBUG_PrintPoints();
+        gameData.UpdateLevel(currentLevelData);
+        SaveGameData();
+    }
+
+    private void LevelFailed() {
+        gameData.UpdateLevel(currentLevelData);
+        SaveGameData();
+    }
+
+    /* =============================================================== LOAD GAME DATA ============================================================= */
+
+    private void RetrieveGameData() {
+        #pragma warning disable CS0618
+        Application.ExternalCall ("getCampoLibre");
+        #pragma warning restore CS0618
+    }
+
+    private void LoadGameData(string gameDataStr) {
+        try {
+            if (!gameDataStr.Equals("") && gameDataStr != null) {
+                gameData = JsonUtility.FromJson<GameData>(gameDataStr);
+                GameEvents.current.UpdateScores();
+            }
+        } catch (Exception e) {
+            DEBUG_ReadGameDataError(e);
+        }
+    }
+
+    /* =============================================================== SAVE GAME DATA ============================================================= */
+
+    private void SaveGameData() {
+        string jsonGD = JsonUtility.ToJson(gameData);
+        #pragma warning disable CS0618
+        Application.ExternalCall("setCampoLibre", jsonGD);
+        #pragma warning restore CS0618
+    }
+
+    private void SaveGlobalData() {
+        int completed = 0;
+        int totalScore = gameData.TotalScore();
+        if (totalScore >= scoreToPass) completed = 1;
+        int [] data = { totalScore, completed };
+        #pragma warning disable CS0618
+        Application . ExternalCall("guardar", data);
+        #pragma warning restore CS0618
     }
 
     /* ============================================================= AUXILIAR METHODS ============================================================= */
 
     private LevelDificulty GetDificulty(int levelNumber) {
         GameObject characterCube = GameObject.FindGameObjectWithTag("CharacterCube");
-        AbsLevel level = (AbsLevel)characterCube.GetComponent("Level"+levelNumber);
+        AbsLevel level = (AbsLevel)characterCube.GetComponent("Level" + levelNumber);
         return level.dificulty;
     }
 
     /* ============================================================= DEBUG FUNCTIONS ============================================================= */
 
-     private void DEBUG_PrintAttempts() {
-         Debug.Log("attempts: " + levelData.attempts);
-     }
+    private void DEBUG_PrintAttempts() {
+        Debug.Log("attempts: " + currentLevelData.attempts);
+    }
 
-     private void DEBUG_PrintPoints() {
-         Debug.Log("points: " + levelData.points + "/ " + (int) GetDificulty(levelData.levelNumber));
-     }
+    private void DEBUG_PrintPoints() {
+        Debug.Log("points: " + currentLevelData.points + "/ " + (int) GetDificulty(currentLevelData.levelNumber));
+    }
 
+    private void DEBUG_ReadGameDataError(Exception e) {
+        Debug.Log("Could not read GameData string: " + e.ToString());
+    }
 }

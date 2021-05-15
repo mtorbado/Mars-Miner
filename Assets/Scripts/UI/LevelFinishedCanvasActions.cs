@@ -36,7 +36,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
         levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!LevelLoader.IsLastLevel());
     
-        levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentScore() + " puntos");
+        levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentPoints() + " puntos");
         levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentAttempts() + " intentos");
 
         background.SetActive(true);
@@ -65,6 +65,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     }
 
     public void GoToMainMenu() {
+        GameEvents.current.ExitGame();
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
 }
