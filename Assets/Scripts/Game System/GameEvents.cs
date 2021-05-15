@@ -31,6 +31,7 @@ public class GameEvents : MonoBehaviour {
 
     public event Action<string> onLoadGameData;
     public event Action onUpdateScores;
+    public event Action onExitGame;
 
     /* ======================================================== SELECTING/LOADING LEVEL ======================================================== */
 
@@ -149,7 +150,7 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
-    /* ============================================================ LOAD GAME DATA ============================================================ */
+    /* ============================================================ PROGRESS SYSTEM ============================================================ */
 
     /// <summary>
     /// (Event) The game data from the external call has been received and can be loaded by the ScoreManager
@@ -167,6 +168,15 @@ public class GameEvents : MonoBehaviour {
     public void UpdateScores() {
         if (onUpdateScores !=null) {
             onUpdateScores();
+        }
+    }
+
+    /// <summary>
+    /// (Event) The game is being closed
+    /// </summary>
+    public void ExitGame() {
+        if (onExitGame !=null) {
+            onExitGame();
         }
     }
 }

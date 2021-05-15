@@ -65,6 +65,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     }
 
     public void GoToMainMenu() {
+        GameEvents.current.ExitGame();
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
 }

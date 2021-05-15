@@ -9,6 +9,8 @@ public class ScoreManager : MonoBehaviour {
 
     private LevelData currentLevelData;
     private GameData gameData;
+
+    public int scoreToPass = 4000;
     
     void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
@@ -16,7 +18,8 @@ public class ScoreManager : MonoBehaviour {
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += LevelPassed;
         GameEvents.current.onLevelFailed += LevelFailed;
-        GameEvents.current.onLoadGameData += ReadGameData;
+        GameEvents.current.onLoadGameData += LoadGameData;
+        GameEvents.current.onExitGame += SaveGlobalData;
 
         gameData = new GameData();
         GameEvents.current.UpdateScores();
@@ -42,7 +45,7 @@ public class ScoreManager : MonoBehaviour {
     }
 
     public int GetLastLevelCompleted() {
-        return gameData.GetLastLevelCompleted();
+        return gameData.LastLevelCompleted();
     }
 
     /* ============================================================ EVENT CALLED METHODS ============================================================ */
@@ -83,10 +86,12 @@ public class ScoreManager : MonoBehaviour {
         #pragma warning restore CS0618
     }
 
-    private void ReadGameData(string gameDataStr) {
+    private void LoadGameData(string gameDataStr) {
         try {
-            gameData = JsonUtility.FromJson<GameData>(gameDataStr);
-            GameEvents.current.UpdateScores();
+            if (!gameDataStr.Equals("") && gameDataStr != null) {
+                gameData = JsonUtility.FromJson<GameData>(gameDataStr);
+                GameEvents.current.UpdateScores();
+            }
         } catch (Exception e) {
             DEBUG_ReadGameDataError(e);
         }
@@ -95,19 +100,19 @@ public class ScoreManager : MonoBehaviour {
     /* =============================================================== SAVE GAME DATA ============================================================= */
 
     private void SaveGameData() {
-        string jsonGD = JsonUtility.ToJson(gameData, true);
+        string jsonGD = JsonUtility.ToJson(gameData);
         #pragma warning disable CS0618
-        Application.ExternalCall ("setCampoLibre", jsonGD );
+        Application.ExternalCall("setCampoLibre", jsonGD);
         #pragma warning restore CS0618
     }
 
-    private void SaveGlobalData() { // not called yet
+    private void SaveGlobalData() {
         int completed = 0;
-        int totalScore = 0;
-        if (totalScore >= 4000) completed = 1;
+        int totalScore = gameData.TotalScore();
+        if (totalScore >= scoreToPass) completed = 1;
         int [] data = { totalScore, completed };
         #pragma warning disable CS0618
-        Application . ExternalCall ("guardar", data );
+        Application . ExternalCall("guardar", data);
         #pragma warning restore CS0618
     }
 
@@ -115,7 +120,7 @@ public class ScoreManager : MonoBehaviour {
 
     private LevelDificulty GetDificulty(int levelNumber) {
         GameObject characterCube = GameObject.FindGameObjectWithTag("CharacterCube");
-        AbsLevel level = (AbsLevel)characterCube.GetComponent("Level"+levelNumber);
+        AbsLevel level = (AbsLevel)characterCube.GetComponent("Level" + levelNumber);
         return level.dificulty;
     }
 

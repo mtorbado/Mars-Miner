@@ -13,6 +13,8 @@ public class CountOreScript : MonoBehaviour
     void Start() {
         GameEvents.current.onPickOreTriggerEnter += OnPickOre;
         GameEvents.current.onSetOreGoal += SetOreGoal;
+        GameEvents.current.onLevelLoad += ResetCount;
+        GameEvents.current.onNextLevelLoad += ResetCount;
     }
 
     /// <summary>
@@ -20,7 +22,7 @@ public class CountOreScript : MonoBehaviour
     /// </summary>
     private void SetOreGoal () {
         oreGoal =  GameObject.FindGameObjectWithTag("CharacterCube").GetComponent<AbsLevel>().oreGoal;
-        gameObject.GetComponent<TextMeshProUGUI>().SetText(oreCount + " / " + oreGoal);
+        gameObject.GetComponent<TextMeshProUGUI>().SetText(0 + " / " + oreGoal);
     }
 
     /// <summary>
@@ -29,5 +31,20 @@ public class CountOreScript : MonoBehaviour
     private void OnPickOre() {
         oreCount ++;
         gameObject.GetComponent<TextMeshProUGUI>().SetText(oreCount + " / " + oreGoal);
+    }
+
+    /// <summary>
+    /// Resets the ore counter each time a level is loaded
+    /// </summary>
+    /// <param name="n"> ignore parameter </param>
+    private void ResetCount(int n) {
+        oreCount = 0;
+    }
+
+    /// <summary>
+    /// Resets the ore counter each time a level is loaded
+    /// </summary>
+    private void ResetCount() {
+        oreCount = 0;
     }
 }
