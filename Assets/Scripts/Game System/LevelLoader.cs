@@ -108,19 +108,19 @@ public class LevelLoader : MonoBehaviour {
                         break;
                     }
                     case 'u': { // character cube (looking up) (-x)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f), transform);
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f), transform);
                         break;
                     }
                     case 'd': { // character cube (looking down) (x)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f), transform);
-                        break;
-                    }
-                    case 'l': { // character cube (looking left) (-z)
                         Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 90f, 0f), transform);
                         break;
                     }
+                    case 'l': { // character cube (looking left) (-z)
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 180f, 0f), transform);
+                        break;
+                    }
                     case 'r': { // character cube (looking right) (z)
-                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, -90f, 0f), transform);
+                        Instantiate(character, boardManager.GetCenterPointOfTile(i,j), transform.rotation * Quaternion.Euler (0f, 0f, 0f), transform);
                         break;
                     }
                 }

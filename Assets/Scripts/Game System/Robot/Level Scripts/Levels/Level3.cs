@@ -1,19 +1,23 @@
-﻿using System.Collections;
+using System.Collections;
 
-public class Level0 : AbsLevel {
+public class Level3 : AbsLevel {
 
     private RobotActions robotActions;
 
     private void Awake() {
         robotActions = (RobotActions)transform.GetComponent<RobotActions>();
-        isTutorial = true;
-        oreGoal = 1;
+        oreGoal = 2;
         dificulty = LevelDificulty.Easy;
     }
     
     public override IEnumerator Play(string[] args) {
+        
         while (!CheckLevelPassed() && !CheckLevelFailed()) {
+           if (robotActions.IsRockInFront(1)) {
+                yield return robotActions.TurnRight();
+            }
             yield return robotActions.MoveFoward();
+            
         }
         if (CheckLevelFailed()) {
             yield return robotActions.BreakAnimation();

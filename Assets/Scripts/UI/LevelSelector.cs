@@ -24,6 +24,7 @@ public class LevelSelector : MonoBehaviour {
     private int currentLevelCount;
 
     private List<GameObject> icons;
+    private int lastLevel = 0;
 
     const string LevelFolder = "LevelFiles/";
 
@@ -65,7 +66,7 @@ public class LevelSelector : MonoBehaviour {
             panel.GetComponent<RectTransform>().localPosition = new Vector2(panelDimensions.width * (i-1), 0);
             SetUpGrid(panel);
             int numOfIcons = i == numOfPanels ? numOfLevels - currentLevelCount : maxPerPage;
-            LoadIcons( numOfIcons, panel);
+            LoadIcons(numOfIcons, panel);
         }
         Destroy(panelClone);
     }
@@ -93,10 +94,11 @@ public class LevelSelector : MonoBehaviour {
             icon.transform.SetParent(thisCanvas.transform, false);
             icon.transform.SetParent(parentObject.transform);
             icon.name = i.ToString();
-            icon.GetComponent<Button>().interactable = false;
-            icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + i);
+            // icon.GetComponent<Button>().interactable = false;
+            icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + (lastLevel + i));
             icons.Add(icon);
          }
+         lastLevel += numOfIcons;
     }
 
     /// <summary>
