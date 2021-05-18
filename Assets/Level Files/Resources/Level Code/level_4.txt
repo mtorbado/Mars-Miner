@@ -1,0 +1,5 @@
+public void start (String[] args) {
+    int power = 5;
+    do {
+
+    } while (power > 0);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 /// <summary>
@@ -146,23 +145,18 @@ public class RobotActions : MonoBehaviour {
     /// <param name="n"> distance (in tiles) from the robot to the returned tile </param>
     /// <returns> tile in front </returns>
     private Tile GetFowardTile(int n) {
-
         Tile t = boardManager.GetTile(transform.position);
-
-        if (transform.rotation.y == 0) {
+        if (transform.forward == new Vector3(1,0,0)) {
             return new Tile(t.X + n, t.Y);
         }
-
-        else if (transform.rotation.y == 1) {
+        else if (transform.forward == new Vector3(-1,0,0)) {
             return new Tile (t.X - n , t.Y);
         }
-
-        else if (transform.rotation.y > 0) {
-            return new Tile (t.X, t.Y - n);
-        }
-
-        else { //(transform.rotation.y < 0)
+        else if (transform.forward == new Vector3(0,0,1)) {
             return new Tile (t.X, t.Y + n);
+        }
+        else {
+            return new Tile (t.X, t.Y - n);
         }
     }
 
