@@ -1,6 +1,6 @@
 using System.Collections;
 
-public class Level3 : AbsLevel {
+public class Level4 : AbsLevel {
 
     private RobotActions robotActions;
 
@@ -11,18 +11,25 @@ public class Level3 : AbsLevel {
     }
     
     public override IEnumerator Play(string[] args) {
-        
-        while (!CheckLevelPassed() && !CheckLevelFailed()) {
-           if (robotActions.IsRockInFront(1)) {
-                yield return robotActions.TurnRight();
-            }
-            else {
-                if (robotActions.IsRockInFront(1)) {
+        int power = 5;
+        while ((power > 0) && (!CheckLevelPassed() && !CheckLevelFailed())) {
+            int oldOC = oreCount;
+            if (robotActions.IsRockInFront(1)) {
+                if (power % 2 == 0) {
+                    yield return robotActions.TurnRight();
+                }
+                else {
                     yield return robotActions.TurnLeft();
                 }
+            }
+            else {
                 yield return robotActions.MoveFoward();
             }
-            
+            power --;
+            if (oreCount > oldOC) {
+                power = 5;
+            }
+            oldOC = oreCount;
         }
         if (CheckLevelFailed()) {
             yield return robotActions.BreakAnimation();

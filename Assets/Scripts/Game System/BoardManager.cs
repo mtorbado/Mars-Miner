@@ -12,7 +12,6 @@ public class BoardManager : MonoBehaviour {
     private int tileNumber;
     private double tileSize;
 
-    Rigidbody rb;
     Plane basePlane;
     GameObject gridPlane;
     Material gridMaterial;
