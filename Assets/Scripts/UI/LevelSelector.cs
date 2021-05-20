@@ -93,7 +93,7 @@ public class LevelSelector : MonoBehaviour {
             GameObject icon = Instantiate(levelIcon) as GameObject;
             icon.transform.SetParent(thisCanvas.transform, false);
             icon.transform.SetParent(parentObject.transform);
-            icon.name = i.ToString();
+            icon.name = (lastLevel + i).ToString();
             // icon.GetComponent<Button>().interactable = false;
             icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + (lastLevel + i));
             icons.Add(icon);
@@ -120,10 +120,10 @@ public class LevelSelector : MonoBehaviour {
     /// Updates the displayed scores in the level selection menu
     /// </summary>
     private void UpdateScores() {
-        int lastLevelAlowed = levelManager.GetComponent<ScoreManager>().GetLastLevelCompleted() + 1;
+        int lastLevelAllowed = levelManager.GetComponent<ScoreManager>().GetLastLevelCompleted() + 1;
         foreach(GameObject icon in icons) {
             try {
-                if(int.Parse(icon.name) <= lastLevelAlowed) {
+                if(int.Parse(icon.name) <= lastLevelAllowed) {
                     icon.GetComponent<Button>().interactable = true;
                     int score = levelManager.GetComponent<ScoreManager>().GetLevelScore(int.Parse(icon.name));
                     icon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(score.ToString());

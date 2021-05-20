@@ -1,5 +1,15 @@
 public void start (String[] args) {
     int power = 5;
-    do {
-
-    } while (power > 0);
+    while (power > 0) {
+        if (robot.seesRock()) {
+                robot.turnLeft();
+            }
+            else {
+                robot.moveFoward();
+            }
+            power --;
+            if (robot.pickedOre()) {
+                power += 5;
+            }
+        }
+}
