@@ -18,17 +18,16 @@ public class LevelLoader : MonoBehaviour {
 
     BoardManager boardManager;
 
-    private static int numOfLevels;
     private static int? lastLoadedLevel;
 
     private void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
         GameEvents.current.onRestartLevel += RestartLevel;
         GameEvents.current.onNextLevelLoad += LoadNextLevel;
+        GameEvents.current.onSelectLevel += CleanTable;
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
-        numOfLevels = Resources.LoadAll("Level Tables").Length;
     }
 
 
@@ -58,24 +57,10 @@ public class LevelLoader : MonoBehaviour {
         LoadLevel((int)lastLoadedLevel + 1);
     }
 
-    /// <summary>
-    /// Returns the number of existing levels for the game
-    /// </summary>
-    /// <returns> number of levels </returns>
-    public static int GetNumOfLevels() { //TODO rework
-        return numOfLevels;
+    public static bool IsLastLevel() {
+        return (lastLoadedLevel == (Int32)LevelInfo.LastLevel);
     }
 
-    /// <summary>
-    /// Check if the current playing level is the last one
-    /// </summary>
-    /// <returns> true if current level is the last one, false otherwise</returns>
-    public static bool IsLastLevel() {
-        if ((int)lastLoadedLevel == numOfLevels - 1) {
-            return true;
-        }
-        return false;
-    }
 
     /* =============================================================== PRIVATE METHODS =============================================================== */
 

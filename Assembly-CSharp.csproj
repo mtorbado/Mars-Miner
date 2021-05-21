@@ -144,6 +144,7 @@
      <Compile Include="Assets\Scripts\Game System\CableController.cs" />
      <Compile Include="Assets\Scripts\Game System\DragObjectController.cs" />
      <Compile Include="Assets\Scripts\Game System\GameEvents.cs" />
+     <Compile Include="Assets\Scripts\Game System\LevelInfo.cs" />
      <Compile Include="Assets\Scripts\Game System\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\CoroutineWithData.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\AbsLevel.cs" />
@@ -153,13 +154,11 @@
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level1.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level2.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level3.cs" />
-     <Compile Include="Assets\Scripts\Game System\Robot\Level Scripts\Levels\Level4.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
      <Compile Include="Assets\Scripts\Game System\Tile.cs" />
-     <Compile Include="Assets\Scripts\Progress System\GameData.cs" />
-     <Compile Include="Assets\Scripts\Progress System\LevelData.cs" />
      <Compile Include="Assets\Scripts\Progress System\OpenField.cs" />
+     <Compile Include="Assets\Scripts\Progress System\Score.cs" />
      <Compile Include="Assets\Scripts\Progress System\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\UI\AbsButton.cs" />
      <Compile Include="Assets\Scripts\UI\CanvasTweening.cs" />
@@ -204,7 +203,6 @@
      <None Include="Assets\Imported Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
-     <None Include="Assets\Level Files\Resources\Level Code\level_4.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
