@@ -36,8 +36,8 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
         levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!LevelLoader.IsLastLevel());
     
-        levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentPoints() + " puntos");
-        levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetCurrentAttempts() + " intentos");
+        levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetLevelPoints() + " puntos");
+        levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetLevelAttempts() + " intentos");
 
         background.SetActive(true);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);
@@ -47,15 +47,15 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     public void LoadNextLevel() {
         background.SetActive(false);
-        GameEvents.current.LoadNextLevel();
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        GameEvents.current.LoadNextLevel();
     }
 
     public void SelectLevel() {
         background.SetActive(false);
-        GameEvents.current.SelectLevel();
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
         LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        GameEvents.current.SelectLevel();
     }
 
     public void RestartLevel() {

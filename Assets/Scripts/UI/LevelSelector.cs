@@ -1,134 +1,78 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 
 /// <summary>
-/// Generates de level selection UI panels dinamically
-/// Based on https://pressstart.vip/tutorials/2019/06/1/96/level-selector.html
+/// 
 /// </summary>
 public class LevelSelector : MonoBehaviour {
 
-    public GameObject levelHolder;
-    public GameObject levelIcon;
-    public GameObject thisCanvas;
-    public Vector2 iconSpacing;
+    ScoreManager scoreManager;
 
-    public GameObject levelManager;
+    int[] maxScores;
 
-    private int numOfLevels;
-    private Rect panelDimensions;
-    private Rect iconDimensions;
-    private int maxPerPage;
-    private int currentLevelCount;
-
-    private List<GameObject> icons;
-    private int lastLevel = 0;
-
-    const string LevelFolder = "LevelFiles/";
+    public GameObject[] dificultyButtons;
 
     private void Start() {
-        icons = new List<GameObject>();
 
-        panelDimensions = levelHolder.GetComponent<RectTransform>().rect;
-        iconDimensions = levelIcon.GetComponent<RectTransform>().rect;
-
-        int maxInRow = Mathf.FloorToInt((panelDimensions.width + iconSpacing.x) / (iconDimensions.width + iconSpacing.x));
-        int maxInCol = Mathf.FloorToInt((panelDimensions.height + iconSpacing.y) / (iconDimensions.height + iconSpacing.y));
-
-        numOfLevels = LevelLoader.GetNumOfLevels();
-
-        maxPerPage = maxInCol * maxInRow;
-        int totalPages = Mathf.CeilToInt((float)numOfLevels / maxPerPage);
-
-        GameEvents.current.onLevelLoad += HideLevelSelection;
         GameEvents.current.onSelectLevel += ShowLevelSelection;
-        GameEvents.current.onSelectLevel += UpdateScores;
         GameEvents.current.onUpdateScores += UpdateScores;
 
-        LoadPanels(totalPages);
+        scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
+
+        maxScores = new int[4];
+        maxScores[0] = (Int32)LevelInfo.FirstMedium * (Int32)LevelDificulty.Easy;
+        maxScores[1] = ((Int32)LevelInfo.FirstHard - (Int32)LevelInfo.FirstMedium) * (Int32)LevelDificulty.Medium;
+        maxScores[2] = ((Int32)LevelInfo.FirstChallenge - (Int32)LevelInfo.FirstHard) * (Int32)LevelDificulty.Hard;
+        maxScores[3] = ((Int32)LevelInfo.LastLevel - (Int32)LevelInfo.FirstChallenge + 1) * (Int32)LevelDificulty.Challenge;
     }
 
-    /// <summary>
-    /// Sets up the level selector menu panels
-    /// </summary>
-    /// <param name="numOfPanels"> desired number of panels </param>
-    private void LoadPanels(int numOfPanels) {
-        GameObject panelClone = Instantiate(levelHolder) as GameObject;
-        levelHolder.AddComponent<PageSwiper>();
-
-        for (int i=1; i <= numOfPanels; i++) {
-            GameObject panel = Instantiate(panelClone) as GameObject;
-            panel.transform.SetParent(thisCanvas.transform, false);
-            panel.transform.SetParent(levelHolder.transform);
-            panel.name = "Page-" + i;
-            panel.GetComponent<RectTransform>().localPosition = new Vector2(panelDimensions.width * (i-1), 0);
-            SetUpGrid(panel);
-            int numOfIcons = i == numOfPanels ? numOfLevels - currentLevelCount : maxPerPage;
-            LoadIcons(numOfIcons, panel);
-        }
-        Destroy(panelClone);
-    }
-    
-    /// <summary>
-    /// Configures grid to place level buttons
-    /// </summary>
-    /// <param name="panel">UI panel to contain the grid</param>
-    private void SetUpGrid(GameObject panel) {
-        GridLayoutGroup grid = panel.AddComponent<GridLayoutGroup>();
-        grid.cellSize = new Vector2(iconDimensions.width, iconDimensions.height);
-        grid.childAlignment = TextAnchor.MiddleCenter;
-        grid.spacing = iconSpacing;
+    public void PlayEasy() {
+        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstEasy);
+        transform.GetComponent<Canvas>().enabled = false;
     }
 
-    /// <summary>
-    /// Sets the level buttons (icons)
-    /// </summary>
-    /// <param name="numOfIcons"> number of level buttons </param>
-    /// <param name="parentObject"> object to set as parent (panel) </param>
-    private void LoadIcons(int numOfIcons, GameObject parentObject) {
-        for (int i=0; i < numOfIcons; i++) {
-            currentLevelCount++;
-            GameObject icon = Instantiate(levelIcon) as GameObject;
-            icon.transform.SetParent(thisCanvas.transform, false);
-            icon.transform.SetParent(parentObject.transform);
-            icon.name = (lastLevel + i).ToString();
-            // icon.GetComponent<Button>().interactable = false;
-            icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Nivel " + (lastLevel + i));
-            icons.Add(icon);
-         }
-         lastLevel += numOfIcons;
+    public void PlayMedium() {
+        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstMedium);
+        transform.GetComponent<Canvas>().enabled = false;
     }
 
-    /// <summary>
-    /// Sets the level selection menu inactive (hides it)
-    /// </summary>
-    /// <param name="levelNumber"> ignore parameter </param>
-    private void HideLevelSelection(int levelNumber) {
-        thisCanvas.GetComponent<Canvas>().enabled = false;
+    public void PlayHard() {
+        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstHard);
+        transform.GetComponent<Canvas>().enabled = false;
+    }
+
+    public void PlayChallenge() {
+        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstChallenge);
+        transform.GetComponent<Canvas>().enabled = false;
     }
 
     /// <summary>
     /// Sets the level selection menu active (shows it)
     /// </summary>
     private void ShowLevelSelection() {
-        thisCanvas.GetComponent<Canvas>().enabled = true;
+        transform.GetComponent<Canvas>().enabled = true;
     }
 
     /// <summary>
-    /// Updates the displayed scores in the level selection menu
+    /// Updates the displayed scores in the level selection menu and activates difficulty buttons if threshold score from previous difficulty is reached
     /// </summary>
     private void UpdateScores() {
-        int lastLevelAllowed = levelManager.GetComponent<ScoreManager>().GetLastLevelCompleted() + 1;
-        foreach(GameObject icon in icons) {
-            try {
-                if(int.Parse(icon.name) <= lastLevelAllowed) {
-                    icon.GetComponent<Button>().interactable = true;
-                    int score = levelManager.GetComponent<ScoreManager>().GetLevelScore(int.Parse(icon.name));
-                    icon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(score.ToString());
-                }
-            } catch {}
+        int[] scoreArray = scoreManager.finalScore.scoreArray;
+        for (int i = 0; i < dificultyButtons.Length; i++) {
+            if (i == 0 || scoreArray[i-1] > (maxScores[i-1] / 2)) {
+                dificultyButtons[i].GetComponent<Button>().interactable = true;
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(scoreArray[i] + "/" + maxScores[i]);
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255,255,255,255);
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 20;
+            }
+            else {
+                dificultyButtons[i].GetComponent<Button>().interactable = false;
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("BLOQUEADO");
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(194,78,82,255);
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 15;
+            }
         }
     }
 }
