@@ -42,7 +42,8 @@ public class PlayButtonScript : AbsButton {
     /// 
     /// </summary>
     /// <param name="n"> not used </param>
-    private void EnableButton2(int n) {
+    /// /// <param name="ld"> not used </param>
+    private void EnableButton2(LevelDificulty ld, int n) {
         EnableButton();
     }
 }

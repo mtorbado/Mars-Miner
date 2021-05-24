@@ -38,7 +38,8 @@ public class InGameUICanvasActions : MonoBehaviour {
     /// Sets the game UI pannels active
     /// </summary>
     /// <param name="n"> not used </param>
-    private void ShowInGameUI(int n) {
+    /// /// <param name="ld"> not used </param>
+    private void ShowInGameUI(LevelDificulty ld, int n) {
         this.gameObject.GetComponent<Canvas>().enabled = true;
     }
 

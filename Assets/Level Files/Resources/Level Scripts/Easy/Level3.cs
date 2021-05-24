@@ -1,6 +1,6 @@
 using System.Collections;
 
-public class Level1 : AbsLevel {
+public class Level3 : AbsLevel {
 
     private RobotActions robotActions;
 

@@ -9,92 +9,86 @@ public class ScoreManager : MonoBehaviour {
 
     
     public Score finalScore;
-    public Score newScore;
     public int scoreToPass;
     public int[] maxScores;
 
-    private int currentLevel;
-    private int attempts;
+    int attempts;
+    int moves;
+
+    LevelLoader levelLoader;
     
     void Start() {
         GameEvents.current.onLoadGameData += LoadScore;
         GameEvents.current.onExitGame += SaveGlobalData;
-        GameEvents.current.onLevelLoad += LoadLevel;
-        GameEvents.current.onNextLevelLoad += LoadNextLevel;
+        GameEvents.current.onLevelLoad += Reset;
+        GameEvents.current.onNextLevelLoad += Reset;
+        GameEvents.current.onRandomLevelLoad += Reset;
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += SaveScore;
 
-        maxScores = new int[4];
-        maxScores[0] = (int)LevelInfo.FirstMedium * (int)LevelDificulty.Easy;
-        maxScores[1] = ((int)LevelInfo.FirstHard - (int)LevelInfo.FirstMedium) * (int)LevelDificulty.Medium;
-        maxScores[2] = ((int)LevelInfo.FirstChallenge - (int)LevelInfo.FirstHard) * (int)LevelDificulty.Hard;
-        maxScores[3] = ((int)LevelInfo.LastLevel - (int)LevelInfo.FirstChallenge + 1) * (int)LevelDificulty.Challenge;
+        levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
 
-        scoreToPass = (maxScores[0] / 2) + (maxScores[1] /2); //TODO: decide total score to complete the game
-
-        newScore = new Score();
         finalScore = new Score();
         GameEvents.current.UpdateScores();
         RetrieveScore();
-    }
-
-    
-     public LevelDificulty GetDificulty(int levelNumber) {
-        if (currentLevel < (int)LevelInfo.FirstMedium) {
-            return LevelDificulty.Easy;
-        }
-        else if (currentLevel < (int)LevelInfo.FirstHard) {
-            return LevelDificulty.Medium;
-        }
-        else if (currentLevel < (int)LevelInfo.FirstChallenge) {
-            return LevelDificulty.Hard;
-        }
-        else {
-            return LevelDificulty.Challenge;
-        }
-    }
-
-     public int GetDificultyIndex(int levelNumber) {
-        if (currentLevel < (int)LevelInfo.FirstMedium) {
-            return 0;
-        }
-        else if (currentLevel < (int)LevelInfo.FirstHard) {
-            return 1;
-        }
-        else if (currentLevel < (int)LevelInfo.FirstChallenge) {
-            return 2;
-        }
-        else {
-            return 3;
-        }
     }
 
     /// <summary>
     /// Returns the points obtained in the current playing level
     /// </summary>
     /// <returns></returns>
-    public int GetLevelPoints() {
-        return (int)GetDificulty(currentLevel); //TODO calculate taking account of time and attempts
-
+    public int LevelPoints() { // TODO calculate score
+        switch(levelLoader.playingDificulty) {
+            case LevelDificulty.Easy: return (int)LevelDificulty.Easy;
+            case LevelDificulty.Medium: return (int)LevelDificulty.Medium;
+            case LevelDificulty.Hard: return (int)LevelDificulty.Hard;
+            case LevelDificulty.Challenge: return (int)LevelDificulty.Challenge;
+        }
+        return 0;
     }
 
-    public int GetLevelAttempts() {
+    public int MaxPoints() {
+        switch(levelLoader.playingDificulty) {
+            case LevelDificulty.Easy: return (int)LevelDificulty.Easy * levelLoader.easyLevels;
+            case LevelDificulty.Medium: return (int)LevelDificulty.Medium * levelLoader.mediumLevels;
+            case LevelDificulty.Hard: return (int)LevelDificulty.Hard * levelLoader.hardLevels;
+            case LevelDificulty.Challenge: return (int)LevelDificulty.Challenge * levelLoader.challengeLevels;
+        }
+        return 0;
+    }
+
+    public int[] MaxPointsArray() {
+        return new int[4] {
+            (int)LevelDificulty.Easy * levelLoader.easyLevels,
+            (int)LevelDificulty.Medium * levelLoader.mediumLevels,
+            (int)LevelDificulty.Hard * levelLoader.hardLevels,
+            (int)LevelDificulty.Challenge * levelLoader.challengeLevels
+        };
+    }
+
+
+    public int LevelAttempts() {
         return attempts;
     }
 
-    private void LoadLevel(int levelNumber) {
-        if (currentLevel != levelNumber) {
+    private void Reset(LevelDificulty levelDificulty, int levelNumber) {
+        if (levelLoader.playingDificulty != levelDificulty || levelLoader.playingLevel != levelNumber) {
             attempts = 0;
-        }
-        currentLevel = levelNumber;
+            moves = 0;
+        }        
     }
 
-    private void LoadNextLevel() {
-        LoadLevel(currentLevel + 1);
+    private void Reset() {
+        attempts = 0;
+        moves = 0;
     }
 
     private void AddAttempt() {
         attempts ++;
+    }
+
+    private void AddMove() {
+        moves ++;
     }
    
     /* =============================================================== LOAD SCORE ============================================================= */
@@ -119,14 +113,10 @@ public class ScoreManager : MonoBehaviour {
     /* =============================================================== SAVE SCORE ============================================================= */
 
     private void SaveScore() {
-        if(newScore.scoreArray[GetDificultyIndex(currentLevel)] + GetLevelPoints() > maxScores[GetDificultyIndex(currentLevel)]) {
-            newScore.scoreArray[GetDificultyIndex(currentLevel)] = maxScores[GetDificultyIndex(currentLevel)];
-        } else {
-            newScore.scoreArray[GetDificultyIndex(currentLevel)] += GetLevelPoints();
-        }
-        for (int i = 0; i < finalScore.scoreArray.Length; i++) {
-            finalScore.scoreArray[i] = Math.Max(finalScore.scoreArray[i], newScore.scoreArray[i]);
-        }
+        
+        int points = Math.Max(LevelPoints() + finalScore.GetPoints(levelLoader.playingDificulty), MaxPoints());
+        finalScore.SetPoints(levelLoader.playingDificulty, Math.Max(finalScore.GetPoints(levelLoader.playingDificulty), points));
+
         string jsonScore = JsonUtility.ToJson(finalScore);
         GameEvents.current.UpdateScores();
         

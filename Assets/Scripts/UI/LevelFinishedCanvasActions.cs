@@ -10,12 +10,14 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     private GameObject levelFailedPanel;
     private GameObject background;
     private ScoreManager scoreManager;
+    private LevelLoader levelLoader;
 
     private void Start() {
         GameEvents.current.onLevelFailed += ShowLevelFailedPanel;
         GameEvents.current.onLevelPassed += ShowLevelPassedPanel;
 
         scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
+        levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
 
         background = gameObject.transform.Find("Background").gameObject;
         background.SetActive(false);
@@ -32,10 +34,10 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     private void ShowLevelPassedPanel() {
 
-        levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!LevelLoader.IsLastLevel());
+        levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!levelLoader.IsLastLevel());
     
-        levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetLevelPoints() + " puntos");
-        levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.GetLevelAttempts() + " intentos");
+        levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelPoints() + " puntos");
+        levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelAttempts() + " intentos");
 
         background.SetActive(true);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);

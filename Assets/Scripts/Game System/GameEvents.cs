@@ -12,7 +12,7 @@ public class GameEvents : MonoBehaviour {
     }
 
     public event Action onSelectLevel;
-    public event Action<int> onLevelLoad;
+    public event Action<LevelDificulty,int> onLevelLoad;
     public event Action onRestartLevel;
     public event Action onNextLevelLoad;
     public event Action onRandomLevelLoad;
@@ -47,9 +47,9 @@ public class GameEvents : MonoBehaviour {
     /// (Event) A level is selected in the level selection menu
     /// </summary>
     /// <param name="levelNumber"> level to load </param>
-    public void LoadLevel(int levelNumber) {
+    public void LoadLevel(LevelDificulty levelDificulty, int levelNumber) {
         if (onLevelLoad !=null) {
-            onLevelLoad(levelNumber);
+            onLevelLoad(levelDificulty, levelNumber);
         }
     }
 

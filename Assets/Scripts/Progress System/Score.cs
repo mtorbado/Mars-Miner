@@ -1,16 +1,66 @@
 [System.Serializable] public class Score {
 
-    public int[] scoreArray;
+    public int easyPoints;
+    public int mediumPoints;
+    public int hardPoints;
+    public int challengePoints;
 
     public Score() {
-        scoreArray = new int[4]{0,0,0,0};
+        easyPoints = 0;
+        mediumPoints = 0;
+        hardPoints = 0;
+        challengePoints = 0;
+    }
+
+    public int[] Array() {
+        return new int[4] {easyPoints, mediumPoints, hardPoints, challengePoints};
+    }
+
+    public int GetPoints(LevelDificulty levelDificulty) {
+        switch(levelDificulty) {
+            case LevelDificulty.Easy: return easyPoints;
+            case LevelDificulty.Medium: return mediumPoints;
+            case LevelDificulty.Hard: return hardPoints;
+            case LevelDificulty.Challenge: return challengePoints;
+        }
+        return 0;
+    }
+
+    public void SetPoints(LevelDificulty levelDificulty, int points) {
+        switch(levelDificulty) {
+            case LevelDificulty.Easy: 
+                easyPoints = points;
+                break;
+            case LevelDificulty.Medium:
+                mediumPoints = points;
+                break;
+            case LevelDificulty.Hard:
+                hardPoints = points;
+                break;
+            case LevelDificulty.Challenge:
+                challengePoints = points;
+                break;
+        }
+    }
+
+    public void AddPoints(LevelDificulty levelDificulty, int points) {
+        switch(levelDificulty) {
+            case LevelDificulty.Easy: 
+                easyPoints += points;
+                break;
+            case LevelDificulty.Medium:
+                mediumPoints += points;
+                break;
+            case LevelDificulty.Hard:
+                hardPoints += points;
+                break;
+            case LevelDificulty.Challenge:
+                challengePoints += points;
+                break;
+        }
     }
 
     public int TotalScore() {
-        int totalScore = 0;
-        for (int i = 0; i < scoreArray.Length; i++) {
-            totalScore += scoreArray[i];
-        }
-        return totalScore;
+        return easyPoints + mediumPoints + hardPoints + challengePoints;
     }
 }

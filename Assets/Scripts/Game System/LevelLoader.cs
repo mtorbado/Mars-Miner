@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -20,7 +21,13 @@ public class LevelLoader : MonoBehaviour {
     ScoreManager scoreManager;
     InGameUICanvasActions inGameUI;
 
-    private static int? lastLoadedLevel;
+    [HideInInspector] public int? playingLevel;
+    [HideInInspector] public LevelDificulty playingDificulty;
+
+    [HideInInspector] public int easyLevels;
+    [HideInInspector] public int mediumLevels;
+    [HideInInspector] public int hardLevels;
+    [HideInInspector] public int challengeLevels;
 
     private void Start() {
         GameEvents.current.onLevelLoad += LoadLevel;
@@ -28,10 +35,14 @@ public class LevelLoader : MonoBehaviour {
         GameEvents.current.onNextLevelLoad += LoadNextLevel;
         GameEvents.current.onRandomLevelLoad += LoadRandomLevel;
         GameEvents.current.onSelectLevel += CleanTable;
+
+        easyLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Easy.ToString()).Length;
+        mediumLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Medium.ToString()).Length;
+        hardLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Hard.ToString()).Length;
+        challengeLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Challenge.ToString()).Length;
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
-        scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
         inGameUI = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<InGameUICanvasActions>();
     }
 
@@ -42,61 +53,66 @@ public class LevelLoader : MonoBehaviour {
     /// Loads a level given its number
     /// </summary>
     /// <param name="levelNumber"> Number of level to load </param>
-    public void LoadLevel(int levelNumber) {
-        SetTableElements(ReadLevelTable(levelNumber));
-        SetLevelScript(levelNumber);
-        SetLevelTextCode(levelNumber);
-        lastLoadedLevel = levelNumber;
+    public void LoadLevel(LevelDificulty levelDificulty,int levelNumber) {
+        SetTableElements(ReadLevelTable(levelDificulty, levelNumber));
+        SetLevelScript(levelDificulty, levelNumber);
+        SetLevelTextCode(levelDificulty, levelNumber);
+
+        playingLevel = levelNumber;
+        playingDificulty = levelDificulty;
     }
 
     /// <summary>
-    /// Loads a random level of the given dificulty, excluding the last one played
+    /// Loads a random level of the current dificulty, excluding the last one played
     /// </summary>
     /// <param name="levelDificulty"> Dificulty of level to load </param>
     public void LoadRandomLevel() {
         int levelNumber =0;
-        LevelDificulty ld = scoreManager.GetDificulty((int)lastLoadedLevel);
         System.Random r = new System.Random();
-        switch(ld) {
+        switch(playingDificulty) {
             case LevelDificulty.Easy:
-                levelNumber = r.Next((int)LevelInfo.FirstEasy, (int)LevelInfo.FirstMedium - 1);
+                levelNumber = r.Next(easyLevels - 1);
                 break;
             case LevelDificulty.Medium:
-                levelNumber = r.Next((int)LevelInfo.FirstMedium, (int)LevelInfo.FirstHard - 1);
+                levelNumber = r.Next(mediumLevels - 1);
                 break;
             case LevelDificulty.Hard:
-                levelNumber = r.Next((int)LevelInfo.FirstHard, (int)LevelInfo.FirstChallenge - 1);
+                levelNumber = r.Next(hardLevels - 1);
                 break;
             case LevelDificulty.Challenge:
-                levelNumber = r.Next((int)LevelInfo.FirstChallenge, (int)LevelInfo.LastLevel - 1);
+                levelNumber = r.Next(challengeLevels - 1);
                 break;
         }
-        if (levelNumber == lastLoadedLevel) {
-            levelNumber++;
-        }
-        LoadLevel(levelNumber);
+        if (levelNumber >= playingLevel) levelNumber++;
+        LoadLevel(playingDificulty, levelNumber);
     }
 
     /// <summary>
     /// Restarts the current playing level
     /// </summary>
     public void RestartLevel() {
-        LoadLevel((int)lastLoadedLevel);
+        LoadLevel(playingDificulty, (int)playingLevel);
     }
 
     /// <summary>
     /// Loads next level
     /// </summary>
     public void LoadNextLevel() {
-        LoadLevel((int)lastLoadedLevel + 1);
+        LoadLevel(playingDificulty, (int)playingLevel + 1);
     }
 
-    public static bool IsLastLevel() {
-        return (lastLoadedLevel == (Int32)LevelInfo.LastLevel);
+    public bool IsLastLevel() {
+        switch(playingDificulty) {
+            case LevelDificulty.Easy: return (easyLevels-1 == playingLevel);
+            case LevelDificulty.Medium: return (mediumLevels-1 == playingLevel);
+            case LevelDificulty.Hard: return (hardLevels-1 == playingLevel);
+            case LevelDificulty.Challenge: return (challengeLevels-1 == playingLevel);
+        }
+        return false;
     }
 
-    public void SetLevelTextCode(int levelNumber) {
-        TextAsset txt=(TextAsset)Resources.Load("Level Code/level_" + levelNumber);
+    public void SetLevelTextCode(LevelDificulty levelDificulty, int levelNumber) {
+        TextAsset txt = (TextAsset)Resources.Load("Level Text/" + levelDificulty.ToString() + "/level_" + levelNumber);
         inGameUI.LoadCode(txt);
     }
 
@@ -156,11 +172,11 @@ public class LevelLoader : MonoBehaviour {
     /// </summary>
     /// <param name="levelNumber"> Number of level to load </param>
     /// <returns> char table with csv file content </returns>
-    private char[,] ReadLevelTable(int levelNumber) {
+    private char[,] ReadLevelTable(LevelDificulty levelDificulty, int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
-        
-        TextAsset csv = (TextAsset)Resources.Load("Level Tables/table_" + levelNumber);
+        Debug.Log("Level Tables/" + levelDificulty.ToString() + "table_" + levelNumber);
+        TextAsset csv = (TextAsset)Resources.Load("Level Tables/" + levelDificulty.ToString() + "/table_" + levelNumber);
         String[] lines  = csv.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
         var string_table = lines.Select(l => l.Split(',').ToArray()).ToArray();
 
@@ -195,10 +211,11 @@ public class LevelLoader : MonoBehaviour {
     /// Locates all character cubes in the scene and adds the propper level script to them
     /// </summary>
     /// <param name="levelNumber">Number of level to load</param>
-    private void SetLevelScript(int levelNumber) {
+    private void SetLevelScript(LevelDificulty levelDificulty, int levelNumber) {
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach(GameObject cc in characterCubes) {
             cc.AddComponent(Type.GetType("Level" + levelNumber));
+            Resources.Load<MonoScript>("Level Scripts/" + levelDificulty.ToString()+"/Level" + levelNumber).GetClass();
         }
         GameEvents.current.SetOreGoal();
     }

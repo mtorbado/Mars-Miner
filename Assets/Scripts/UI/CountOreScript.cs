@@ -14,6 +14,7 @@ public class CountOreScript : MonoBehaviour
         GameEvents.current.onPickOreTriggerEnter += OnPickOre;
         GameEvents.current.onSetOreGoal += SetOreGoal;
         GameEvents.current.onLevelLoad += ResetCount;
+        GameEvents.current.onRandomLevelLoad += ResetCount;
         GameEvents.current.onNextLevelLoad += ResetCount;
     }
 
@@ -37,7 +38,7 @@ public class CountOreScript : MonoBehaviour
     /// Resets the ore counter each time a level is loaded
     /// </summary>
     /// <param name="n"> ignore parameter </param>
-    private void ResetCount(int n) {
+    private void ResetCount(LevelDificulty ld, int n) {
         oreCount = 0;
     }
 

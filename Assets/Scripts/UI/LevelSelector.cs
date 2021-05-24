@@ -21,23 +21,23 @@ public class LevelSelector : MonoBehaviour {
     }
 
     public void PlayEasy() {
-        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstEasy);
+        GameEvents.current.LoadLevel(LevelDificulty.Easy, 0);
         transform.GetComponent<Canvas>().enabled = false;
         GameEvents.current.DisableAllForTutorial();
     }
 
     public void PlayMedium() {
-        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstMedium);
+        GameEvents.current.LoadLevel(LevelDificulty.Medium, 0);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
     public void PlayHard() {
-        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstHard);
+        GameEvents.current.LoadLevel(LevelDificulty.Hard, 0);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
     public void PlayChallenge() {
-        GameEvents.current.LoadLevel((Int32)LevelInfo.FirstChallenge);
+        GameEvents.current.LoadLevel(LevelDificulty.Challenge, 0);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
@@ -52,11 +52,13 @@ public class LevelSelector : MonoBehaviour {
     /// Updates the displayed scores in the level selection menu and activates difficulty buttons if threshold score from previous difficulty is reached
     /// </summary>
     private void UpdateScores() {
-        int[] scoreArray = scoreManager.finalScore.scoreArray;
+        int[] scoreArray = scoreManager.finalScore.Array();
+        int[] maxArray = scoreManager.MaxPointsArray();
         for (int i = 0; i < dificultyButtons.Length; i++) {
-            if (i == 0 || scoreArray[i-1] > (scoreManager.maxScores[i-1] / 2)) { //TODO: decide score to pass to next dificulty
+            Debug.Log(i);
+            if (i == 0 || scoreArray[i-1] > (maxArray[i-1] / 2)) { //TODO: decide score to pass to next dificulty
                 dificultyButtons[i].GetComponent<Button>().interactable = true;
-                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(scoreArray[i] + "/" + scoreManager.maxScores[i]);
+                dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(scoreArray[i] + "/" + maxArray[i]);
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255,255,255,255);
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 20;
             }
@@ -68,4 +70,5 @@ public class LevelSelector : MonoBehaviour {
             }
         }
     }
+
 }
