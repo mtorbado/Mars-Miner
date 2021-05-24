@@ -7,6 +7,8 @@ TagManager:
   - CharacterCube
   - Ore
   - LevelManager
+  - Rock
+  - InGameUI
   layers:
   - Default
   - TransparentFX

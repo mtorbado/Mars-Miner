@@ -1,0 +1,13 @@
+public void start (String[] args) {
+    while (true) {
+        if (robot.<color=#00ffff>seesRock</color>()) {
+            robot.<color=#00ffff>turnRight</color>();
+        }
+        else {
+            if (robot.<color=#00ffff>seesRock</color>()) {
+                robot.<color=#00ffff>turnLeft</color>();
+            }
+            robot.<color=#00ffff>moveForward</color>();
+        }
+    }
+}

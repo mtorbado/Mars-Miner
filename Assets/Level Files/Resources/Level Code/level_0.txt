@@ -1,5 +1,7 @@
-public void start (String[] args) {
-    while (true) {
-        robot.<color=#00ffff>moveForward</color>();
-    }
+public void main (String[] args) {
+    robot.moveForward();
+    robot.moveForward();
+    robot.moveForward();
+    robot.moveForward();
+    robot.moveForward();
 }

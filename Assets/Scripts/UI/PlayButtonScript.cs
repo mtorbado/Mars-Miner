@@ -11,6 +11,7 @@ public class PlayButtonScript : AbsButton {
     private void Awake() {
         GameEvents.current.onNextLevelLoad += EnableButton;
         GameEvents.current.onRestartLevel += EnableButton;
+        GameEvents.current.onRandomLevelLoad += EnableButton;
         GameEvents.current.onLevelLoad += EnableButton2;
     }
 

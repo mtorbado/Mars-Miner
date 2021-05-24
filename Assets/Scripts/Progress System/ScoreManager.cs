@@ -10,7 +10,8 @@ public class ScoreManager : MonoBehaviour {
     
     public Score finalScore;
     public Score newScore;
-    public int scoreToPass = 4000;
+    public int scoreToPass;
+    public int[] maxScores;
 
     private int currentLevel;
     private int attempts;
@@ -23,6 +24,14 @@ public class ScoreManager : MonoBehaviour {
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += SaveScore;
 
+        maxScores = new int[4];
+        maxScores[0] = (int)LevelInfo.FirstMedium * (int)LevelDificulty.Easy;
+        maxScores[1] = ((int)LevelInfo.FirstHard - (int)LevelInfo.FirstMedium) * (int)LevelDificulty.Medium;
+        maxScores[2] = ((int)LevelInfo.FirstChallenge - (int)LevelInfo.FirstHard) * (int)LevelDificulty.Hard;
+        maxScores[3] = ((int)LevelInfo.LastLevel - (int)LevelInfo.FirstChallenge + 1) * (int)LevelDificulty.Challenge;
+
+        scoreToPass = (maxScores[0] / 2) + (maxScores[1] /2); //TODO: decide total score to complete the game
+
         newScore = new Score();
         finalScore = new Score();
         GameEvents.current.UpdateScores();
@@ -31,13 +40,13 @@ public class ScoreManager : MonoBehaviour {
 
     
      public LevelDificulty GetDificulty(int levelNumber) {
-        if (currentLevel < (Int32)LevelInfo.FirstMedium) {
+        if (currentLevel < (int)LevelInfo.FirstMedium) {
             return LevelDificulty.Easy;
         }
-        else if (currentLevel < (Int32)LevelInfo.FirstHard) {
+        else if (currentLevel < (int)LevelInfo.FirstHard) {
             return LevelDificulty.Medium;
         }
-        else if (currentLevel < (Int32)LevelInfo.FirstChallenge) {
+        else if (currentLevel < (int)LevelInfo.FirstChallenge) {
             return LevelDificulty.Hard;
         }
         else {
@@ -46,13 +55,13 @@ public class ScoreManager : MonoBehaviour {
     }
 
      public int GetDificultyIndex(int levelNumber) {
-        if (currentLevel < (Int32)LevelInfo.FirstMedium) {
+        if (currentLevel < (int)LevelInfo.FirstMedium) {
             return 0;
         }
-        else if (currentLevel < (Int32)LevelInfo.FirstHard) {
+        else if (currentLevel < (int)LevelInfo.FirstHard) {
             return 1;
         }
-        else if (currentLevel < (Int32)LevelInfo.FirstChallenge) {
+        else if (currentLevel < (int)LevelInfo.FirstChallenge) {
             return 2;
         }
         else {
@@ -65,7 +74,7 @@ public class ScoreManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public int GetLevelPoints() {
-        return (Int32)GetDificulty(currentLevel); //TODO calculate taking account of time and attempts
+        return (int)GetDificulty(currentLevel); //TODO calculate taking account of time and attempts
 
     }
 
@@ -110,7 +119,11 @@ public class ScoreManager : MonoBehaviour {
     /* =============================================================== SAVE SCORE ============================================================= */
 
     private void SaveScore() {
-        newScore.scoreArray[GetDificultyIndex(currentLevel)] += GetLevelPoints();
+        if(newScore.scoreArray[GetDificultyIndex(currentLevel)] + GetLevelPoints() > maxScores[GetDificultyIndex(currentLevel)]) {
+            newScore.scoreArray[GetDificultyIndex(currentLevel)] = maxScores[GetDificultyIndex(currentLevel)];
+        } else {
+            newScore.scoreArray[GetDificultyIndex(currentLevel)] += GetLevelPoints();
+        }
         for (int i = 0; i < finalScore.scoreArray.Length; i++) {
             finalScore.scoreArray[i] = Math.Max(finalScore.scoreArray[i], newScore.scoreArray[i]);
         }

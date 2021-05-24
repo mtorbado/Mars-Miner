@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -49,6 +47,13 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
         background.SetActive(false);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
         GameEvents.current.LoadNextLevel();
+    }
+
+    public void LoadRandomLevel() {
+        background.SetActive(false);
+        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        GameEvents.current.LoadRandomLevel();
     }
 
     public void SelectLevel() {

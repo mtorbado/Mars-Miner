@@ -1,10 +1,9 @@
-public void start (String[] args) {
-    while (true) {
-        if (robot.<color=#00ffff>seesRock</color>()) {
-            robot.<color=#00ffff>turnLeft</color>();
-        }
-        else {
-            robot.<color=#00ffff>moveForward</color>();
-        }
+public void main (String[] args) {
+    robot.moveForward();
+    robot.moveFoward();
+    robot.moveForward();
+    if (robot.seesRock()) {
+        robot.turnRight();
     }
-}
+    robot.moveForward();
+    robot.moveFoward();

@@ -11,17 +11,16 @@ public class GameEvents : MonoBehaviour {
         current = this;
     }
 
-    
     public event Action onSelectLevel;
     public event Action<int> onLevelLoad;
     public event Action onRestartLevel;
     public event Action onNextLevelLoad;
+    public event Action onRandomLevelLoad;
     public event Action onSetOreGoal;
 
     public event Action onPlayLevel;
     public event Action onPickOreTriggerEnter;
     public event Action onRockCollision;
-    
     
     public event Action onLevelPassed;
     public event Action onLevelFailed;
@@ -53,6 +52,16 @@ public class GameEvents : MonoBehaviour {
             onLevelLoad(levelNumber);
         }
     }
+
+    /// <summary>
+    /// (Event) A level is load randomly of same dificulty
+    /// </summary>
+    /// <param name="levelNumber"> level to load </param>
+    public void LoadRandomLevel() {
+        if (onRandomLevelLoad !=null) {
+            onRandomLevelLoad();
+        }
+    } 
 
     /// <summary>
     /// (Event) The current playing level is reseted

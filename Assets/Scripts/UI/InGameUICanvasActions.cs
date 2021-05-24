@@ -9,17 +9,21 @@ public class InGameUICanvasActions : MonoBehaviour {
 
     public GameObject codeHolder;
     public GameObject docHolder;
-    private static int? lastLoadedLevel;
     
     private void Start() {
         LoadHooverDoc();
-        GameEvents.current.onLevelLoad += LoadLevel;
-        GameEvents.current.onNextLevelLoad += LoadNextLevel;
+        GameEvents.current.onLevelLoad += ShowInGameUI;
+        GameEvents.current.onNextLevelLoad += ShowInGameUI;
+        GameEvents.current.onRandomLevelLoad += ShowInGameUI;
         GameEvents.current.onRestartLevel += ShowInGameUI;
         GameEvents.current.onSelectLevel += HideInGameUI;
         GameEvents.current.onLevelFailed += HideInGameUI;
         GameEvents.current.onLevelPassed += HideInGameUI;
         this.gameObject.GetComponent<Canvas>().enabled = false;
+    }
+
+    public void LoadCode(TextAsset txt) {
+        codeHolder.GetComponent<TextMeshProUGUI>().SetText(txt.text);
     }
 
     /// <summary>
@@ -31,21 +35,11 @@ public class InGameUICanvasActions : MonoBehaviour {
     }
 
     /// <summary>
-    /// Sets the game UI pannels for the given level
+    /// Sets the game UI pannels active
     /// </summary>
-    /// <param name="levelNumber"> number of the loaded level </param>
-    private void LoadLevel(int levelNumber) {
-        TextAsset txt=(TextAsset)Resources.Load("Level Code/level_" + levelNumber);
-        codeHolder.GetComponent<TextMeshProUGUI>().SetText(txt.text);
-        ShowInGameUI();
-        lastLoadedLevel = levelNumber;
-    }
-
-    /// <summary>
-    /// Sets the game UI pannels for the next level
-    /// </summary>
-    private void LoadNextLevel() {
-        LoadLevel((int)lastLoadedLevel +1);
+    /// <param name="n"> not used </param>
+    private void ShowInGameUI(int n) {
+        this.gameObject.GetComponent<Canvas>().enabled = true;
     }
 
     /// <summary>

@@ -17,6 +17,8 @@ public class LevelLoader : MonoBehaviour {
     const int TableSize = 20;
 
     BoardManager boardManager;
+    ScoreManager scoreManager;
+    InGameUICanvasActions inGameUI;
 
     private static int? lastLoadedLevel;
 
@@ -24,10 +26,13 @@ public class LevelLoader : MonoBehaviour {
         GameEvents.current.onLevelLoad += LoadLevel;
         GameEvents.current.onRestartLevel += RestartLevel;
         GameEvents.current.onNextLevelLoad += LoadNextLevel;
+        GameEvents.current.onRandomLevelLoad += LoadRandomLevel;
         GameEvents.current.onSelectLevel += CleanTable;
     }
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
+        scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
+        inGameUI = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<InGameUICanvasActions>();
     }
 
 
@@ -40,7 +45,36 @@ public class LevelLoader : MonoBehaviour {
     public void LoadLevel(int levelNumber) {
         SetTableElements(ReadLevelTable(levelNumber));
         SetLevelScript(levelNumber);
+        SetLevelTextCode(levelNumber);
         lastLoadedLevel = levelNumber;
+    }
+
+    /// <summary>
+    /// Loads a random level of the given dificulty, excluding the last one played
+    /// </summary>
+    /// <param name="levelDificulty"> Dificulty of level to load </param>
+    public void LoadRandomLevel() {
+        int levelNumber =0;
+        LevelDificulty ld = scoreManager.GetDificulty((int)lastLoadedLevel);
+        System.Random r = new System.Random();
+        switch(ld) {
+            case LevelDificulty.Easy:
+                levelNumber = r.Next((int)LevelInfo.FirstEasy, (int)LevelInfo.FirstMedium - 1);
+                break;
+            case LevelDificulty.Medium:
+                levelNumber = r.Next((int)LevelInfo.FirstMedium, (int)LevelInfo.FirstHard - 1);
+                break;
+            case LevelDificulty.Hard:
+                levelNumber = r.Next((int)LevelInfo.FirstHard, (int)LevelInfo.FirstChallenge - 1);
+                break;
+            case LevelDificulty.Challenge:
+                levelNumber = r.Next((int)LevelInfo.FirstChallenge, (int)LevelInfo.LastLevel - 1);
+                break;
+        }
+        if (levelNumber == lastLoadedLevel) {
+            levelNumber++;
+        }
+        LoadLevel(levelNumber);
     }
 
     /// <summary>
@@ -61,6 +95,10 @@ public class LevelLoader : MonoBehaviour {
         return (lastLoadedLevel == (Int32)LevelInfo.LastLevel);
     }
 
+    public void SetLevelTextCode(int levelNumber) {
+        TextAsset txt=(TextAsset)Resources.Load("Level Code/level_" + levelNumber);
+        inGameUI.LoadCode(txt);
+    }
 
     /* =============================================================== PRIVATE METHODS =============================================================== */
 
@@ -161,9 +199,6 @@ public class LevelLoader : MonoBehaviour {
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach(GameObject cc in characterCubes) {
             cc.AddComponent(Type.GetType("Level" + levelNumber));
-        }
-        if (characterCubes.First().GetComponent<AbsLevel>().isTutorial) {
-            GameEvents.current.DisableAllForTutorial();
         }
         GameEvents.current.SetOreGoal();
     }

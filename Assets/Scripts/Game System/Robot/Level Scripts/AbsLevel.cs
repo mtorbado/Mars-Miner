@@ -8,16 +8,13 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class AbsLevel : MonoBehaviour, ILevel {
 
-    public bool isTutorial;
     public int oreGoal;
     public int oreCount;
     public int numOfAttempts;
-    public LevelDificulty dificulty;
 
     private bool failLevel;
     
     private void Start() {
-        isTutorial = false;
         failLevel = false;
         numOfAttempts = 0;
         GameEvents.current.onPickOreTriggerEnter += PickOre;
