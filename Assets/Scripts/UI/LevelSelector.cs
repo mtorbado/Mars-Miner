@@ -55,7 +55,6 @@ public class LevelSelector : MonoBehaviour {
         int[] scoreArray = scoreManager.finalScore.Array();
         int[] maxArray = scoreManager.MaxPointsArray();
         for (int i = 0; i < dificultyButtons.Length; i++) {
-            Debug.Log(i);
             if (i == 0 || scoreArray[i-1] > (maxArray[i-1] / 2)) { //TODO: decide score to pass to next dificulty
                 dificultyButtons[i].GetComponent<Button>().interactable = true;
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(scoreArray[i] + "/" + maxArray[i]);
@@ -63,7 +62,7 @@ public class LevelSelector : MonoBehaviour {
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 20;
             }
             else {
-                dificultyButtons[i].GetComponent<Button>().interactable = false;
+                // dificultyButtons[i].GetComponent<Button>().interactable = false;
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("BLOQUEADO");
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(194,78,82,255);
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontSize = 15;

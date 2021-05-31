@@ -1,0 +1,16 @@
+public void main (String[] args) {
+    int ores = 0;
+    int oreGoal = 3;
+    while (ores < oreGoal) {
+        if (robot.seesRock()) {
+            robot.turnRight();
+        }
+        robot.turnRight();
+        for (int i = 0; i < 3; i++) {
+            robot.moveForward();
+        }
+        if (robot.pickedOre()) {
+            ores ++;
+        }
+    }
+}

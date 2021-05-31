@@ -12,7 +12,6 @@ public class CountOreScript : MonoBehaviour
 
     void Start() {
         GameEvents.current.onPickOreTriggerEnter += OnPickOre;
-        GameEvents.current.onSetOreGoal += SetOreGoal;
         GameEvents.current.onLevelLoad += ResetCount;
         GameEvents.current.onRandomLevelLoad += ResetCount;
         GameEvents.current.onNextLevelLoad += ResetCount;
@@ -21,9 +20,10 @@ public class CountOreScript : MonoBehaviour
     /// <summary>
     /// Sets the ore goal for the current playing level
     /// </summary>
-    private void SetOreGoal () {
-        oreGoal =  GameObject.FindGameObjectWithTag("CharacterCube").GetComponent<AbsLevel>().oreGoal;
+    public void SetOreGoal(int oreGoal) {
+        this.oreGoal = oreGoal;
         gameObject.GetComponent<TextMeshProUGUI>().SetText(0 + " / " + oreGoal);
+        Debug.Log(oreGoal);
     }
 
     /// <summary>

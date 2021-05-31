@@ -1,0 +1,15 @@
+public void main (String[] args) { //medio
+    int i = 0;
+    int j = 0;
+    while (i < 3) {
+        robot.moveForward();
+        i++;
+    }
+    robot.turnleft();
+    while (i < 3) {
+        robot.moveForward();
+        i++;
+    }
+    robot.turnRight();
+    robot.moveForward();
+}

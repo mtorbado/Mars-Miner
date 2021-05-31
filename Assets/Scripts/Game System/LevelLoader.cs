@@ -112,7 +112,7 @@ public class LevelLoader : MonoBehaviour {
     }
 
     public void SetLevelTextCode(LevelDificulty levelDificulty, int levelNumber) {
-        TextAsset txt = (TextAsset)Resources.Load("Level Text/" + levelDificulty.ToString() + "/level_" + levelNumber);
+        TextAsset txt = (TextAsset)Resources.Load("Level Text/" + levelDificulty.ToString() + levelNumber);
         inGameUI.LoadCode(txt);
     }
 
@@ -175,8 +175,7 @@ public class LevelLoader : MonoBehaviour {
     private char[,] ReadLevelTable(LevelDificulty levelDificulty, int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
-        Debug.Log("Level Tables/" + levelDificulty.ToString() + "table_" + levelNumber);
-        TextAsset csv = (TextAsset)Resources.Load("Level Tables/" + levelDificulty.ToString() + "/table_" + levelNumber);
+        TextAsset csv = (TextAsset)Resources.Load("Level Tables/" + levelDificulty.ToString() + levelNumber);
         String[] lines  = csv.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
         var string_table = lines.Select(l => l.Split(',').ToArray()).ToArray();
 
@@ -214,9 +213,10 @@ public class LevelLoader : MonoBehaviour {
     private void SetLevelScript(LevelDificulty levelDificulty, int levelNumber) {
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach(GameObject cc in characterCubes) {
-            cc.AddComponent(Type.GetType("Level" + levelNumber));
-            Resources.Load<MonoScript>("Level Scripts/" + levelDificulty.ToString()+"/Level" + levelNumber).GetClass();
+            Destroy(cc.GetComponent<AbsLevel>());
+            cc.AddComponent(Type.GetType(levelDificulty.ToString() + levelNumber));
+            cc.GetComponent<AbsLevel>().Initialize();
         }
-        GameEvents.current.SetOreGoal();
+         inGameUI.LoadOreGoal(characterCubes.Last<GameObject>().GetComponent<AbsLevel>().oreGoal);
     }
 }
