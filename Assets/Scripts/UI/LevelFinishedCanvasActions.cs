@@ -34,7 +34,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     private void ShowLevelPassedPanel() {
 
-        levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!levelLoader.IsLastLevel());
+        // levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!levelLoader.IsLastLevel());
     
         levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelPoints() + " puntos");
         levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelAttempts() + " intentos");

@@ -1,0 +1,12 @@
+public void main (String[] args) { //medio
+    int i = 0;
+    while (i < 3) {
+        robot.moveForward();
+        i++;
+    }
+    robot.turnLeft();
+    while (i > 0) {
+        robot.moveBackward();
+        i--;
+    }
+}

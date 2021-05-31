@@ -1,0 +1,7 @@
+public void main (String[] args) { //facil
+    robot.moveForward();
+    robot.moveForward();
+    robot.moveForward();
+    robot.moveForward();
+    robot.moveForward();
+}

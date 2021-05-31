@@ -9,6 +9,7 @@ public class InGameUICanvasActions : MonoBehaviour {
 
     public GameObject codeHolder;
     public GameObject docHolder;
+    public GameObject scoreHolder;
     
     private void Start() {
         LoadHooverDoc();
@@ -24,6 +25,11 @@ public class InGameUICanvasActions : MonoBehaviour {
 
     public void LoadCode(TextAsset txt) {
         codeHolder.GetComponent<TextMeshProUGUI>().SetText(txt.text);
+    }
+
+    public void LoadOreGoal(int oreGoal) {
+        Debug.Log(oreGoal);
+        scoreHolder.GetComponent<CountOreScript>().SetOreGoal(oreGoal);
     }
 
     /// <summary>

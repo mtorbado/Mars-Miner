@@ -114,7 +114,7 @@ public class ScoreManager : MonoBehaviour {
 
     private void SaveScore() {
         
-        int points = Math.Max(LevelPoints() + finalScore.GetPoints(levelLoader.playingDificulty), MaxPoints());
+        int points = Math.Min(LevelPoints() + finalScore.GetPoints(levelLoader.playingDificulty), MaxPoints());
         finalScore.SetPoints(levelLoader.playingDificulty, Math.Max(finalScore.GetPoints(levelLoader.playingDificulty), points));
 
         string jsonScore = JsonUtility.ToJson(finalScore);

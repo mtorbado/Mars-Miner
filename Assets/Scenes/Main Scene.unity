@@ -9939,6 +9939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   codeHolder: {fileID: 60996360}
   docHolder: {fileID: 260233547}
+  scoreHolder: {fileID: 1685086671}
 --- !u!114 &1374182712
 MonoBehaviour:
   m_ObjectHideFlags: 0

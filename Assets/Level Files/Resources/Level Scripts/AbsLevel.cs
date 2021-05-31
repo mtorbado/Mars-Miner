@@ -14,13 +14,18 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     private bool failLevel;
     
+    public RobotActions robotActions;
+
     private void Start() {
+        Initialize();
         failLevel = false;
         numOfAttempts = 0;
         GameEvents.current.onPickOreTriggerEnter += PickOre;
         GameEvents.current.onLevelFailed += FailLevel;
-    }   
+    }
 
+    public abstract void Initialize();
+    
     /// <summary>
     /// Abstract method to override with game loop for each level 
     /// </summary>
@@ -36,7 +41,7 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
     }
 
     public bool CheckLevelPassed() {
-        if (oreCount == oreGoal) {
+        if (oreCount >= oreGoal) {
             GameEvents.current.LevelPassed();
             return true;
         }
