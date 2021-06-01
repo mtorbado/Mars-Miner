@@ -31,7 +31,7 @@ public class GameEvents : MonoBehaviour {
     /* ======================================================== SELECTING/LOADING LEVEL ======================================================== */
 
     /// <summary>
-    /// (Event) Load the level selection menu
+    /// (Event) Go to the level selection menu
     /// </summary>
     public void SelectLevel() {
         if (onSelectLevel != null) {
@@ -40,9 +40,8 @@ public class GameEvents : MonoBehaviour {
     }
 
     /// <summary>
-    /// (Event) A level is selected in the level selection menu
+    /// (Event) A level is loaded and ready to be played
     /// </summary>
-    /// <param name="levelNumber"> level to load </param>
     public void LoadLevel() {
         if (onLevelLoad !=null) {
             onLevelLoad();

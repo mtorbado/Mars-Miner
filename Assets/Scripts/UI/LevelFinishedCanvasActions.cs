@@ -47,32 +47,35 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     public void LoadNextLevel() {
         background.SetActive(false);
-        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        ClosePanels();
         levelLoader.LoadNextLevel();
     }
 
     public void LoadRandomLevel() {
         background.SetActive(false);
-        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
-        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        ClosePanels();
         levelLoader.LoadRandomLevel();
     }
 
     public void SelectLevel() {
         background.SetActive(false);
-        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
-        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        ClosePanels();
         GameEvents.current.SelectLevel();
     }
 
     public void RestartLevel() {
         background.SetActive(false);
+        ClosePanels();
         levelLoader.RestartLevel();
-        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
     }
 
     public void GoToMainMenu() {
         GameEvents.current.ExitGame();
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
+    }
+
+    private void ClosePanels() {
+        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
     }
 }
