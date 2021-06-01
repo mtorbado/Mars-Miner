@@ -12,10 +12,7 @@ public class GameEvents : MonoBehaviour {
     }
 
     public event Action onSelectLevel;
-    public event Action<LevelDificulty,int> onLevelLoad;
-    public event Action onRestartLevel;
-    public event Action onNextLevelLoad;
-    public event Action onRandomLevelLoad;
+    public event Action onLevelLoad;
 
     public event Action onPlayLevel;
     public event Action onPickOreTriggerEnter;
@@ -46,37 +43,9 @@ public class GameEvents : MonoBehaviour {
     /// (Event) A level is selected in the level selection menu
     /// </summary>
     /// <param name="levelNumber"> level to load </param>
-    public void LoadLevel(LevelDificulty levelDificulty, int levelNumber) {
+    public void LoadLevel() {
         if (onLevelLoad !=null) {
-            onLevelLoad(levelDificulty, levelNumber);
-        }
-    }
-
-    /// <summary>
-    /// (Event) A level is load randomly of same dificulty
-    /// </summary>
-    /// <param name="levelNumber"> level to load </param>
-    public void LoadRandomLevel() {
-        if (onRandomLevelLoad !=null) {
-            onRandomLevelLoad();
-        }
-    } 
-
-    /// <summary>
-    /// (Event) The current playing level is reseted
-    /// </summary>
-    public void RestartLevel() {
-        if (onRestartLevel != null) {
-            onRestartLevel();
-        }
-    }
-
-    /// <summary>
-    /// (Event) The next level is loaded
-    /// </summary>
-    public void LoadNextLevel() {
-        if (onNextLevelLoad != null) {
-            onNextLevelLoad();
+            onLevelLoad();
         }
     }
 

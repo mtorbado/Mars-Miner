@@ -48,14 +48,14 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     public void LoadNextLevel() {
         background.SetActive(false);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
-        GameEvents.current.LoadNextLevel();
+        levelLoader.LoadNextLevel();
     }
 
     public void LoadRandomLevel() {
         background.SetActive(false);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
         LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
-        GameEvents.current.LoadRandomLevel();
+        levelLoader.LoadRandomLevel();
     }
 
     public void SelectLevel() {
@@ -67,7 +67,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
     public void RestartLevel() {
         background.SetActive(false);
-        GameEvents.current.RestartLevel();
+        levelLoader.RestartLevel();
         LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
     }
 
