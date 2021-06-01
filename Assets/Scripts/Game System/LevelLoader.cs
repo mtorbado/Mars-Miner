@@ -30,10 +30,6 @@ public class LevelLoader : MonoBehaviour {
     [HideInInspector] public int challengeLevels;
 
     private void Start() {
-        GameEvents.current.onLevelLoad += LoadLevel;
-        GameEvents.current.onRestartLevel += RestartLevel;
-        GameEvents.current.onNextLevelLoad += LoadNextLevel;
-        GameEvents.current.onRandomLevelLoad += LoadRandomLevel;
         GameEvents.current.onSelectLevel += CleanTable;
 
         easyLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Easy.ToString()).Length;
@@ -60,16 +56,17 @@ public class LevelLoader : MonoBehaviour {
 
         playingLevel = levelNumber;
         playingDificulty = levelDificulty;
+        GameEvents.current.LoadLevel();
     }
 
     /// <summary>
     /// Loads a random level of the current dificulty, excluding the last one played
     /// </summary>
     /// <param name="levelDificulty"> Dificulty of level to load </param>
-    public void LoadRandomLevel() {
+    public void LoadRandomLevel(LevelDificulty levelDificulty) {
         int levelNumber =0;
         System.Random r = new System.Random();
-        switch(playingDificulty) {
+        switch(levelDificulty) {
             case LevelDificulty.Easy:
                 levelNumber = r.Next(easyLevels - 1);
                 break;
@@ -84,7 +81,11 @@ public class LevelLoader : MonoBehaviour {
                 break;
         }
         if (levelNumber >= playingLevel) levelNumber++;
-        LoadLevel(playingDificulty, levelNumber);
+        LoadLevel(levelDificulty, levelNumber);
+    }
+
+    public void LoadRandomLevel() {
+        LoadRandomLevel(playingDificulty);
     }
 
     /// <summary>

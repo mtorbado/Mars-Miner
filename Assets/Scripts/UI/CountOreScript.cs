@@ -13,8 +13,6 @@ public class CountOreScript : MonoBehaviour
     void Start() {
         GameEvents.current.onPickOreTriggerEnter += OnPickOre;
         GameEvents.current.onLevelLoad += ResetCount;
-        GameEvents.current.onRandomLevelLoad += ResetCount;
-        GameEvents.current.onNextLevelLoad += ResetCount;
     }
 
     /// <summary>
@@ -32,14 +30,6 @@ public class CountOreScript : MonoBehaviour
     private void OnPickOre() {
         oreCount ++;
         gameObject.GetComponent<TextMeshProUGUI>().SetText(oreCount + " / " + oreGoal);
-    }
-
-    /// <summary>
-    /// Resets the ore counter each time a level is loaded
-    /// </summary>
-    /// <param name="n"> ignore parameter </param>
-    private void ResetCount(LevelDificulty ld, int n) {
-        oreCount = 0;
     }
 
     /// <summary>

@@ -21,8 +21,6 @@ public class ScoreManager : MonoBehaviour {
         GameEvents.current.onLoadGameData += LoadScore;
         GameEvents.current.onExitGame += SaveGlobalData;
         GameEvents.current.onLevelLoad += Reset;
-        GameEvents.current.onNextLevelLoad += Reset;
-        GameEvents.current.onRandomLevelLoad += Reset;
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += SaveScore;
 
@@ -76,6 +74,10 @@ public class ScoreManager : MonoBehaviour {
             attempts = 0;
             moves = 0;
         }        
+    }
+
+    private void Reset(LevelDificulty? levelDificulty) {
+        Reset();
     }
 
     private void Reset() {

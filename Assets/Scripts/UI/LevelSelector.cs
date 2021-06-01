@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class LevelSelector : MonoBehaviour {
 
     ScoreManager scoreManager;
+    LevelLoader levelLoader;
 
     public GameObject[] dificultyButtons;
 
@@ -18,26 +19,32 @@ public class LevelSelector : MonoBehaviour {
         GameEvents.current.onUpdateScores += UpdateScores;
 
         scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
+        levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
     }
 
     public void PlayEasy() {
-        GameEvents.current.LoadLevel(LevelDificulty.Easy, 0);
+        if (scoreManager.finalScore.easyPoints == 0) {
+            levelLoader.LoadLevel(LevelDificulty.Easy, 0);
+            GameEvents.current.DisableAllForTutorial();
+        }
+        else {
+            levelLoader.LoadRandomLevel(LevelDificulty.Easy);
+        }
         transform.GetComponent<Canvas>().enabled = false;
-        GameEvents.current.DisableAllForTutorial();
     }
 
     public void PlayMedium() {
-        GameEvents.current.LoadLevel(LevelDificulty.Medium, 0);
+        levelLoader.LoadRandomLevel(LevelDificulty.Medium);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
     public void PlayHard() {
-        GameEvents.current.LoadLevel(LevelDificulty.Hard, 0);
+        levelLoader.LoadRandomLevel(LevelDificulty.Hard);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
     public void PlayChallenge() {
-        GameEvents.current.LoadLevel(LevelDificulty.Challenge, 0);
+        levelLoader.LoadRandomLevel(LevelDificulty.Challenge);
         transform.GetComponent<Canvas>().enabled = false;
     }
 

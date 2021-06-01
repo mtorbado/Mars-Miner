@@ -9,10 +9,7 @@ public class PlayButtonScript : AbsButton {
     public GameObject programInput;
 
     private void Awake() {
-        GameEvents.current.onNextLevelLoad += EnableButton;
-        GameEvents.current.onRestartLevel += EnableButton;
-        GameEvents.current.onRandomLevelLoad += EnableButton;
-        GameEvents.current.onLevelLoad += EnableButton2;
+        GameEvents.current.onLevelLoad += EnableButton;
     }
 
     /// <summary>
@@ -36,14 +33,5 @@ public class PlayButtonScript : AbsButton {
     private void EnableButton() {
         GetComponentInChildren<Text>().text = "Start";
         button.interactable = true;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="n"> not used </param>
-    /// /// <param name="ld"> not used </param>
-    private void EnableButton2(LevelDificulty ld, int n) {
-        EnableButton();
     }
 }
