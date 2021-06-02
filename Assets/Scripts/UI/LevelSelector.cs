@@ -62,7 +62,7 @@ public class LevelSelector : MonoBehaviour {
         int[] scoreArray = scoreManager.finalScore.Array();
         int[] maxArray = (int[])Enum.GetValues(typeof(LevelDificulty));
         for (int i = 0; i < dificultyButtons.Length; i++) {
-            if (i == 0 || scoreArray[i-1] > ScoreManager.PASS_LEVEL_SCORE) {
+            if (i == 0 || scoreArray[i-1] > ScoreManager.PASS_DIFICULTY_SCORE) {
                 dificultyButtons[i].GetComponent<Button>().interactable = true;
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(scoreArray[i] + "/" + maxArray[i]);
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255,255,255,255);

@@ -120,7 +120,7 @@ public class LevelLoader : MonoBehaviour {
     }
 
     public bool IsNextDificultyUnlocked() {
-        if (scoreManager.finalScore.GetPoints(playingDificulty) >= ScoreManager.PASS_LEVEL_SCORE) {
+        if (scoreManager.finalScore.GetPoints(playingDificulty) >= ScoreManager.PASS_DIFICULTY_SCORE) {
             return true;
         }
         else return false;
