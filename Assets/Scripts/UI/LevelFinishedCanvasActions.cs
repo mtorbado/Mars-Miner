@@ -5,7 +5,7 @@ using TMPro;
 public class LevelFinishedCanvasActions : MonoBehaviour {
     
     public float displayPosition1, closedPosition1; // for levelPassedPanel and levelFailedPanel
-    public float displayPosition2, closedPosition2; // for nexrDificultyPanel 
+    public float displayPosition2, closedPosition2; // for nextDificultyPanel 
 
     public GameObject levelPassedPanel, levelFailedPanel, nextDificultyPanel;
 

@@ -11,7 +11,8 @@ public class ScoreManager : MonoBehaviour {
     public int[] maxScores;
 
     public const int PASS_GAME_SCORE = 4000;
-    public const int PASS_LEVEL_SCORE = 1000;
+    public const int PASS_DIFICULTY_SCORE = 1000;
+    public const int MIN_LEVEL_SCORE = 100;
 
     public const int ATTEMP_PENALTY = 50; // each attempt reduces score by ATTEMP_PENALTY
     public const int SCORE_FACTOR = 2; // max score per level is (levelDificulty / SCORE_FACTOR)
@@ -44,7 +45,7 @@ public class ScoreManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public int LevelPoints() {
-        return ((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY);
+        return (Math.Min(((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY), MIN_LEVEL_SCORE));
     }
 
     public int LevelAttempts() {
