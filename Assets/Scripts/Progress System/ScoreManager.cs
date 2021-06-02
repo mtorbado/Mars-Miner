@@ -45,7 +45,7 @@ public class ScoreManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public int LevelPoints() {
-        return (Math.Min(((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY), MIN_LEVEL_SCORE));
+        return (Math.Max(((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY), MIN_LEVEL_SCORE));
     }
 
     public int LevelAttempts() {

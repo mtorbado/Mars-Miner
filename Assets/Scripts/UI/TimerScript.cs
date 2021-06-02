@@ -37,7 +37,7 @@ public class TimerScript : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
             seconds++;
             if (seconds > 30) {
-                penalty = Math.Max (MAX_PENALTY, penalty + (seconds/30) * 50);
+                penalty = Math.Min(MAX_PENALTY, (seconds/30) * 50);
             }
         }
     }
