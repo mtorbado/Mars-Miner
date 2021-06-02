@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -37,8 +35,10 @@ public class LevelLoader : MonoBehaviour {
         hardLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Hard.ToString()).Length;
         challengeLevels = Resources.LoadAll("Level Scripts/" + LevelDificulty.Challenge.ToString()).Length;
     }
+
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
+        scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>(); 
         inGameUI = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<InGameUICanvasActions>();
     }
 
@@ -102,6 +102,13 @@ public class LevelLoader : MonoBehaviour {
         LoadLevel(playingDificulty, (int)playingLevel + 1);
     }
 
+    public void LoadNextDificulty() {
+        LevelDificulty[] ldArray = (LevelDificulty[])Enum.GetValues(typeof(LevelDificulty));
+        int i = Array.IndexOf<LevelDificulty>(ldArray, playingDificulty) + 1;
+        LevelDificulty nextDificulty = (ldArray.Length == i) ? ldArray[0] : ldArray[i];
+        LoadRandomLevel(nextDificulty);
+    }
+
     public bool IsLastLevel() {
         switch(playingDificulty) {
             case LevelDificulty.Easy: return (easyLevels-1 == playingLevel);
@@ -112,9 +119,11 @@ public class LevelLoader : MonoBehaviour {
         return false;
     }
 
-    public void SetLevelTextCode(LevelDificulty levelDificulty, int levelNumber) {
-        TextAsset txt = (TextAsset)Resources.Load("Level Text/" + levelDificulty.ToString() + levelNumber);
-        inGameUI.LoadCode(txt);
+    public bool IsNextDificultyUnlocked() {
+        if (scoreManager.finalScore.GetPoints(playingDificulty) >= ScoreManager.PASS_LEVEL_SCORE) {
+            return true;
+        }
+        else return false;
     }
 
     /* =============================================================== PRIVATE METHODS =============================================================== */
@@ -219,5 +228,10 @@ public class LevelLoader : MonoBehaviour {
             cc.GetComponent<AbsLevel>().Initialize();
         }
          inGameUI.LoadOreGoal(characterCubes.Last<GameObject>().GetComponent<AbsLevel>().oreGoal);
+    }
+
+    private void SetLevelTextCode(LevelDificulty levelDificulty, int levelNumber) {
+        TextAsset txt = (TextAsset)Resources.Load("Level Text/" + levelDificulty.ToString() + levelNumber);
+        inGameUI.LoadCode(txt);
     }
 }

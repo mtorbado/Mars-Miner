@@ -4,7 +4,7 @@ public class Challenge0 : AbsLevel {
 
     public override void Initialize() {
         robotActions = (RobotActions)transform.GetComponent<RobotActions>();
-        oreGoal = 1;
+        oreGoal = 2;
     }
     
     public override IEnumerator Play(string[] args) {
