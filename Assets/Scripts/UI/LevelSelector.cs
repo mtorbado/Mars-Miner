@@ -60,9 +60,9 @@ public class LevelSelector : MonoBehaviour {
     /// </summary>
     private void UpdateScores() {
         int[] scoreArray = scoreManager.finalScore.Array();
-        int[] maxArray = scoreManager.MaxPointsArray();
+        int[] maxArray = (int[])Enum.GetValues(typeof(LevelDificulty));
         for (int i = 0; i < dificultyButtons.Length; i++) {
-            if (i == 0 || scoreArray[i-1] > (maxArray[i-1] / 2)) { //TODO: decide score to pass to next dificulty
+            if (i == 0 || scoreArray[i-1] > ScoreManager.PASS_LEVEL_SCORE) {
                 dificultyButtons[i].GetComponent<Button>().interactable = true;
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(scoreArray[i] + "/" + maxArray[i]);
                 dificultyButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255,255,255,255);

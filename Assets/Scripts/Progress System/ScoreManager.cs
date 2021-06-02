@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,13 +8,21 @@ public class ScoreManager : MonoBehaviour {
 
     
     public Score finalScore;
-    public int scoreToPass;
     public int[] maxScores;
 
+    public const int PASS_GAME_SCORE = 4000;
+    public const int PASS_LEVEL_SCORE = 1000;
+
+    public const int ATTEMP_PENALTY = 50; // each attempt reduces score by ATTEMP_PENALTY
+    public const int SCORE_FACTOR = 2; // max score per level is (levelDificulty / SCORE_FACTOR)
+
     int attempts;
-    int moves;
+
+    LevelDificulty lastDificulty;
+    int lastLevelNumber;
 
     LevelLoader levelLoader;
+    TimerScript timerScript;
     
     void Start() {
         GameEvents.current.onLoadGameData += LoadScore;
@@ -25,6 +32,7 @@ public class ScoreManager : MonoBehaviour {
         GameEvents.current.onLevelPassed += SaveScore;
 
         levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
+        timerScript = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerScript>();
 
         finalScore = new Score();
         GameEvents.current.UpdateScores();
@@ -35,62 +43,24 @@ public class ScoreManager : MonoBehaviour {
     /// Returns the points obtained in the current playing level
     /// </summary>
     /// <returns></returns>
-    public int LevelPoints() { // TODO calculate score
-        switch(levelLoader.playingDificulty) {
-            case LevelDificulty.Easy: return (int)LevelDificulty.Easy;
-            case LevelDificulty.Medium: return (int)LevelDificulty.Medium;
-            case LevelDificulty.Hard: return (int)LevelDificulty.Hard;
-            case LevelDificulty.Challenge: return (int)LevelDificulty.Challenge;
-        }
-        return 0;
+    public int LevelPoints() {
+        return ((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY);
     }
-
-    public int MaxPoints() {
-        switch(levelLoader.playingDificulty) {
-            case LevelDificulty.Easy: return (int)LevelDificulty.Easy * levelLoader.easyLevels;
-            case LevelDificulty.Medium: return (int)LevelDificulty.Medium * levelLoader.mediumLevels;
-            case LevelDificulty.Hard: return (int)LevelDificulty.Hard * levelLoader.hardLevels;
-            case LevelDificulty.Challenge: return (int)LevelDificulty.Challenge * levelLoader.challengeLevels;
-        }
-        return 0;
-    }
-
-    public int[] MaxPointsArray() {
-        return new int[4] {
-            (int)LevelDificulty.Easy * levelLoader.easyLevels,
-            (int)LevelDificulty.Medium * levelLoader.mediumLevels,
-            (int)LevelDificulty.Hard * levelLoader.hardLevels,
-            (int)LevelDificulty.Challenge * levelLoader.challengeLevels
-        };
-    }
-
 
     public int LevelAttempts() {
         return attempts;
     }
 
-    private void Reset(LevelDificulty levelDificulty, int levelNumber) {
-        if (levelLoader.playingDificulty != levelDificulty || levelLoader.playingLevel != levelNumber) {
-            attempts = 0;
-            moves = 0;
-        }        
-    }
-
-    private void Reset(LevelDificulty? levelDificulty) {
-        Reset();
-    }
-
     private void Reset() {
-        attempts = 0;
-        moves = 0;
+        if (levelLoader.playingDificulty !=lastDificulty || levelLoader.playingLevel != lastLevelNumber) {
+            attempts = 0;
+        }
+        lastDificulty = levelLoader.playingDificulty;
+        lastLevelNumber = (int)levelLoader.playingLevel;        
     }
 
     private void AddAttempt() {
         attempts ++;
-    }
-
-    private void AddMove() {
-        moves ++;
     }
    
     /* =============================================================== LOAD SCORE ============================================================= */
@@ -116,7 +86,7 @@ public class ScoreManager : MonoBehaviour {
 
     private void SaveScore() {
         
-        int points = Math.Min(LevelPoints() + finalScore.GetPoints(levelLoader.playingDificulty), MaxPoints());
+        int points = Math.Min(LevelPoints() + finalScore.GetPoints(levelLoader.playingDificulty), (int)levelLoader.playingDificulty);
         finalScore.SetPoints(levelLoader.playingDificulty, Math.Max(finalScore.GetPoints(levelLoader.playingDificulty), points));
 
         string jsonScore = JsonUtility.ToJson(finalScore);
@@ -129,7 +99,7 @@ public class ScoreManager : MonoBehaviour {
 
     private void SaveGlobalData() {
         int completed = 0;
-        if (finalScore.TotalScore() >= scoreToPass) completed = 1;
+        if (finalScore.TotalScore() >= PASS_GAME_SCORE) completed = 1;
         int [] data = {finalScore.TotalScore(), completed};
         #pragma warning disable CS0618
         Application.ExternalCall("guardar", data);

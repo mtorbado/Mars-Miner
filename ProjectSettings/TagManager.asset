@@ -9,6 +9,7 @@ TagManager:
   - LevelManager
   - Rock
   - InGameUI
+  - Timer
   layers:
   - Default
   - TransparentFX

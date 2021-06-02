@@ -4,10 +4,11 @@ using TMPro;
 
 public class LevelFinishedCanvasActions : MonoBehaviour {
     
-    public float displayPosition, closedPosition;
+    public float displayPosition1, closedPosition1; // for levelPassedPanel and levelFailedPanel
+    public float displayPosition2, closedPosition2; // for nexrDificultyPanel 
 
-    private GameObject levelPassedPanel;
-    private GameObject levelFailedPanel;
+    public GameObject levelPassedPanel, levelFailedPanel, nextDificultyPanel;
+
     private GameObject background;
     private ScoreManager scoreManager;
     private LevelLoader levelLoader;
@@ -21,15 +22,13 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
         background = gameObject.transform.Find("Background").gameObject;
         background.SetActive(false);
-        levelPassedPanel = gameObject.transform.Find("LevelPassedPanel").gameObject;
-        levelFailedPanel = gameObject.transform.Find("LevelFailedPanel").gameObject;
     }
 
     /* ============================================================ EVENT CALL METHODS ============================================================ */
 
     private void ShowLevelFailedPanel() {
         background.SetActive(true);
-        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);
+        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), displayPosition1, 0.2f);
     }
 
     private void ShowLevelPassedPanel() {
@@ -40,31 +39,31 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
         levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelAttempts() + " intentos");
 
         background.SetActive(true);
-        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition, 0.2f);
+        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition1, 0.2f);
+
+        if (levelLoader.playingDificulty != LevelDificulty.Challenge && levelLoader.IsNextDificultyUnlocked()) {
+            LeanTween.moveY(nextDificultyPanel.GetComponent<RectTransform>(), displayPosition2, 0.2f);
+        }
     }
 
     /* ============================================================== BUTTON METHODS ============================================================== */
 
     public void LoadNextLevel() {
-        background.SetActive(false);
         ClosePanels();
         levelLoader.LoadNextLevel();
     }
 
     public void LoadRandomLevel() {
-        background.SetActive(false);
         ClosePanels();
         levelLoader.LoadRandomLevel();
     }
 
     public void SelectLevel() {
-        background.SetActive(false);
         ClosePanels();
         GameEvents.current.SelectLevel();
     }
 
     public void RestartLevel() {
-        background.SetActive(false);
         ClosePanels();
         levelLoader.RestartLevel();
     }
@@ -74,8 +73,15 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
 
+    public void PlayNextDificulty() {
+        ClosePanels();
+        levelLoader.LoadNextDificulty();
+    }
+
     private void ClosePanels() {
-        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
-        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition, 0.1f);
+        background.SetActive(false);
+        LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition1, 0.1f);
+        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition1, 0.1f);
+        LeanTween.moveY(nextDificultyPanel.GetComponent<RectTransform>(), closedPosition2, 0.1f);
     }
 }

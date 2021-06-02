@@ -183,6 +183,7 @@
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\ProgramInputScript.cs" />
      <Compile Include="Assets\Scripts\UI\RestartLevelButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\TimerScript.cs" />
      <Compile Include="Assets\Scripts\UI\TutorialCanvasActions.cs" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />

@@ -21,7 +21,6 @@ public class CountOreScript : MonoBehaviour
     public void SetOreGoal(int oreGoal) {
         this.oreGoal = oreGoal;
         gameObject.GetComponent<TextMeshProUGUI>().SetText(0 + " / " + oreGoal);
-        Debug.Log(oreGoal);
     }
 
     /// <summary>
