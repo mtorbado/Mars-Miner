@@ -187,9 +187,6 @@
      <Compile Include="Assets\Scripts\UI\TutorialCanvasActions.cs" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Challenge0.txt" />
-     <None Include="Assets\Level Files\Resources\Level Text\Medium0.txt" />
-     <None Include="Assets\Level Files\Resources\Level Text\Easy3.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\Imported Assets\Standard Assets\Prototyping\Shaders\WorldCoordDiffuse.shader" />
@@ -200,11 +197,8 @@
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ImageEffects\Readme.txt" />
      <None Include="Assets\Imported Assets\LeanTween\ReadMe.txt" />
-     <None Include="Assets\Level Files\Resources\Level Text\Hard4.txt" />
-     <None Include="Assets\Level Files\Resources\Level Text\Medium3.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Medium1.txt" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Environment\Water\DO_NOT_WORK_IN_VR.txt" />
@@ -216,27 +210,19 @@
      <None Include="Assets\Imported Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Challenge1.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Hard2.txt" />
-     <None Include="Assets\Level Files\Resources\Level Text\Easy0.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\Imported Assets\SimpleGridShader\README.txt" />
      <None Include="Assets\Imported Assets\SimpleGridShader\GridShader.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Hard0.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Imported Assets\LeanTween\License.txt" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Medium2.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Easy1.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-     <None Include="Assets\Level Files\Resources\hoover_doc.txt" />
-     <None Include="Assets\Level Files\Resources\Level Text\Hard3.txt" />
      <None Include="Assets\Level Files\Resources\tutorial.txt" />
      <None Include="Assets\Imported Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
@@ -244,10 +230,8 @@
      <None Include="Assets\Imported Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAdd.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\Imported Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Hard1.txt" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\Imported Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-     <None Include="Assets\Level Files\Resources\Level Text\Easy2.txt" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Users/Mario/Unity projects/tfg/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
