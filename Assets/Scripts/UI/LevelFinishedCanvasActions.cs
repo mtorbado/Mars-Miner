@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class LevelFinishedCanvasActions : MonoBehaviour {
     
@@ -27,23 +28,31 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     /* ============================================================ EVENT CALL METHODS ============================================================ */
 
     private void ShowLevelFailedPanel() {
-        background.SetActive(true);
-        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), displayPosition1, 0.2f);
+        StartCoroutine(LevelFailedCorroutine());
     }
 
     private void ShowLevelPassedPanel() {
-
         // levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!levelLoader.IsLastLevel());
-    
         levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelPoints() + " puntos");
         levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelAttempts() + " intentos");
+        StartCoroutine(LevelPassedCorroutine());
+    }
 
+    private IEnumerator LevelPassedCorroutine() {
+        yield return new WaitForSeconds(0.5f);
         background.SetActive(true);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), displayPosition1, 0.2f);
 
         if (levelLoader.playingDificulty != LevelDificulty.Challenge && levelLoader.IsNextDificultyUnlocked()) {
             LeanTween.moveY(nextDificultyPanel.GetComponent<RectTransform>(), displayPosition2, 0.2f);
         }
+        
+    }
+
+    private IEnumerator LevelFailedCorroutine() {
+        yield return new WaitForSeconds(2);
+        background.SetActive(true);
+        LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), displayPosition1, 0.2f);
     }
 
     /* ============================================================== BUTTON METHODS ============================================================== */
