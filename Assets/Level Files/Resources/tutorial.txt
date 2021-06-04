@@ -5,7 +5,7 @@ Tu misión es guiar a este pequeño robot, el Mars Hoover, para que recoja los v
 Aunque el Mars Hoover es un poco terco y no podemos decirle qué hacer. para cada nivel nos indicará los movimientos que hará por su cuenta, en el panel de codigo de la derecha.
 Nuestro trabajo es analizar su código y tratar de despejarle e el camino.
 
-En algunos niveles, el Mars Rover pedirá que le indiques algunos valores para su código, escríbelos en la caja de entrada, separados por comas.
+Al comenzar cada nivel, el temporizador que se muestra arriba empezará a contar. Cada 30 segundos, tu puntiación se reducirá 50 puntos. ¡Piensa rápido!
 
 Si tienes alguna duda respecto al código del Mars Hoover, podrás acceder al HooverDoc pulsando el botón que aparece en la parte inferior del panel de la derecha.
 
