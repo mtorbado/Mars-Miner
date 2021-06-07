@@ -10,6 +10,7 @@ public class LevelSelector : MonoBehaviour {
 
     ScoreManager scoreManager;
     LevelLoader levelLoader;
+    AudioManager audioManager;
 
     public GameObject[] dificultyButtons;
 
@@ -20,9 +21,12 @@ public class LevelSelector : MonoBehaviour {
 
         scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
         levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public void PlayEasy() {
+        audioManager.Play("beep");
         if (scoreManager.finalScore.easyPoints == 0) {
             levelLoader.LoadLevel(LevelDificulty.Easy, 0);
             GameEvents.current.DisableAllForTutorial();
@@ -34,16 +38,19 @@ public class LevelSelector : MonoBehaviour {
     }
 
     public void PlayMedium() {
+        audioManager.Play("beep");
         levelLoader.LoadRandomLevel(LevelDificulty.Medium);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
     public void PlayHard() {
+        audioManager.Play("beep");
         levelLoader.LoadRandomLevel(LevelDificulty.Hard);
         transform.GetComponent<Canvas>().enabled = false;
     }
 
     public void PlayChallenge() {
+        audioManager.Play("beep");
         levelLoader.LoadRandomLevel(LevelDificulty.Challenge);
         transform.GetComponent<Canvas>().enabled = false;
     }
