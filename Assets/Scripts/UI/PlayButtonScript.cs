@@ -17,6 +17,8 @@ public class PlayButtonScript : AbsButton {
     /// </summary>
     public void Play() {
         
+        audioManager.Play("beep");
+
         button.interactable = false;
         GetComponentInChildren<Text>().text = "¡Iniciado!";
         GameEvents.current.PlayLevel();

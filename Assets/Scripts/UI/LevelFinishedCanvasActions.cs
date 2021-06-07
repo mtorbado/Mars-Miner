@@ -13,6 +13,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     private GameObject background;
     private ScoreManager scoreManager;
     private LevelLoader levelLoader;
+    private AudioManager audioManager;
 
     private void Start() {
         GameEvents.current.onLevelFailed += ShowLevelFailedPanel;
@@ -23,6 +24,8 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
         background = gameObject.transform.Find("Background").gameObject;
         background.SetActive(false);
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     /* ============================================================ EVENT CALL METHODS ============================================================ */
@@ -88,6 +91,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     }
 
     private void ClosePanels() {
+        audioManager.Play("beep");
         background.SetActive(false);
         LeanTween.moveY(levelPassedPanel.GetComponent<RectTransform>(), closedPosition1, 0.1f);
         LeanTween.moveY(levelFailedPanel.GetComponent<RectTransform>(), closedPosition1, 0.1f);

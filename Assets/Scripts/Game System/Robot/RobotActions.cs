@@ -10,6 +10,7 @@ public class RobotActions : MonoBehaviour {
     BoardManager boardManager;
     Vector3 currentPosition;
     new Animation animation;
+    AudioManager audioManager;
     float moveSpeed = 1f;
     float rotationTime = 1f;
     bool canMove = true;
@@ -23,6 +24,7 @@ public class RobotActions : MonoBehaviour {
     private void Awake() {
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
         currentPosition = transform.position;
+        audioManager = FindObjectOfType<AudioManager>();
         animation = gameObject.GetComponent<Animation>();
         animation.PlayQueued("RunningRobotAnimation");
     }
@@ -35,10 +37,12 @@ public class RobotActions : MonoBehaviour {
         if (collider.gameObject.CompareTag("Ore")) {
             Destroy(collider.gameObject);
             GameEvents.current.PickOreTriggerEnter();
+            audioManager.Play("score");
         }
         else {
             canMove = false;
             GameEvents.current.LevelFailed();
+            audioManager.Play("bump");
         }
     }
 
@@ -49,6 +53,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator MoveFoward() {
+        audioManager.Play("robot_motor2");
         Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile(1));
         float i = 0.0f;
         while (Vector3.Distance(transform.position, target) > 0.0f && canMove) {
@@ -56,6 +61,7 @@ public class RobotActions : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, target, i);
             yield return null;
         }
+        audioManager.Stop("robot_motor2");
     }
 
     /// <summary>
@@ -63,6 +69,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator MoveBackward() {
+        audioManager.Play("robot_motor2");
         Vector3 target = boardManager.GetCenterPointOfTile(GetFowardTile(-1));
         float i = 0.0f;
         while (Vector3.Distance(transform.position, target) > 0.0f && canMove) {

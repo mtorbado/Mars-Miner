@@ -155,6 +155,8 @@
      <Compile Include="Assets\Level Files\Resources\Level Scripts\Medium\Medium1.cs" />
      <Compile Include="Assets\Level Files\Resources\Level Scripts\Medium\Medium2.cs" />
      <Compile Include="Assets\Level Files\Resources\Level Scripts\Medium\Medium3.cs" />
+     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\Audio\Sound.cs" />
      <Compile Include="Assets\Scripts\Game System\BoardManager.cs" />
      <Compile Include="Assets\Scripts\Game System\CableController.cs" />
      <Compile Include="Assets\Scripts\Game System\DragObjectController.cs" />

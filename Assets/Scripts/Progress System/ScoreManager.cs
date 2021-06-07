@@ -11,11 +11,11 @@ public class ScoreManager : MonoBehaviour {
     public int[] maxScores;
 
     public const int PASS_GAME_SCORE = 4000;
-    public const int PASS_DIFICULTY_SCORE = 1000;
+    public const int PASS_DIFICULTY_SCORE = 500;
     public const int MIN_LEVEL_SCORE = 100;
 
     public const int ATTEMP_PENALTY = 50; // each attempt reduces score by ATTEMP_PENALTY
-    public const int SCORE_FACTOR = 3; // max score per level is (levelDificulty / SCORE_FACTOR)
+    public const int SCORE_FACTOR = 4; // max score per level is (levelDificulty / SCORE_FACTOR)
 
     int attempts;
 

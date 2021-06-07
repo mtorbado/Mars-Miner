@@ -5,11 +5,13 @@
 /// </summary>
 public class RockPariclesController : MonoBehaviour {
 
+    AudioManager audioManager;
     ParticleSystem[] particles;
     private bool showParticles;
 
     private void Start() {
         particles = GetComponentsInChildren<ParticleSystem>();
+        audioManager = FindObjectOfType<AudioManager>();
         foreach( ParticleSystem p in particles) {
             p.Stop();
         }
@@ -24,14 +26,17 @@ public class RockPariclesController : MonoBehaviour {
     private void OnMouseDown() {
         if(showParticles) {
             foreach( ParticleSystem p in particles) {
-             p.Play();
+                p.Play();
             }
+            audioManager.Play("magnet");
         }
     }
 
     private void OnMouseUp() {
         foreach( ParticleSystem p in particles) {
             p.Stop();
+            audioManager.Stop("magnet");
+            audioManager.Play("bump");
         }
     }
 
