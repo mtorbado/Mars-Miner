@@ -4,6 +4,7 @@ Mars Miner es un juego desarrollado en Unity como Trabajo de Fin de Grado por Ma
 El juego trata de ser una herramienta para la enseñanza de los alumnos de primer curso de Grado en Ingeniería Informática para la comprensión de estructuras
 de código iterativas y condicionales. Para un análisis en detalle del juego, consulte el apartado correspondiente del TFG. //completar
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Pre-requisitos
 
@@ -13,9 +14,9 @@ Para leer o modificar los archivos de código (.cs) se recomienda usar un entorn
 funciones de Unity. Durante el desarrollo se ha usado el editor Visual Studio Code junto a las siguientes extensiones:
 
 - [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
-- [C# XML Documentation Comments](https://marketplace.visualstudio.com/items?itemName=k--kato.docomment)
 - [Unity Code Snippets](https://marketplace.visualstudio.com/items?itemName=kleber-swf.unity-code-snippets)
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Edición de Niveles
 
@@ -43,6 +44,15 @@ Para añadir color o formato a dicho texto, pueden utilizarse una serie de etiqu
 
 
 ### Script C#:
+El Script contiene la secuencia de movimientos del robot que se ejecutará en el nivel, Para generar nuevos scripts de nivel debemos seguir las siguientes pautas:
+
+- Se debe importar (_using_) la clase _System.Collections_.
+- Debe haber una definición _public override void Initialize() {...}_, donde se debe indicar el número de minerales que el robot debe recoger para superar el nivel (_oreGoal_) y se debe obtener una referencia al componente _RobotActions_.
+- Debe haber una definición _public override IEnumerator Play(string[] args) {..}_, que contiene la secuencia de acciones del robot.
+- Entre cada secuencia de movimiento del robot que mueva a este de casilla (_robotActions.MoveFoward()_ o _robotAcions.MoveBackward()_) se debe hacer una comprobación de si el robot colisiona con una roca (_CheckLevelFailed()_), y retornar la animación _robotActions.BreakAnimation()_ en tal caso.
+- Al final de la secuencia de código, deberá llamarse al método _CheckLevelPassed()_, excluyendo la condición _CheckLevelFailed()_ de tal forma que no se puedan dar de forma simultánea ambas condiciones.
+
+Es recomendable que consultes los scripts de los niveles existentes para comprender mejor la estructura de código a seguir. Para ver todas las acciones disponibles para el robot, consulta los métodos debajo de "_=== COROUTINES ===_" del script _RobotActions.cs_ en _/Assets/Scripts/Game System/Robot_.
 
 
 ### Tablero CSV:
@@ -57,7 +67,31 @@ La esquina superior izquierda de la matriz corresponde con la esquina inferior d
 - r - robot orientado hacia la derecha (right).
 - l - robot orientado hacia la izquierda (left).
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## Modificación del cálculo de puntuaciones
+
+El cálculo para la puntuación de cada nivel está preestablecido en el código del proyecto, mediante una ecuación y una serie de parámetros fijos. Sin embargo, debido a la imposibilidad de que el proyecto sea probado por su usuario final (alumnos) antes de su entrega, aquí se incluye una guía sobre cómo modificar dicha ecuación y parámetros, en caso de querer modificarlo en el futuro.
+
+El script encargado de calcular las puntuaciones se puede encontrar en esta ruta: _/Assets/Scripts/Progress System/ScoreManager.cs_. Dentro del script, en la función _LevelPoints()_ encontraremos la ecuación que calcula la puntuación por cada nivel. Esta función utiliza los siguientes parámetros que podemos modificar:
+
+- _SCORE\_FACTOR_: Es un factor de división con respecto a la puntuación máxima del nivel actual. La puntuación máxima para el nivel será la puntuación máxima de la dificultad dividida entre este valor (4 originalmente).
+- _ATTEMP\_PENALTY_: Es la puntuación que se descontará por cada vez que se reintente el nivel (50 originalmente).
+- _MIN\_LEVEL\_SCORE_ : Es la puntuación mínima que se obtendrá por nivel que se supere independientemente de los intentos y el tiempo que se tarde (100 originalmente).
+
+Para ajustar la penalización de la puntuación por tiempo, debemos ir a _/Assets/Scripts/UI/TimerScript.cs_. En este script encontraremos los siguientes parámetros que podemos modificar:
+
+- _MAX\_PENALTY_: Es la puntuación máxima que se puede llegar a descontar por nivel (200 originalmente).
+- _PENALTY\_LAPSE_: Es el intervalo de tiempo, en segundos, entre cada resta de puntos (30 segundos originalmente).
+- _PENALTY_: Son los puntos que se restarán a la puntuación del nivel cada vez que pase el tiempo marcado por _PENALTY\_LAPSE_.
+
+Para ajustar la puntuación necesaria para desbloquear la siguiente dificultad, podemos hacerlo de nuevo en _ScoreManager.cs_, en el parámetro _PASS\_DIFICULTY\_SCORE_.
+
+La puntuación necesaria para marcar el juego como superado en la plataforma se indica también en  _ScoreManager.cs_, en el parámetro _PASS\_GAME\_SCORE_.
+
+Por último, en caso que queramos modificar la puntuación máxima por dificultad, estas están definidas en _/Assets/Scripts/Game System/LevelDificulty.cs_. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Construcción y ejecución del proyecto
 
@@ -69,20 +103,24 @@ Mars Miner está destinado a ser construido como un proyecto WebGL, para su expo
 4. Seleccionar WebGL como _Platform_.
 5. Pulsar el botón _Build_.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Versionado
 
 Para el versionado del proyecto se ha utilizado Git y Github como plataforma online para albergar el repositorio remoto.
+El repositorio del proyecto puede encontrarse en https://github.com/mtorbado/tfg.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Autores 
 
 * **Mario Torbado de la Rosa** - *Desarrollo del proyecto Unity, modelado 3D y documentación* - [mtorbado](https://github.com/mtorbado)
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Licencia
+## Colaboradores
 
-Este proyecto está bajo la Licencia "" - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+* **Oliver L. Sanz San José** - *Música y sonido*
 
------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
