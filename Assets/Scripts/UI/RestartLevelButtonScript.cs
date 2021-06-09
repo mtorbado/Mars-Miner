@@ -8,9 +8,6 @@ public class RestartLevelButtonScript : MonoBehaviour {
         levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void RestartLevel() {
         Debug.Log("Reloading current level");
         levelLoader.RestartLevel();

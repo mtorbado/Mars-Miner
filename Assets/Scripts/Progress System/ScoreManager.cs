@@ -1,9 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
 public class ScoreManager : MonoBehaviour {
 
     
@@ -40,10 +37,6 @@ public class ScoreManager : MonoBehaviour {
         RetrieveScore();
     }
 
-    /// <summary>
-    /// Returns the points obtained in the current playing level
-    /// </summary>
-    /// <returns></returns>
     public int LevelPoints() {
         return (Math.Max(((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY), MIN_LEVEL_SCORE));
     }

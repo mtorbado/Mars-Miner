@@ -3,9 +3,6 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 
-/// <summary>
-/// Displays the list of tutorial panels for the tutorial level and then re-enables the game interaction
-/// </summary>
 public class TutorialCanvasActions : MonoBehaviour {
 
     public GameObject tutorialPanel;

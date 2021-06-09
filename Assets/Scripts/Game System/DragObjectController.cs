@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Class that allows to drag objetcs with the mouse in the game board
-/// </summary>
 public class DragObjectController : MonoBehaviour { 
     
     // LAYER MASKS
@@ -50,10 +47,6 @@ public class DragObjectController : MonoBehaviour {
 
     /* =============================================================== AUXILIAR METHODS =============================================================== */
 
-    /// <summary>
-    /// Returns a point on the game board upon which the object is hovering
-    /// </summary>
-    /// <returns>Hover point</returns>
     private Vector2 GetHoverPoint() {
         Vector2 hoverPoint = new Vector2(-1,-1);
         Vector3 toGround = this.transform.TransformDirection(Vector3.down);
@@ -65,9 +58,6 @@ public class DragObjectController : MonoBehaviour {
         return hoverPoint;
     }
 
-    /// <summary>
-    /// Snaps the object into the board cell bellow it, if said cell is clear
-    /// </summary>
     private void SnapIntoPlaneCell() {
         Tile tile = boardManager.GetTile(GetHoverPoint());
 
