@@ -2,9 +2,6 @@
 using System.Linq;
 using UnityEngine;
 
-/// <summary>
-/// Class for loading game levels
-/// </summary>
 public class LevelLoader : MonoBehaviour {
 
     public GameObject[] movableRocks;
@@ -45,10 +42,6 @@ public class LevelLoader : MonoBehaviour {
 
     /* =============================================================== PUBLIC METHODS =============================================================== */
 
-    /// <summary>
-    /// Loads a level given its number
-    /// </summary>
-    /// <param name="levelNumber"> Number of level to load </param>
     public void LoadLevel(LevelDificulty levelDificulty,int levelNumber) {
         SetTableElements(ReadLevelTable(levelDificulty, levelNumber));
         SetLevelScript(levelDificulty, levelNumber);
@@ -59,10 +52,6 @@ public class LevelLoader : MonoBehaviour {
         GameEvents.current.LoadLevel();
     }
 
-    /// <summary>
-    /// Loads a random level of the current dificulty, excluding the last one played
-    /// </summary>
-    /// <param name="levelDificulty"> Dificulty of level to load </param>
     public void LoadRandomLevel(LevelDificulty levelDificulty) {
         int levelNumber =0;
         System.Random r = new System.Random();
@@ -88,16 +77,10 @@ public class LevelLoader : MonoBehaviour {
         LoadRandomLevel(playingDificulty);
     }
 
-    /// <summary>
-    /// Restarts the current playing level
-    /// </summary>
     public void RestartLevel() {
         LoadLevel(playingDificulty, (int)playingLevel);
     }
 
-    /// <summary>
-    /// Loads next level
-    /// </summary>
     public void LoadNextLevel() {
         LoadLevel(playingDificulty, (int)playingLevel + 1);
     }
@@ -121,7 +104,7 @@ public class LevelLoader : MonoBehaviour {
 
     public bool IsNextDificultyUnlocked() {
         Debug.Log("puntos: " + scoreManager.finalScore.GetPoints(playingDificulty));
-        if (scoreManager.finalScore.GetPoints(playingDificulty) + scoreManager.LevelPoints() >= ScoreManager.PASS_DIFICULTY_SCORE) {
+        if (scoreManager.finalScore.GetPoints(playingDificulty) >= ScoreManager.PASS_DIFICULTY_SCORE) {
             return true;
         }
         else return false;
@@ -129,10 +112,6 @@ public class LevelLoader : MonoBehaviour {
 
     /* =============================================================== PRIVATE METHODS =============================================================== */
 
-    /// <summary>
-    /// Sets the game elements onto the game board acording to the given level table
-    /// </summary>
-    /// <param name="table"> char table that contains the distribution of game objects in the board for each level </param>
     private void SetTableElements(char [,] table) {
 
         CleanTable();
@@ -178,11 +157,6 @@ public class LevelLoader : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Reads the required csv level file given its number and returns it as a char jagged array
-    /// </summary>
-    /// <param name="levelNumber"> Number of level to load </param>
-    /// <returns> char table with csv file content </returns>
     private char[,] ReadLevelTable(LevelDificulty levelDificulty, int levelNumber) {
 
         char[,] table = new char[TableSize,TableSize];
@@ -206,9 +180,6 @@ public class LevelLoader : MonoBehaviour {
         return table;
     }
 
-    /// <summary>
-    /// Destroys all objects from Game Elements layer that exists in the current game scene
-    /// </summary>
     private void CleanTable() {
         foreach (Transform child in transform) {
             if (child.gameObject.layer == GameElementsLayer) {
@@ -217,10 +188,6 @@ public class LevelLoader : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Locates all character cubes in the scene and adds the propper level script to them
-    /// </summary>
-    /// <param name="levelNumber">Number of level to load</param>
     private void SetLevelScript(LevelDificulty levelDificulty, int levelNumber) {
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach(GameObject cc in characterCubes) {

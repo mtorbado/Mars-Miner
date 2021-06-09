@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// Manages the UI elements displayed while playing a level
-/// </summary>
 public class InGameUICanvasActions : MonoBehaviour {
 
     public GameObject codeHolder;
@@ -28,17 +25,11 @@ public class InGameUICanvasActions : MonoBehaviour {
         scoreHolder.GetComponent<CountOreScript>().SetOreGoal(oreGoal);
     }
 
-    /// <summary>
-    /// Loads the code documentation file into de HooverDoc panel
-    /// </summary>
     private void LoadHooverDoc() {
         TextAsset txt = (TextAsset)Resources.Load("hoover_doc");
         docHolder.GetComponent<TextMeshProUGUI>().SetText(txt.text);
     }
 
-    // <summary>
-    /// Sets the game UI pannels active
-    /// </summary>
     private void ShowInGameUI() {
         this.gameObject.GetComponent<Canvas>().enabled = true;
     }

@@ -1,11 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
-/// <summary>
-/// Abstract class to define game levels
-/// </summary>
 public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public int oreGoal;
@@ -26,10 +22,6 @@ public abstract class AbsLevel : MonoBehaviour, ILevel {
 
     public abstract void Initialize();
     
-    /// <summary>
-    /// Abstract method to override with game loop for each level 
-    /// </summary>
-    /// <returns></returns>
     public abstract IEnumerator Play(string [] args);
 
     public void PickOre() {

@@ -5,10 +5,13 @@ public class AudioManager : MonoBehaviour {
 
     public Sound[] sounds;
 
+    public static AudioManager instance;
+
     private void Start() {
     GameEvents.current.onLevelFailed += LevelFailed;
     GameEvents.current.onLevelPassed += LevelPassed;
     GameEvents.current.onLevelLoad += LevelLoad;
+    GameEvents.current.onExitGame += ExitGame;
     }
 
     private void Awake() {
@@ -17,10 +20,9 @@ public class AudioManager : MonoBehaviour {
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            s.source.loop = s.loop; 
         }
-        Play("wind");
-        Play("robot_motor");
+
     }
 
     public void Play (string name) {
@@ -35,6 +37,11 @@ public class AudioManager : MonoBehaviour {
         s.source.Stop();
     }
 
+    public void SetVolume (string name, int volume) {
+        Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
+        s.source.volume = volume;
+    }
+
     private void LevelFailed() {
         Stop("robot_motor");
         Stop("robot_motor2");
@@ -45,8 +52,13 @@ public class AudioManager : MonoBehaviour {
     }
 
     private void LevelLoad() {
+        Play("wind");
         Play("robot_motor");
     }
 
+    private void ExitGame() {
+        Stop("wind");
+        Stop("robot_motor");
+    }
 
 }
