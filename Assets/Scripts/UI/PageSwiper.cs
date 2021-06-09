@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// From https://pressstart.vip/tutorials/2019/06/1/96/level-selector.html
 /// </summary>
-public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler{
+public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler {
     private Vector3 panelLocation;
     public float percentThreshold = 0.2f;
     public float easing = 0.5f;
-    public int totalPages = 3;
+    public int totalPages = 2;
     private int currentPage = 1;
 
     void Start() {

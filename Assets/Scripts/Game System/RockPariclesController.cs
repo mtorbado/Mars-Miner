@@ -5,19 +5,47 @@
 /// </summary>
 public class RockPariclesController : MonoBehaviour {
 
-    ParticleSystem particles;
+    AudioManager audioManager;
+    ParticleSystem[] particles;
+    private bool showParticles;
 
     private void Start() {
-        particles = GetComponentInChildren<ParticleSystem>();
-        particles.Stop();
+        particles = GetComponentsInChildren<ParticleSystem>();
+        audioManager = FindObjectOfType<AudioManager>();
+        foreach( ParticleSystem p in particles) {
+            p.Stop();
+        }
+    }
+
+    private void Awake() {
+        showParticles = true;
+        GameEvents.current.onDisableAllForTutorial += DisableParticles;
+        GameEvents.current.onEnableAllAfterTutorial += EnableParticles; 
     }
 
     private void OnMouseDown() {
-        particles.Play();
+        if(showParticles) {
+            foreach( ParticleSystem p in particles) {
+                p.Play();
+            }
+            audioManager.Play("magnet");
+        }
     }
 
     private void OnMouseUp() {
-        particles.Stop();
+        foreach( ParticleSystem p in particles) {
+            p.Stop();
+            audioManager.Stop("magnet");
+            audioManager.Play("bump");
+        }
+    }
+
+    private void EnableParticles() {
+        showParticles = true;
+    }
+
+    private void DisableParticles() {
+        showParticles = false;
     }
 
 }

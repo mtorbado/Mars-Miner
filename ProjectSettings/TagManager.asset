@@ -6,6 +6,11 @@ TagManager:
   tags:
   - CharacterCube
   - Ore
+  - LevelManager
+  - Rock
+  - InGameUI
+  - Timer
+  - AudioManager
   layers:
   - Default
   - TransparentFX

@@ -11,14 +11,17 @@ public class DragObjectController : MonoBehaviour {
     const int Board_LayerMask = 1 << 8;
     const int GameElement_LayerMask = 1 << 9;
 
+    private bool canDrag;
+
     Plane basePlane;
     BoardManager boardManager;
     Vector3 previousPosition;
 
-    Ray mouseRay;
-    Transform cable;
-
     private void Awake() {
+        canDrag = true;
+        GameEvents.current.onDisableAllForTutorial += DisableDrag;
+        GameEvents.current.onEnableAllAfterTutorial += EnableDrag;
+
         boardManager = (BoardManager)GameObject.Find("Board").GetComponent(typeof(BoardManager));
         basePlane = boardManager.GetBasePlane();
         previousPosition = transform.position;
@@ -29,15 +32,14 @@ public class DragObjectController : MonoBehaviour {
     }
 
     private void OnMouseDrag() {
-        mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (basePlane.Raycast(mouseRay, out float distance)) {
-
-            boardManager.ShowTileGrid(true);
-            transform.position = mouseRay.GetPoint(distance - distance / 10);
-
-            boardManager.ShowSelectedTile(GetHoverPoint(), IsTileUnderClear());
-            //DEBUG_GetPlaneHitPoint();
+        if (canDrag) {
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (basePlane.Raycast(mouseRay, out float distance)) {
+                boardManager.ShowTileGrid(true);
+                transform.position = mouseRay.GetPoint(distance - distance / 10);
+                boardManager.ShowSelectedTile(GetHoverPoint());
+                //DEBUG_GetPlaneHitPoint();
+            }
         }
     }
 
@@ -46,7 +48,7 @@ public class DragObjectController : MonoBehaviour {
         SnapIntoPlaneCell();
     }
 
-    /* ============================================================================================================================================= */
+    /* =============================================================== AUXILIAR METHODS =============================================================== */
 
     /// <summary>
     /// Returns a point on the game board upon which the object is hovering
@@ -64,27 +66,12 @@ public class DragObjectController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Returns if the board tile upon which the object is hovering is clear or not
-    /// </summary>
-    /// <returns>true if tile is clear, false otherwise</returns>
-    private bool IsTileUnderClear() {
-        bool clear = true;
-        Vector3 toGround = this.transform.TransformDirection(Vector3.down);
-
-        if (Physics.Raycast(transform.position, toGround, out RaycastHit hit, Mathf.Infinity, GameElement_LayerMask)) {
-            clear = false;
-        }
-        return clear;
-    }
-
-    /// <summary>
     /// Snaps the object into the board cell bellow it, if said cell is clear
     /// </summary>
     private void SnapIntoPlaneCell() {
-
         Tile tile = boardManager.GetTile(GetHoverPoint());
 
-        if (IsTileUnderClear() && tile.X!=-1) {
+        if (boardManager.isTileClear(tile) && tile.X!=-1) {
             Vector3 centerOfTile = boardManager.GetCenterPointOfTile(tile);
             // centerOfTile.y = transform.localScale.y / 2;
             transform.position = centerOfTile;
@@ -93,6 +80,16 @@ public class DragObjectController : MonoBehaviour {
         else {
             transform.position = previousPosition;
         }
+    }
+
+    /* ============================================================== TUTORIAL LEVEL ============================================================== */
+
+    private void DisableDrag() {
+        canDrag = false;
+    }
+
+    private void EnableDrag() {
+        canDrag = true;
     }
 
     /* ============================================================== DEBUG FUNCTIONS ============================================================== */

@@ -1,0 +1,18 @@
+<color=#FFE4A0>public void</color> main (<color=#FFE4A0>String</color>[] args) {
+    <color=#FFE4A0>int</color> minerales = 0;
+    <color=#FFE4A0>int</color> objetivo = 2;
+    <color=#FFE4A0>while</color> (minerales < objetivo) {
+        <color=#FFE4A0>if</color> (robot.<color=#00FFFF>veRoca</color>()) {
+            robot.<color=#00FFFF>giraDerecha</color>();
+        }
+        <color=#FFE4A0>else</color> {
+            <color=#FFE4A0>if</color> (robot.<color=#00FFFF>veRoca</color>()) {
+                robot.<color=#00FFFF>giraIzquierda</color>();
+            }
+            robot.<color=#00FFFF>avanza</color>();
+        }
+        <color=#FFE4A0>if</color> (robot.<color=#00FFFF>cogeMineral</color>()) {
+            minerales ++;
+        }
+    }
+}

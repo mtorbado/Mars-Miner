@@ -6,10 +6,12 @@ using UnityEngine;
 /// </summary>
 public class BoardManager : MonoBehaviour {
 
+    // LAYER MASKS
+    const int GameElement_LayerMask = 1 << 9;
+
     private int tileNumber;
     private double tileSize;
 
-    Rigidbody rb;
     Plane basePlane;
     GameObject gridPlane;
     Material gridMaterial;
@@ -78,6 +80,38 @@ public class BoardManager : MonoBehaviour {
         return new Vector3(x + 0.5f, 0.5f, y + 0.5f);
     }
 
+    /// <summary>
+    /// Returns the game element object sitting in a given tile
+    /// </summary>
+    /// <param name="tile"> tile where the wanted game element is</param>
+    /// <returns>the game element object if there's any, null otherwise</returns>
+    public GameObject GetTileObject(Tile tile) {
+        Vector3 up = this.transform.TransformDirection(Vector3.up);
+        Vector3 tileCenter = GetCenterPointOfTile(tile);
+        Vector3 rayOrigin = new Vector3(tileCenter.x, tileCenter.y -1f, tileCenter.z);
+        if (Physics.Raycast(rayOrigin, up, out RaycastHit hit, 1f, GameElement_LayerMask) && hit.collider != null) {
+            return hit.collider.gameObject;
+        }
+        return null;
+    }
+
+    /* ================================================================== OTHER ================================================================== */
+
+    /// <summary>
+    /// Checks if there is a game element object in the given tile
+    /// </summary>
+    /// <param name="tile"> tile to check</param>
+    /// <returns> true if the tile is clear, false otherwise</returns>
+    public bool isTileClear(Tile tile) {
+        Vector3 up = this.transform.TransformDirection(Vector3.up);
+        Vector3 tileCenter = GetCenterPointOfTile(tile);
+        Vector3 rayOrigin = new Vector3(tileCenter.x, tileCenter.y -1f, tileCenter.z);
+        if (Physics.Raycast(rayOrigin, up, out RaycastHit hit, 1f, GameElement_LayerMask)) {
+            return false;
+        }
+        return true;
+    }
+
     /* =========================================================== GRID UPDATE METHODS =========================================================== */
 
     /// <summary>
@@ -85,12 +119,12 @@ public class BoardManager : MonoBehaviour {
     /// </summary>
     /// <param name="point"></param>
     /// <param name="isClear"></param>
-    public void ShowSelectedTile(Vector2 point, bool isClear) {
+    public void ShowSelectedTile(Vector2 point) {
 
         Tile selectedTile = GetTile(point);
 
         if (selectedTile.X != -1 && selectedTile.Y != -1) {
-            if (isClear) {
+            if (isTileClear(selectedTile)) {
                 gridMaterial.SetColor("_SelectedColor", new Color(0.7f,1,0.36f));
                 gridMaterial.SetColor("_LineColor", new Color(0.8f,1,0.16f));
             }

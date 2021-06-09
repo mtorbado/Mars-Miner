@@ -4,13 +4,12 @@ using UnityEngine.UI;
 /// <summary>
 /// 
 /// </summary>
-public class PlayButtonScript : MonoBehaviour {
+public class PlayButtonScript : AbsButton {
 
-    bool isCoroutineStarted;
-    Button button;
+    public GameObject programInput;
 
-    private void Start() {
-        button = GetComponent<Button>();
+    private void Awake() {
+        GameEvents.current.onLevelLoad += EnableButton;
     }
 
     /// <summary>
@@ -18,12 +17,23 @@ public class PlayButtonScript : MonoBehaviour {
     /// </summary>
     public void Play() {
         
-        button.interactable = false;
-        GetComponentInChildren<Text>().text = "Running!";
+        audioManager.Play("beep");
 
+        button.interactable = false;
+        GetComponentInChildren<Text>().text = "¡Iniciado!";
+        GameEvents.current.PlayLevel();
+        
         GameObject[] characterCubes = GameObject.FindGameObjectsWithTag("CharacterCube");
         foreach (GameObject characterCube in characterCubes) {
-            StartCoroutine(characterCube.GetComponent<ILevel>().Play());
+            StartCoroutine(characterCube.GetComponent<ILevel>().Play(programInput.GetComponent<ProgramInputScript>().GetInputArrayStr()));
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void EnableButton() {
+        GetComponentInChildren<Text>().text = "Start";
+        button.interactable = true;
     }
 }
