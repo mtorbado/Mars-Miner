@@ -3851,7 +3851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3719295, g: 0.37800372, b: 0.3962264, a: 0.5882353}
+  m_Color: {r: 0.3719295, g: 0.37800372, b: 0.3962264, a: 0.88235295}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9868,7 +9868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.37254903, g: 0.3764706, b: 0.39607844, a: 0.5882353}
+  m_Color: {r: 0.37254903, g: 0.3764706, b: 0.39607844, a: 0.88235295}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -16020,7 +16020,7 @@ PrefabInstance:
     - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
         type: 3}
       propertyPath: sounds.Array.size
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
         type: 3}
@@ -16185,6 +16185,46 @@ PrefabInstance:
     - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
         type: 3}
       propertyPath: sounds.Array.data[7].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[8].name
+      value: robot_motor3
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[8].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6c7af36dba4fb904bb23e2470a048eed, type: 3}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[8].volume
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[8].pitch
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[9].name
+      value: music
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[9].clip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[9].volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 548778381990815903, guid: 5aceba44e4295fe408bfd9bcdbff19e0,
+        type: 3}
+      propertyPath: sounds.Array.data[9].pitch
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

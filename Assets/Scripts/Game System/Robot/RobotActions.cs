@@ -77,6 +77,7 @@ public class RobotActions : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, target, i);
             yield return null;
         }
+        audioManager.Stop("robot_motor2");
     }
 
     /// <summary>
@@ -84,6 +85,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator TurnRight() {
+        audioManager.Play("robot_motor3");
         float startRotation = transform.eulerAngles.y;
         float endRotation = startRotation + 90f;
         float t = 0.0f;
@@ -93,6 +95,7 @@ public class RobotActions : MonoBehaviour {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
             yield return null;
         }
+        audioManager.Stop("robot_motor3");
     }
 
     /// <summary>
@@ -100,6 +103,7 @@ public class RobotActions : MonoBehaviour {
     /// </summary>
     /// <returns> null </returns>
     public IEnumerator TurnLeft() {
+        audioManager.Play("robot_motor3");
         float startRotation = transform.eulerAngles.y;
         float endRotation = startRotation - 90f;
         float t = 0.0f;
@@ -109,6 +113,7 @@ public class RobotActions : MonoBehaviour {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, transform.eulerAngles.z);
             yield return null;
         }
+        audioManager.Stop("robot_motor3");
     }
 
     /// <summary>
