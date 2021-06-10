@@ -9,6 +9,7 @@ public class CanvasTweening : AbsButton {
     private bool isDisplayed;
 
     void Awake() {
+        GameEvents.current.onSelectLevel += ClosePanel;
         isDisplayed = startsDisplayed;
     }
 
@@ -17,5 +18,10 @@ public class CanvasTweening : AbsButton {
         else LeanTween.moveX(panel.GetComponent<RectTransform>(), closedPosition, 0.2f);
         
         isDisplayed = !isDisplayed;
+    }
+
+    private void ClosePanel() {
+        LeanTween.moveX(panel.GetComponent<RectTransform>(), closedPosition, 0.2f);
+        isDisplayed = false;
     }
 }

@@ -99,7 +99,7 @@ Mars Miner está destinado a ser construido como un proyecto WebGL, para su expo
 
 1. Abrir el proyecto en Unity.
 2. Ir a _File_ -> _Build Setings..._
-3. Seleccionar las dos escenas existentes (Scenes/Start Menu y Scenes/Main Scene).
+3. Seleccionar la escena _Main Scene_.
 4. Seleccionar WebGL como _Platform_.
 5. Pulsar el botón _Build_.
 

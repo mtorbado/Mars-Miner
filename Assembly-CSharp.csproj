@@ -180,6 +180,7 @@
      <Compile Include="Assets\Scripts\UI\LevelFinishedCanvasActions.cs" />
      <Compile Include="Assets\Scripts\UI\LevelSelector.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
+     <Compile Include="Assets\Scripts\UI\OptionsCanvasActions.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\ProgramInputScript.cs" />
      <Compile Include="Assets\Scripts\UI\RestartLevelButtonScript.cs" />
