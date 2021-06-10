@@ -83,11 +83,6 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
         levelLoader.RestartLevel();
     }
 
-    public void GoToMainMenu() {
-        GameEvents.current.ExitGame();
-        SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
-    }
-
     public void PlayNextDificulty() {
         ClosePanels();
         levelLoader.LoadNextDificulty();

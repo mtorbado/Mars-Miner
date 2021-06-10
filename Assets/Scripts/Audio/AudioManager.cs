@@ -8,10 +8,11 @@ public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
     private void Start() {
-    GameEvents.current.onLevelFailed += LevelFailed;
-    GameEvents.current.onLevelPassed += LevelPassed;
-    GameEvents.current.onLevelLoad += LevelLoad;
-    GameEvents.current.onExitGame += ExitGame;
+    GameEvents.current.onLevelFailed += StopRobotNoise;
+    GameEvents.current.onLevelPassed += StopRobotNoise;
+    GameEvents.current.onLevelLoad += StartSceneSound;
+    GameEvents.current.onExitGame += StopSceneSound;
+    GameEvents.current.onSelectLevel += StopSceneSound;
     }
 
     private void Awake() {
@@ -34,29 +35,45 @@ public class AudioManager : MonoBehaviour {
 
     public void Stop (string name) {
         Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
-        s.source.Stop();
+        if (s != null) {
+            s.source.Stop();
+        }
     }
 
-    public void SetVolume (string name, int volume) {
+    public void SetVolume (string name, float volume) {
         Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
-        s.source.volume = volume;
+        if (s != null) {
+            s.source.volume = volume;
+        }
     }
 
-    private void LevelFailed() {
+    public void SetMusicVolume(float volume) {
+        SetVolume("music", volume);
+    }
+
+    public void SetFxVolume(float volume) {
+        SetVolume("robot_motor", volume);
+        SetVolume("robot_motor2", volume);
+        SetVolume("robot_motor3", volume);
+        SetVolume("bump", volume);
+        SetVolume("wind", volume * 0.3f);
+        SetVolume("magnet", volume);
+        SetVolume("score", volume);
+        SetVolume("beep", volume);
+        
+    }
+
+    private void StopRobotNoise() {
         Stop("robot_motor");
         Stop("robot_motor2");
     }
 
-    private void LevelPassed() {
-        Stop("robot_motor2");
-    }
-
-    private void LevelLoad() {
+    private void StartSceneSound() {
         Play("wind");
         Play("robot_motor");
     }
 
-    private void ExitGame() {
+    private void StopSceneSound() {
         Stop("wind");
         Stop("robot_motor");
     }

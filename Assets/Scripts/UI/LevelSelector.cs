@@ -51,6 +51,14 @@ public class LevelSelector : MonoBehaviour {
         levelLoader.LoadRandomLevel(LevelDificulty.Challenge);
         transform.GetComponent<Canvas>().enabled = false;
     }
+    
+    public void QuitGame() {
+        #pragma warning disable CS0618
+        Application.ExternalCall ("salir");
+        #pragma warning restore CS0618
+        Application.Quit();
+        Debug.Log("Game was closed");
+    }
 
     private void ShowLevelSelection() {
         transform.GetComponent<Canvas>().enabled = true;
