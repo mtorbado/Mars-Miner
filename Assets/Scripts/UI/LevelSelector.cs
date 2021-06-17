@@ -53,6 +53,7 @@ public class LevelSelector : MonoBehaviour {
     }
     
     public void QuitGame() {
+        scoreManager.SaveGlobalData();
         #pragma warning disable CS0618
         Application.ExternalCall ("salir");
         #pragma warning restore CS0618

@@ -162,10 +162,8 @@
      <Compile Include="Assets\Scripts\Game System\DragObjectController.cs" />
      <Compile Include="Assets\Scripts\Game System\GameEvents.cs" />
      <Compile Include="Assets\Scripts\Game System\LevelDificulty.cs" />
-     <Compile Include="Assets\Scripts\Game System\LevelInfo.cs" />
      <Compile Include="Assets\Scripts\Game System\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\AbsLevel.cs" />
-     <Compile Include="Assets\Scripts\Game System\Robot\CoroutineWithData.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\ILevel.cs" />
      <Compile Include="Assets\Scripts\Game System\Robot\RobotActions.cs" />
      <Compile Include="Assets\Scripts\Game System\RockPariclesController.cs" />
@@ -179,7 +177,6 @@
      <Compile Include="Assets\Scripts\UI\InGameUICanvasActions.cs" />
      <Compile Include="Assets\Scripts\UI\LevelFinishedCanvasActions.cs" />
      <Compile Include="Assets\Scripts\UI\LevelSelector.cs" />
-     <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\UI\OptionsCanvasActions.cs" />
      <Compile Include="Assets\Scripts\UI\PlayButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\ProgramInputScript.cs" />
