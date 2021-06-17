@@ -63,10 +63,10 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: music
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
+    clip: {fileID: 8300000, guid: 33c9c15e7a1cd2d4cb670e2e59b9ede0, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
   - name: magnet
     clip: {fileID: 8300000, guid: 1bbab0233dec4f94aae1c7a47e6a4504, type: 3}
@@ -96,11 +96,5 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6c7af36dba4fb904bb23e2470a048eed, type: 3}
     volume: 0.15
     pitch: 2
-    loop: 0
-    source: {fileID: 0}
-  - name: music
-    clip: {fileID: 0}
-    volume: 0.05
-    pitch: 1
     loop: 0
     source: {fileID: 0}
