@@ -4,8 +4,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour {
 
     public Sound[] sounds;
-
-    public static AudioManager instance;
+    bool isVolLowed = false;
 
     private void Start() {
     GameEvents.current.onLevelFailed += StopRobotNoise;
@@ -13,6 +12,7 @@ public class AudioManager : MonoBehaviour {
     GameEvents.current.onLevelLoad += StartSceneSound;
     GameEvents.current.onExitGame += StopSceneSound;
     GameEvents.current.onSelectLevel += StopSceneSound;
+    Play("music");
     }
 
     private void Awake() {
@@ -23,7 +23,6 @@ public class AudioManager : MonoBehaviour {
             s.source.pitch = s.pitch;
             s.source.loop = s.loop; 
         }
-
     }
 
     public void Play (string name) {
@@ -44,6 +43,22 @@ public class AudioManager : MonoBehaviour {
         Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
         if (s != null) {
             s.source.volume = volume;
+        }
+    }
+
+    public void LowerVolume (string name) {
+        Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
+        if (s != null && !isVolLowed) {
+            isVolLowed = true;
+            s.source.volume = s.source.volume/2;
+        }
+    }
+
+    public void RaiseVolume (string name) {
+        Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
+        if (s != null && isVolLowed) {
+            isVolLowed = false;
+            s.source.volume = s.source.volume*2;
         }
     }
 
@@ -71,11 +86,13 @@ public class AudioManager : MonoBehaviour {
     private void StartSceneSound() {
         Play("wind");
         Play("robot_motor");
+        LowerVolume("music");
     }
 
     private void StopSceneSound() {
         Stop("wind");
         Stop("robot_motor");
+        RaiseVolume("music");
     }
 
 }

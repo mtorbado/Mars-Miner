@@ -52,9 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140f172863988ef46b0650e19c67b92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotMotor: {fileID: 0}
-  robotBreak: {fileID: 0}
-  robotVacuum: {fileID: 0}
 --- !u!65 &65207089620762370
 BoxCollider:
   m_ObjectHideFlags: 0
