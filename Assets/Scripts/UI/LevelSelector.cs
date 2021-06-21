@@ -3,9 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// 
-/// </summary>
 public class LevelSelector : MonoBehaviour {
 
     ScoreManager scoreManager;
@@ -54,17 +51,20 @@ public class LevelSelector : MonoBehaviour {
         levelLoader.LoadRandomLevel(LevelDificulty.Challenge);
         transform.GetComponent<Canvas>().enabled = false;
     }
+    
+    public void QuitGame() {
+        scoreManager.SaveGlobalData();
+        #pragma warning disable CS0618
+        Application.ExternalCall ("salir");
+        #pragma warning restore CS0618
+        Application.Quit();
+        Debug.Log("Game was closed");
+    }
 
-    /// <summary>
-    /// Sets the level selection menu active (shows it)
-    /// </summary>
     private void ShowLevelSelection() {
         transform.GetComponent<Canvas>().enabled = true;
     }
 
-    /// <summary>
-    /// Updates the displayed scores in the level selection menu and activates difficulty buttons if threshold score from previous difficulty is reached
-    /// </summary>
     private void UpdateScores() {
         int[] scoreArray = scoreManager.finalScore.Array();
         int[] maxArray = (int[])Enum.GetValues(typeof(LevelDificulty));

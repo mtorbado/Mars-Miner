@@ -14,6 +14,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     private ScoreManager scoreManager;
     private LevelLoader levelLoader;
     private AudioManager audioManager;
+    private TimerScript timerScript;
 
     private void Start() {
         GameEvents.current.onLevelFailed += ShowLevelFailedPanel;
@@ -21,6 +22,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
 
         scoreManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreManager>();
         levelLoader = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelLoader>();
+        timerScript = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerScript>();
 
         background = gameObject.transform.Find("Background").gameObject;
         background.SetActive(false);
@@ -38,6 +40,7 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
         // levelPassedPanel.transform.Find("NextLevelButton").gameObject.SetActive(!levelLoader.IsLastLevel());
         levelPassedPanel.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelPoints() + " puntos");
         levelPassedPanel.transform.Find("AttemptsText").GetComponent<TextMeshProUGUI>().SetText(scoreManager.LevelAttempts() + " intentos");
+        levelPassedPanel.transform.Find("TimeText").GetComponent<TextMeshProUGUI>().SetText(timerScript.GetTime());
         StartCoroutine(LevelPassedCorroutine());
     }
 
@@ -78,11 +81,6 @@ public class LevelFinishedCanvasActions : MonoBehaviour {
     public void RestartLevel() {
         ClosePanels();
         levelLoader.RestartLevel();
-    }
-
-    public void GoToMainMenu() {
-        GameEvents.current.ExitGame();
-        SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
 
     public void PlayNextDificulty() {

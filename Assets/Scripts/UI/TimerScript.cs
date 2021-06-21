@@ -9,6 +9,8 @@ public class TimerScript : MonoBehaviour {
     public TextMeshProUGUI penaltyText;
 
     public const int MAX_PENALTY = 200;
+    public const int PENALTY = 50;
+    public const int PENALTY_LAPSE = 30;
 
     int seconds = 0;
     int penalty = 0;
@@ -36,13 +38,9 @@ public class TimerScript : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
             seconds++;
             if (seconds > 30) {
-                penalty = Math.Min(MAX_PENALTY, (seconds/30) * 50);
+                penalty = Math.Min(MAX_PENALTY, (seconds/PENALTY_LAPSE) * PENALTY);
             }
         }
-    }
-
-    public void StopTime() {
-        stop = true;
     }
 
     public int GetSeconds() {

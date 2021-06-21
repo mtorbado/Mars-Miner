@@ -137,13 +137,4 @@ public class GameEvents : MonoBehaviour {
             onUpdateScores();
         }
     }
-
-    /// <summary>
-    /// (Event) The game is being closed
-    /// </summary>
-    public void ExitGame() {
-        if (onExitGame !=null) {
-            onExitGame();
-        }
-    }
 }

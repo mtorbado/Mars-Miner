@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &548778381990815889
+--- !u!1 &718462324187866836
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 548778381990815888}
-  - component: {fileID: 548778381990815903}
+  - component: {fileID: 5038114494161613533}
+  - component: {fileID: 3486064436476572540}
   m_Layer: 0
   m_Name: Audio Manager
-  m_TagString: Untagged
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &548778381990815888
+--- !u!4 &5038114494161613533
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548778381990815889}
+  m_GameObject: {fileID: 718462324187866836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,46 +31,70 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &548778381990815903
+--- !u!114 &3486064436476572540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548778381990815889}
+  m_GameObject: {fileID: 718462324187866836}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65c08216789718543ba5ab9928405062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: robot_motor
+    clip: {fileID: 8300000, guid: 6c7af36dba4fb904bb23e2470a048eed, type: 3}
+    volume: 0.135
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: bump
+    clip: {fileID: 8300000, guid: 50eab5d50f1e1044b872ebc434d45a58, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: score
+    clip: {fileID: 8300000, guid: 7446b18cee20be845b58d297e6a212a3, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: music
+    clip: {fileID: 8300000, guid: 33c9c15e7a1cd2d4cb670e2e59b9ede0, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: magnet
+    clip: {fileID: 8300000, guid: 1bbab0233dec4f94aae1c7a47e6a4504, type: 3}
+    volume: 0.05
+    pitch: 1.29
+    loop: 1
+    source: {fileID: 0}
+  - name: wind
+    clip: {fileID: 8300000, guid: 4c7466a530e529045b309d8a201690be, type: 3}
+    volume: 0.039
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: robot_motor2
+    clip: {fileID: 8300000, guid: 6c7af36dba4fb904bb23e2470a048eed, type: 3}
+    volume: 0.15
+    pitch: 1.71
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: beep
+    clip: {fileID: 8300000, guid: 786ca636cf5d7554caa54f5385ec15a2, type: 3}
+    volume: 0.05
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: robot_motor3
+    clip: {fileID: 8300000, guid: 6c7af36dba4fb904bb23e2470a048eed, type: 3}
+    volume: 0.15
+    pitch: 2
     loop: 0
     source: {fileID: 0}

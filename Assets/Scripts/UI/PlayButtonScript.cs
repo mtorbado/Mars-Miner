@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// 
-/// </summary>
 public class PlayButtonScript : AbsButton {
 
     public GameObject programInput;
@@ -12,9 +9,6 @@ public class PlayButtonScript : AbsButton {
         GameEvents.current.onLevelLoad += EnableButton;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Play() {
         
         audioManager.Play("beep");
@@ -29,9 +23,6 @@ public class PlayButtonScript : AbsButton {
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void EnableButton() {
         GetComponentInChildren<Text>().text = "Start";
         button.interactable = true;

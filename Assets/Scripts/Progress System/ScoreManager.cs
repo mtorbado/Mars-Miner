@@ -1,9 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
 public class ScoreManager : MonoBehaviour {
 
     
@@ -27,7 +24,6 @@ public class ScoreManager : MonoBehaviour {
     
     void Start() {
         GameEvents.current.onLoadGameData += LoadScore;
-        GameEvents.current.onExitGame += SaveGlobalData;
         GameEvents.current.onLevelLoad += Reset;
         GameEvents.current.onPlayLevel += AddAttempt;
         GameEvents.current.onLevelPassed += SaveScore;
@@ -40,10 +36,6 @@ public class ScoreManager : MonoBehaviour {
         RetrieveScore();
     }
 
-    /// <summary>
-    /// Returns the points obtained in the current playing level
-    /// </summary>
-    /// <returns></returns>
     public int LevelPoints() {
         return (Math.Max(((int)levelLoader.playingDificulty/SCORE_FACTOR) - (timerScript.GetPenalty() + (attempts-1)*ATTEMP_PENALTY), MIN_LEVEL_SCORE));
     }
@@ -98,7 +90,7 @@ public class ScoreManager : MonoBehaviour {
         #pragma warning restore CS0618
     }
 
-    private void SaveGlobalData() {
+    public void SaveGlobalData() {
         int completed = 0;
         if (finalScore.TotalScore() >= PASS_GAME_SCORE) completed = 1;
         int [] data = {finalScore.TotalScore(), completed};
