@@ -43,10 +43,6 @@ public class TimerScript : MonoBehaviour {
         }
     }
 
-    public void StopTime() {
-        stop = true;
-    }
-
     public int GetSeconds() {
         return seconds;
     }
