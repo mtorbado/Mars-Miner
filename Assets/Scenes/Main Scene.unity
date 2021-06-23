@@ -4193,7 +4193,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Selecciona una dificultad para comenzar:'
+  m_text: 'Selecciona un nivel para comenzar:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4263,7 +4263,7 @@ MonoBehaviour:
   m_margin: {x: -0.54477924, y: 5.983145, z: 0.05917588, w: -0.19523941}
   m_textInfo:
     textComponent: {fileID: 432448268}
-    characterCount: 40
+    characterCount: 34
     spriteCount: 0
     spaceCount: 4
     wordCount: 5
@@ -6394,7 +6394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.900055}
+  m_AnchoredPosition: {x: 0, y: -10.900085}
   m_SizeDelta: {x: 0, y: -174.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &767996716

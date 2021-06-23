@@ -120,7 +120,7 @@ El repositorio del proyecto puede encontrarse en https://github.com/mtorbado/tfg
 
 ## Colaboradores
 
-* **Oliver L. Sanz San José** - *Música y sonido*
+* **Oliver L. Sanz San José** - *Música*
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 

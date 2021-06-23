@@ -53,6 +53,7 @@ public class LevelSelector : MonoBehaviour {
     }
     
     public void QuitGame() {
+        audioManager.Stop("music");
         scoreManager.SaveGlobalData();
         #pragma warning disable CS0618
         Application.ExternalCall ("salir");
